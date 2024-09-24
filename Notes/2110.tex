@@ -1,0 +1,990 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\Fc}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{exercise}[1][red]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+\begin{tcolorbox}[
+    parbox=false,
+    colback=#1!5!white,
+    colframe=#1!75!black,
+    breakable
+]}
+{\end{tcolorbox}}
+
+\title{APMA 2110: Real Analysis}
+\author{Milan Capoor}
+\date{Fall 2024}
+
+\begin{document}
+\maketitle
+
+\section{Sept 05}
+Some basic notation:
+\begin{align*}
+    \N &:= \{1, 2, 3, \ldots\} \\
+    \Z &:= \{\ldots, -2, -1, 0, 1, 2, \ldots\} \\
+    \Q &:= \left\{\frac{m}{n} \mid m, n \in \Z, n \neq 0\right\} \\
+    \R &:= \text{the set of real numbers}\\
+    \C &:= \text{the set of complex numbers}     
+\end{align*}
+
+Some basic logic:
+\begin{itemize}
+    \item $(A \implies B) \iff (\neg B \implies \neg A)$ (contrapositive)
+    \item $E \subset X \implies \forall x \in E, \; x \in X$
+\end{itemize}
+
+    \subsection*{Sets}
+    Note that in this course, $\subset$ includes the possibility of equality, while $\subsetneq$ does not.
+
+    \textbf{Power Set:} $P(X) = \{E: E \sub X\}$
+
+    \emph{Example:} $X = \{1, 2, 3\}$ 
+    \[P(X) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{2, 3\}, \{1, 3\}, \{1, 2, 3\}\}\]
+
+    \textbf{Sets:} Let $\E$ be a collection of sets $E$
+    \begin{itemize}
+        \item $\bigcup_{E \in \Ec} = \{x : x\in E, \text{ for some } E \in \Ec\}$
+        \item $\bigcap_{E \in \Ec} = \{x : x\in E, \text{ for all } E \in \Ec\}$
+        \item $\Ec = \{E_{\alpha} : \alpha \in A\} = \{E_{\underset{\alpha \in A}{\alpha}}\}$ 
+        \item $E_{\alpha} \cap E_{\beta} = \emptyset$ for $\alpha \neq \beta$ $\iff$ $E_{\alpha}$ and $E_{\beta}$ are \emph{disjoint}
+    \end{itemize}
+
+    \textbf{Limsup and Liminf:} For $\{E_n\}_{n=1}^{\infty}$,
+    \begin{align*}
+        \limsup E_n &= \bigcap_{k=1}^{\infty} \bigcup_{n=k}^{\infty} E_n\\ 
+        \liminf E_n &= \bigcup_{k=1}^{\infty} \bigcap_{n=k}^{\infty} E_n
+    \end{align*}
+
+    \begin{exercise}
+        \textbf{Exercise:} Prove that 
+        \begin{align*}
+            \limsup E_n &= \{x : x\in E_n \text{ for infinitely many } n\}\\
+            \liminf E_n &= \{x : x\in E_n \text{ for all but finitely many } n\}
+        \end{align*}
+        i.e. after first finite $n$, $x$ is in $E_n$ for all $n$.
+    \end{exercise}
+
+    \textbf{Difference and Symmetric Difference:} Let $E$ and $F$ be two sets
+    \begin{align*}
+        E \setminus F &= \{x : x\in E, x\not\in F\}\\
+        E \triangle F &= (E \setminus F) \cup (F \setminus E)\\ 
+        E^c &= X \setminus E, \; E \sub X
+    \end{align*}
+
+    \textbf{De Morgan's Laws:}
+    \begin{align*}
+        \left(\bigcup_{\alpha \in A} E_{\alpha}\right)^c &= \bigcap_{\alpha \in A} E_{\alpha}^c\\
+        \left(\bigcap_{\alpha \in A} E_{\alpha}\right)^c &= \bigcup_{\alpha \in A} E_{\alpha}^c
+    \end{align*}
+
+    \begin{exercise}
+        \textbf{Exercise:} Prove De Morgan's Laws.
+    \end{exercise}
+
+    \textbf{Cartesian Product:} If $X$ and $Y$ are sets, then $X \times Y$ is the \emph{ordered} set 
+    \[X \times Y = \{(x, y): x \in X, y \in Y\}\]
+
+    \subsection*{Relations}
+    \textbf{Relations:} A \emph{relation} $R$ from $X$ to $Y$ is a subset of $X \times Y$ such that 
+    \[xRy \iff (x, y) \in R\]
+
+    \textbf{Equivalence relation:} A relation $\sim$ is an equivalence relation in the special case $Y = X$ if it is
+    \begin{itemize}
+        \item Reflexive: $x\sim x \quad \forall x \in X$
+        \item Symmetric $x\sim y \iff y\sim x$
+        \item Transitive $x\sim y, y\sim z \implies x\sim z$
+    \end{itemize}
+
+    \subsection*{Functions}
+    \textbf{Mappings:} A mapping/function $f: X \to Y$ is a relation $R$ from $X$ to $Y$ such that $\forall x \in X$, there exists a \emph{unique} $y \in Y$ such that $xRy$. We write $y = f(x)$.
+
+    \textbf{Composition:} If $f: X \to Y$ and $g: Y \to Z$, then $g \circ f: X \to Z$ is a function such that $g \circ f(x) = g(f(x))$
+
+    \textbf{Images:} If $D \sub X, E \sub Y$, the \emph{image} of $D$ (and the \emph{inverse image}/pre-image of $E$) under $f: X \to Y$ is
+    \begin{align*}
+        f(D) &= \{f(x) : x \in D\}\\ 
+        f^{-1}(E) &= \{x \in X : f(x) \in E\}
+    \end{align*}
+
+    For $f: X \to Y$ we further call $X$ the \emph{domain} of $f$ and $Y$ the \emph{codomain} of $f$. The \emph{range}/\emph{image} of $f$ is $f(X)$.
+
+    \textbf{Inverses:} $f^{-1}$ defines an operation on $P(X)$ such that
+    \begin{align*}
+        f^{-1}\left(\bigcup_{\alpha \in A} E_{\alpha}\right) &= \bigcup_{\alpha \in A} f^{-1}(E_{\alpha})\\
+        f^{-1}\left(\bigcap_{\alpha \in A} E_{\alpha}\right) &= \bigcap_{\alpha \in A} f^{-1}(E_{\alpha})\\ 
+        f^{-1}(E^c) &= (f^{-1}(E))^c
+    \end{align*}
+    
+    \begin{exercise}
+        \textbf{Exercise:} Prove the above properties of inverses. Warning: in general, $f$ also commutes with unions but \emph{not} with intersections. Why?
+    \end{exercise}
+
+    \textbf{Bijectivity:}
+    \begin{itemize}
+        \item $f$ is \emph{injective} iff $f(x_1) = f(x_2) \implies x_1 = x_2$
+        \item $f$ is \emph{surjective} iff $\forall y \in Y, \exists x \in X \st f(x) = y$
+        \item $f$ is \emph{bijective} iff it is both injective and surjective
+    \end{itemize}
+
+    In the case of a bijective mapping $f$, then $f^{-1}$ is a function from $Y$ to $X$ (i.e. $f^{-1}$ has a unique value for bijective $f$)
+
+    \subsection*{Sequences}
+    \textbf{Sequences:} A sequence in a set $X$ is a function $f: \N \to X$. We $\{x_n\}$ for $x_n \in X$
+    
+    \textbf{Subsequence:} A subsequence $x_{n_k} \subseteq \{x_n\}$ with $n_k \in \{1, \dots, \infty\}$
+
+    \subsection*{Ordering}
+    \textbf{Partial ordering:} a partial ordering on a nonempty set $X$ is a relation $R$ on $X$ such that 
+    \begin{itemize}
+        \item If $xRy$ and $yRz$, then $xRz$ (transitivity)
+        \item If $xRy$ and $yRx$, then $x = y$ (antisymmetry)
+        \item $xRx$ for all $x$ (reflexivity)
+    \end{itemize}
+
+    \emph{Example:} Let $E$ be a set. Consider the relation $\sub$. Let $E_1, E_2, E_3 \sub E$.
+    \begin{itemize}
+        \item $E_1 \sub E_2$ and $E_2 \sub E_3$ implies $E_1 \sub E_3$ (transitivity $\checkmark$)
+        \item $E_1 \sub E_2$ and $E_2 \sub E_1$ implies $E_1 = E_2$ (antisymmetry $\checkmark$)
+        \item $E_1 \sub E_1$ (reflexivity $\checkmark$)
+    \end{itemize}
+    Therefore, inclusion (with equality) is a partial ordering.
+    (Proof for first two by considering elements, proof for last by equality)
+
+    \textbf{Total ordering:} A total ordering/linear ordering is a partial ordering such that for all $x, y \in X$, either $xRy$ or $yRx$.
+
+    \emph{Example:} Inclusion is not a total ordering on $P(X)$ since (in general) $E_1 \not\sub E_2$ and $E_2 \not\sub E_1$ for $E_1 \neq E_2$.
+
+\section{Sept 10}
+    \textbf{Recall:} a \emph{partial ordering} is a relation that satisfies
+    \begin{enumerate}
+        \item if $xRy$ and $yRz$, then $xRz$ 
+        \item if $xRy$ and $yRx$, then $x = y$
+        \item $xRx$ for all $x$
+    \end{enumerate}
+
+    \emph{Examples:}
+    \begin{itemize}
+        \item  In the real numbers, $\leq$ is the typical ordering. 
+        \item For a set $X$ and its power set $P(X)$, $\sub$ is a partial ordering.
+    \end{itemize}
+
+    \textbf{Warning:} In this class, we will use $\leq$ to denote an abstract partial ordering. 
+
+    \textbf{Total/Linear Ordering:} A total ordering is a partial ordering such that for all $x, y \in X$, either $x\leq y$ or $y \leq x$.
+
+    \textbf{Extrema:} If $X$ is partially ordered by $\leq$, a \emph{maximal} (resp. \emph{minimal}) element of $X$ is an element $x \in X$ such that $x \leq y \implies y = x$
+
+    \textbf{Bounds:} If $E \sub X$, an \emph{upper} (resp. \emph{lower}) \emph{bound} for $E$ is an element $x \in X$ such that $y \leq x$ (resp. $x \leq y$) for all $y \in E$.
+
+    \begin{tbox}{\textbf{Zorn's Lemma (transfinite induction):} If $X$ is partially ordered by $\leq$, assume every linearly ordered subset of $X$ has an upper bound. Then $X$ has a maximal element.}
+        \emph{Proof:} We regard this as axiomatic
+    \end{tbox}
+
+    \textbf{Well-Ordering:} A set $X$ is \emph{well-ordered} if 
+    \begin{enumerate}
+        \item it is linearly ordered by $\leq$
+        \item every nonempty subset of $X$ has a minimal element.
+    \end{enumerate}
+
+    \begin{tbox}{\textbf{Well-ordering Principle:} Every non-empty set $X$ can be well-ordered}
+        \emph{Proof:} Consider $\mathcal{W} = \{\text{all well-ordered subsets of } X\}$.
+        
+        Suppose there exist well-ordered sets $E_1, E_2 \sub W$. Then each has a minimal element.  
+
+        We know $\mathcal W$ is non-empty because for all finite subsets of $X$, we can order them (using the normal linear order on $\R$). 
+
+        We will proceed by defining a relation $R$ between the linear orderings $\leq_1$ and $\leq_2$ of $E_1$ and $E_2$ respectively. We will say $\leq_1 R \leq_2$ if:
+        \begin{enumerate}
+            \item $\leq_2$ extends $\leq_1$ (i.e. $E_1 \sub E_2$ and $\leq_1 = \leq_2$ on $E_1$)
+            \item If $x \notin E_1, x \in E_2$, then $y \leq_2 x$ for all $y \in E_1$
+        \end{enumerate}
+
+        \begin{exercise}
+            \textbf{Exercise:} Prove that $R$ is a partial ordering in $\mathcal W$
+        \end{exercise}
+        
+        Assume $\mathcal S = \{\leq_{\alpha} ; R\}$ is the set of linear orderings $\leq_{\alpha}$ of $E_{\alpha} \sub \mathcal W$ for $\alpha \in A$. Thus, $\leq_{\alpha} R \leq_{\beta}$ for $\alpha, \beta \in A$.
+
+        \emph{Claim:} Let
+        \[E_{\infty} = \bigcup_{\alpha \in A} E_{\alpha}\]
+        equipped with the partial ordering $\leq_{\infty}$ such that $\leq_{\infty}\big\vert_{E_{\alpha}} = \leq_{\alpha}$ for all $\alpha \in A$. 
+
+        Clearly, $\leq_{\alpha} R \leq_{\infty}$ for all $\alpha \in A$. Then for any sequence of well-ordered sets in $\mathcal W$, $E_{\infty}$ is an upper-bound. 
+        
+        \begin{exercise}
+            \textbf{Exercise:} Verify that $\leq_{\alpha} R \leq_{\infty}$ is well defined and that $E_{\infty}$ is an upper bound for $\mathcal W$
+        \end{exercise}
+
+        By Zorn's Lemma, there exists a maximal element $E_{\max} \in \mathcal W$. (Verify it's a well-ordering by extending $\leq_{\max}$ to include any $x_0 \in X\setminus E_{\max}$ such that $x \leq x_0$ for all $x \in E_{\max}$).
+        
+        Consider $E_{\max} \cup \{x_0\}$. Clearly, $E_{\max} \leq E_{\max} \cup \{x_0\}$, so $E_{\max} \cup \{x_0\}$ and by the extension above, $E_{\max} \cup \{x_0\} \in \mathcal W$. This contradicts the maximality of $E_{\max}$, so $E_{\max} = X$.
+    \end{tbox}
+
+    \textbf{Definition:} Let $\prod_{\alpha \in A} X_{\alpha}$ be the set of all maps $f: A \to \bigcup_{\alpha \in A} X_{\alpha}$ such that $f(\alpha) \in X_{\alpha}$ for all $\alpha \in A$.
+
+    \begin{tbox}{\textbf{Axiom of Choice:} If $\{X_\alpha\}_{\alpha \in A}$ is a nonempty collection of nonempty sets, $\prod_{\alpha \in A} X_{\alpha}$ is nonempty, i.e. there exists at least one choice function $f$ }
+        \emph{Proof:} Let $X = \bigcup_{\alpha \in A} X_{\alpha}$. Pick a well-ordering on $X$ and $\alpha \in A$. Let $f(\alpha)$ be the minimal element of $X_{\alpha}$. Then $f \in \prod_{\alpha \in A} X_{\alpha}$ 
+    \end{tbox}
+
+    \subsection*{Cardinality} 
+        \textbf{Definition:} 
+        \begin{itemize}
+            \item $\card X \leq \card Y$ if there exists an injective function $f: X \to Y$
+            \item $\card X = \card Y$ if there exists a bijective function $f: X \to Y$
+            \item $\card X \geq \card Y$ if $\card X \leq \card Y$ but $\card X \neq \card Y$ there exists a surjective function $f: X \to Y$
+        \end{itemize}
+
+        \begin{tbox}{\textbf{Property:} $\card X \leq \card Y$ iff $\card Y \geq \card X$}
+            \emph{Proof:} $\card X \leq \card Y$ implies there exists an injective $f: X \to Y$. Pick $x_0 \in X$ and define $g: Y \to X$ by 
+            \[g(y) = \begin{cases}
+                f^{-1}(y) & y \in f(X)\\
+                x_0 & \text{otherwise}
+            \end{cases}\]
+            
+            In the first case, we have injectivity of $f$ so each $f^{-1}(y)$ is unique. In the second case we ensure surjectivity. 
+
+            \div 
+
+            Conversely, if $g: Y \to X$ is surjective, consider $g^{-1}(\{x\})$ for $x \in X$. These sets are non-empty and disjoint because $f$ is a map (each $x$ can map to a single $y$). Then any $f \in \prod_{x \in X} g^{-1}(\{x\})$ is an injection from $X$ to $Y$.
+        \end{tbox}
+
+\section{Sept 12}
+    \begin{tbox}{\textbf{Property:} For any sets $x$ and $Y$, either $\card X \leq \card Y$ or $\card Y \leq \card X$}
+        \emph{Proof Sketch:} Consider the (non-empty) set 
+        \[J = \{\text{all injections } f_E: X \to Y \text{ with respect to } E \sub X\}\]
+        
+        Define a relation $R$ on $J$ such that $f_{E_1} R f_{e_2}$ if $E_1 \sub E_2$ and $f_{E_2}\big\vert_{E_1} = f_{E_1}$, i.e. $f_{E_2}$ is an extension of $f_{E_1}$.
+
+        Repeating the argument of the Well-Ordering Principle, $R$ is a partial ordering. 
+
+        Then we can find an upper bound for $J$ by considering the union of all $E \in J$ and extending the injections. 
+
+        By Zorn's Lemma, there exists a maximal element $f_{E_{\max}} \in J$ with respect to the ordering $R$. 
+
+        \emph{Case 1:} Suppose $E_{\max} = X$. Then $f_{E_{\max}}$ is an injection from $X$ to $Y$ so $\card X \leq \card Y$  
+
+        \emph{Case 2:} Suppose $E_{\max} \subsetneq X$. Then $\exists x_0 \in X \setminus E_{\max}$. Consider the image $f(E_{\max})$. We claim $f(E_{\max}) = Y$ so $f_{E_{\max}}^{-1}$ is defined on all of $Y$ and is injective $Y \to X$ and we are done. Thus, it only remains to show $f(E_{\max}) = Y$. 
+
+        If the claim is not true, $\exists y_0 \in Y$ but $y_0 \notin f_{E_{\max}}(X)$ but this is a contradiction to maximality (as in the Well-Ordering Principle proof).       
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Schröder-Bernstein Theorem:} If $\card X \leq \card Y$ and $\card Y \leq \card X$, then $\card X = \card Y$}
+        \emph{Note:} This seems trivial but in fact the two functions are not necessarily the same so we must construct our own bijection. 
+
+        \emph{Proof:} Denote the cardinality injections $f: X \to Y$ and $g: Y \to X$.
+
+        If $f(X) = Y$, then $f$ is a bijection and we are done.
+
+        If $f(X) \neq Y$ (i.e. $f(X) \subsetneq Y$), the consider $Y_1 = Y \setminus f(X)$ and $g(Y_1)$. Then $f(Y_1) \subsetneq X$, so call $X_1 = f(Y_1)$. We now have a bijection $X_1 \to Y_1$. 
+
+        Let's repeat. $f(X \setminus X_1) \subsetneq Y \setminus Y_1$ so define $Y_2 = (Y \setminus Y_1) \setminus f(X \setminus X_1)$.
+
+        Now we know $f(X_1) \sub Y_2$ and $f^{-1}(Y_1) \sub X_1$ so we can define a bijection $X_2 \to Y_2$.
+
+        Assume $X_1, \dots X_n$ and $Y_1, \dots, Y_n$ are constructed. WLOG assume that this procedure can be repeated infinitely (or else we would already have a bijection). 
+
+        Define 
+        \[\left(Y \setminus \bigcup_{i=1}^n Y_i\right) \setminus f\left(X \setminus \bigcup_{i=1}^n X_i\right) = Y_{n+1}\]
+        since $f(X_i) \sub Y_{i+1}$. 
+
+        \begin{exercise}
+            \textbf{Exercise:} Verify that 
+            \[g: \bigcup_{i=1}^{\infty} Y_i \to \bigcup_{i=1}^{\infty} X_i\]
+            is a bijection and further that 
+            \[f: \left(X \setminus \bigcup_{i=1}^{\infty} X_i\right) \to \left(Y \setminus \bigcup_{i=1}^{\infty} Y_n\right)\] 
+            is also a bijection.
+        \end{exercise} 
+
+        Together, these steps show that we have a bijection on the full sets $X$ and $Y$.
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Proposition}: For any set $X$, $\card X < \card P(X)$}
+        \emph{Proof:} Clearly, $\forall x \in X$, we have an injection $f: X \inj P(X)$ defined by $f(x) = \{x\}$.
+
+        We claim there is no surjection $g: X \to P(X)$ and proceed by contradiction. 
+
+        Let $g: X \twoheadrightarrow P(X)$. Define 
+        \[Y = \{x \in X \st x \notin g(x)\}\] 
+
+        We claim $Y \notin g(X)$. If not, assume $x_0 \in X$ such that $g(x_0) = Y$. 
+
+        \emph{Case 1:} If $x_0 \in Y$, then $x_0 \notin g(x_0) = Y$ - contradiction 
+
+        \emph{Case 2:} If $x_0 \notin Y$, then $x_0 \in g(x_0) = Y$ - contradiction
+
+        Therefore, $Y \notin g(X)$ so $g$ is not surjective.
+    \end{tbox}
+
+    \textbf{Countable:} A set $X$ is \emph{countably infinite} if $\card X \leq \card \N$.
+
+    \begin{tbox}{\textbf{Proposition:} 
+        \begin{enumerate}[label=(\alph*)]
+            \item If $X$ and $Y$ are countable, so is $X \times Y$.
+            \item If $A$ is countable and $X_{\alpha}$ is countable for every $\alpha \in A$, then $\bigcup_{\alpha \in A} X_{\alpha}$ is countable.
+        \end{enumerate}}
+        \emph{Proof:} 
+        \begin{enumerate}[label=(\alph*)]
+            \item $\card X = \card Y =\card \N$ so it suffices to show $\N \times \N = \card \N$ 
+            
+            $\forall n \in \N$, define $f(n) \inj (n, 1) \in \N \times \N$.
+
+            \color{red}
+            Consider $g((m, n)) \to 2^m 3^n \in \N$. Is this injective? Consider $g(m_1, n_1) = 2^{m_1} 3^{n_1}$. By the unique prime factorization of integers, $2^{m_1} 3^{n_1} = 2^m 3^n$ iff $(m_1, n_1) = (m, n)$ so $g$ is injective.
+
+            Now we can use Schroder-Bernstein and we are done. 
+
+            \item As $A$ is countable, $\forall \alpha \in A$, $\exists f_{\alpha}: \N \to X_{\alpha}$ So we can define $F: \N \times A \to \bigcup_{\alpha \in A} X_{\alpha}$ by 
+            \[F(n, \alpha) = f_{\alpha}(n)\]
+            which is surjective 
+
+            \color{black}
+
+        \end{enumerate}
+
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Corollary:} $\Z$ and $\Q$ are countable}
+        \emph{Proof:} $\Z = \N \cup \{-\N\} \cup 0$ 
+
+        We can define $f: \Z^2 \to \Q$ by 
+        \[f(m, n) = \begin{cases}
+            \frac{m}{n} & n \neq 0\\
+            0 & n = 0 
+        \end{cases}\] 
+    \end{tbox}
+
+    \textbf{Convention for this course:} We will use $\R$ to denote the standard reals and will define the \emph{extended reals} $\bar R$ by $\R \cup \pm \infty$ 
+
+    Under this notation, we can state that for any $E \sub \bar R$, $\sup \bar E$ and $\inf \bar E$ are always well-defined, i.e. all sets are bounded above by $\infty$ and below by $-\infty$.
+
+    We define the following rules: 
+    \begin{itemize}
+        \item $X \pm  \infty = \pm \infty$ 
+        \item $\infty + \infty = \infty$
+        \item $-\infty - \infty = -\infty$
+        \item $\infty - \infty$ is undefined
+        \item $x(\pm \infty) = \pm \infty$ for $x > 0$ and $x(\pm \infty) = \mp \infty$ for $x < 0$
+        \item $0 \cdot (\pm\infty) = 0$
+    \end{itemize}
+
+    \textbf{Note:} this last point does \emph{not} talk about limits, it is just notation 
+
+    \begin{tbox}{\textbf{Proposition:} Every open set in $\R$ is a countable disjoint union of open intervals}
+        \emph{Proof Sketch:} For all $x \in U$, there exists an open interval $I_{\alpha, \beta} = (\alpha, \beta) \sub U$ with $\alpha < x < \beta$. 
+
+        Let $\mathcal J_x = \{x \in I_{\alpha, \beta} \; | \; I_{\alpha, \beta} \in U\}$. 
+
+        Take $\alpha_{\inf} = \inf \mathcal \alpha$ and $\beta_{\sup} = \sup \beta$. 
+
+        \begin{exercise}
+            \textbf{Exercise:} Check that $x \in (\alpha_{\inf}, \beta_{\sup}) \sub U$
+        \end{exercise}
+
+        We call $I_x = (\alpha_{\inf}, \beta_{\sup})$ for all $x \in U$ 
+
+        We claim $\forall x, y \in U$, either $I_x \cap I_y = \emptyset$ or $I_x = I_y$.
+
+        Suppose $I_x \cap I_y \neq \emptyset$. Then $I_x \cup I_y$ is an open interval containing $x$, so $I_x \cup I_y \in \mathcal J_x$ but $I_x$ is maximal so this is a contradiction unless $I_x = I_y$ 
+
+        Now we can write 
+        \[U = \bigcup_{x \in U} I_x\]
+
+        Why is this countable? We can define an injection $U \to \Q$ by choosing a rational number in each $I_x$ (exist by density of $\Q$). 
+    \end{tbox}
+
+    \subsection*{Metric Spaces}
+    \textbf{Definition:} A \emph{metric space} is a set $X$ together with a \emph{distance function} $\rho: X \times X \to [0, \infty)$ such that 
+    \begin{enumerate}
+        \item $\rho(x, y) = 0 \iff x = y$
+        \item $\rho(x, y) = \rho(y, x)$
+        \item $\rho(x, y) \leq \rho(x, z) + \rho(z, y)$
+    \end{enumerate}
+
+    \textbf{Examples:} 
+    \begin{itemize}
+        \item $\R^n$ with $\rho(x, y) = \abs{x - y}$
+        \item Set of continuous functions $f$ over $[0, 1]$ with $\rho_1(f, g) = \int0^1 \abs{f(x) - g(x)} dx$ (or alternatively $\rho_{\infty} = \sup_{0 \leq x \leq 1} \abs{f(x) - g(x)}$)
+    \end{itemize}
+ 
+    \begin{exercise}
+        \textbf{Exercise:} Check the above are metric spaces
+    \end{exercise}
+
+\section{Sept 17}
+\subsection*{Closed and Open Sets}  
+    \textbf{Open ball:} Let $(X, \rho)$ be a metric space. If $x \in X$, $r > 0$, we define the \emph{open ball} $B(x, r) = \{y \in X \st \rho(x, y) < r\}$
+
+    \textbf{Open set:} a set $E$ is open iff $\forall x \in E, \exists r > 0 \st B(x, r) \sub E$
+
+    \textbf{Closed set:} a set $E$ is closed iff $E^c$ is open
+
+    \emph{Example:} $B(x, r)$ is open. Consider $y \in B(x, r)$. Then $\rho(x, y) = s < r$. By the triangle inequality, $B(y, r - s) \sub B(x, r)$ 
+
+    \begin{exercise}
+        \textbf{Exercise:} Prove that $B(x, r)$ is open
+    \end{exercise}
+
+    \textbf{Properties:}
+    \begin{itemize}
+        \item $\emptyset$ is open 
+        \item If $U_x$ are open sets, $\bigcup_{x \in A} U_x$ is open (as is the finite intersection)
+        \item If $F_x$ are closed sets, $\bigcap_{x \in A} F_x$ is closed (as is the finite union)
+    \end{itemize}
+
+    \textbf{Interior:} Let $E \sub X$. The \emph{interior} of $E$ is 
+    \[\overset{\circ}{E} = \bigcup_{O \sub E} O\]
+    (this is the largest open set in $E$)
+
+    \textbf{Closure:} The \emph{closure} of $E$ is
+    \[\bar E = \bigcap_{E \sub F} F\]
+    (this is the smallest closed set containing $E$)
+    
+    \begin{tbox}{\textbf{Proposition:} Let $(X, \rho)$ be a metric space. Let $E \sub X$ and $x \in X$. Then the following are equivalent:
+        \begin{enumerate}[label=(\alph*)]
+            \item $x \in \bar E$
+            \item $B(x, r) \cap E \neq \emptyset$ for all $r > 0$
+            \item $\exists (x_n) \sub E$ such that $x_n \to x$
+        \end{enumerate}}
+        \emph{Proof:} 
+        ($(a) \to (b)$) Let $x \in \bar E$. Suppose $\exists r_0 >0$ such that $B(x, r) \cap E = \emptyset$. Then $E \sub (B(x, r_0))^c$. But $(B(x, r_0))^c$ is closed so $\bar E \sub (B(x, r_0))^c$ so $x \in B(x, r_0) \sub (\bar E)^c$ but this implies $x \in (\bar E)^c$ which is a contradiction. 
+
+        ($(b) \to (c)$) Let $r = \frac{1}{n}$. By (b), $B(x, \frac{1}{n}) \cap E \neq \emptyset$. Choose $x_n \in B(x, \frac{1}{n}) \cap E$. Certainly $\rho(x_n, x) < \frac{1}{n}$ so $\lim \rho(x_n, x) = 0$ and $x_n \to x$
+
+        ($(c) \to (a)$) If $x \notin \bar E$, $x \in (\bar E)^c$ but $(\bar E)^c$ is open so $\exists r > 0 \st B(x, r) \sub (\bar E)^c \sub E^c$. Then there cannot exist any sequence in $E$. But this contradicts $x_n \to x$
+    \end{tbox}
+
+\subsection*{Density}
+    \textbf{Dense:} $E$ is dense in $X$ if $\bar E = X$ (examples $\R^n, \Q^n$)
+
+    \textbf{Nowhere dense:} $E$ is nowhere dense if $(\bar E)^{\circ} = \emptyset$ (example: emptyset)
+
+    \textbf{Separable:} $X$ is separable if there exists a countable dense subset $E \sub X$
+
+    \textbf{Limits:} In this class, $x_n \to x$ iff $\lim_{n\to\infty} \rho(x_n, x) = 0$
+
+\subsection*{Continuity} 
+    Let $\mathcal C = \{\text{continuous functions on } [0,1]\}$.
+
+    \textbf{Continuity at a point:} If $(X_1, \rho_1)$ and $(X_2, \rho_2)$ are metric spaces, $f: X_1 \to X_2$ is continuous at $x \in X_1$ if $\forall \ep > 0, \exists \delta_x > 0$ such that $\forall y \in X_1$ such that $\rho_1(x, y) < \delta_x$ (i.e. $y \in B_1(x, \delta_x)$),  
+    \[\rho_2(f(x), f(y)) < \ep\]
+    (i.e. $f(y) \in B_2(f(x), \ep)$)
+
+    \textbf{Continuity on a set:} $f$ is continuous in $X$ iff $f$ is continuous at every $x \in X$
+
+    \textbf{Uniform Continuity:} $f$ is uniformly continuous if $\delta$ is independent of $x$, i.e. $\forall \ep > 0$, $\exists \delta > 0$ such that 
+    \[\rho_1(x, y) < \delta \implies \rho_2(f(x), f(y)) < \ep\]
+    for all $x \in X$. 
+
+    \begin{tbox}{\textbf{Proposition:} $f: X_1 \to X_2$ is continuous iff $f^{-1}(U) \sub X_1$ is open for all open $U \sub X_2$}
+        \emph{Proof:} Let $f$ be continuous and $U \sub X_2$ be open. $f^{-1}(U) = \emptyset$ is open so take $x \in f^{-1}(U)$. Then $f(x) = y \in U$. 
+        
+        Since $U$ is open, $\exists \ep_y > 0 \st B_2(y, \ep_y) = B_2(f(x), \ep_y) \sub U$. 
+        
+        By continuity, $\exists \delta_x > 0$ such that $\forall z \in B_1(x, \delta_2)$, 
+        \[\rho_2(f(x), f(z)) < \ep_y \implies f(z) \in B_2(y, \ep_y) \sub U \implies z \in f^{-1}(U)\]
+        so $B_1(x_1, \delta_x) \sub f^{-1}(U)$ and $f^{-1}(U)$ is open.
+
+        Conversely, suppose $f^{-1}(U)$ is open for all open $U \sub X_2$. Let $\ep > 0$. Consider $y = f(x) X_2$. Then $B_2(y, \ep)$ is open so $f^{-1}(B_2(y, \ep))$ is open by assumption. 
+        
+        Let $x \in f^{-1}(B_2(y, \ep))$. Then $\exists \delta_x$ such that $B_1(x, \delta_x) \sub f^{-1}(B_2(y, \ep))$. 
+
+        Then $f(B_1(x, \delta_x)) \sub B_2(y, \ep)$ which is precisely the definition of continuity.
+    \end{tbox}
+
+\subsection*{Cauchy Sequences}
+    \textbf{Cauchy Sequence:} A sequence $(x_n)$ in a metric space $(X, \rho)$ is Cauchy if $\forall \ep > 0, \exists N \in \N$ such that $\forall m, n \geq N$,
+    \[\rho(x_m, x_n) < \ep\]
+
+    \textbf{Completeness:} A subset $E \sub X$ is \emph{complete} if every Cauchy sequence $x_n \in E$ has a limit $x \in E$
+
+    \emph{Examples:} 
+    \begin{itemize}
+        \item In $\R^n$, any bounded closed subset is complete. 
+        \item $(\mathcal C, \rho_{\infty})$ is complete 
+    \end{itemize}
+
+    \begin{exercise}
+        \textbf{Exercise:} Prove that $(\mathcal C, \rho_{\infty})$ is complete for 
+        \[\rho_{\infty}(x, y) = \sup_{x \in [0,1]} \abs{f(x) - g(x)}\] 
+        (though in general this is not true for other metrics)
+    \end{exercise}
+    
+    \begin{tbox}{\textbf{Proposition:} A closed subset $(X, \rho)$ of a complete metric space is complete and complete subsets of a metric space must be closed}
+        \emph{Proof:} 
+        
+        \begin{exercise}
+            \textbf{Exercise}
+        \end{exercise}
+    \end{tbox}
+
+    \textbf{Set Distance:}
+    \begin{itemize}
+        \item Let $x \in X$ and $E \sub X$. The \emph{distance} from $x$ to $E$ is
+        \[\rho(x, E) = \inf\{\rho(x, y): y \in E\}\] 
+        \item For $E, F \sub X$, 
+        \[\rho(E, F) = \inf\{\rho(x, y): x \in E, y \in F\}\]
+    \end{itemize}
+
+    \textbf{Diameter:} $\diam E = \sup\{\rho(x, y): x, y \in E\}$
+
+    \textbf{Bounded:} $E$ is bounded iff $\diam E < \infty$
+
+    \textbf{Open cover:} Let $\{V_{\alpha}\}_{\alpha \in A}$ be a family of sets. $\{V_{\alpha}\}$ \emph{covers} $E$ if 
+    \[E \sub \bigcup_{\alpha \in A} V_{\alpha}\]
+
+    \textbf{Total boundedness:} $E$ is \emph{totally bounded} if $\forall \ep > 0$, $E$ can be covered by finitely many balls of radius $\ep$
+
+    \emph{Example:} $\R^n$ is totally bounded. \emph{Proof:} consider a hypercube of side length $R$. Clearly we can divide this into $\ep$-cubes and then take slightly larger balls to cover the whole space.
+
+    \begin{tbox}{\textbf{Theorem (Characterization of Compactness):} The following are equivalent: 
+        \begin{enumerate}
+            \item $E$ is complete and totally bounded
+            \item Every sequence in $E$ has a convergent subsequence with its limit in $E$
+            \item If $\{V_{\alpha}\}_{\alpha \in A}$ is an open cover of $E$, then there exists a finite set $F \sub A$ such that $\{U_{\alpha}\}_{\alpha \in F}$ covers $E$
+        \end{enumerate}}
+        \emph{Proof:} HW
+    \end{tbox}
+
+\section{Sept 19}
+    \textbf{Products of Metric Spaces:} Let $(X, \rho_1)$ and $(Y, \rho_2)$ be metric spaces. Define the \emph{product metric} on $X \times Y$ by $(X_1 \times X_2, \rho_1 \times \rho_2)$ where
+    \[\rho_1 \times \rho_2 = \sqrt{\rho_1^2(x_1, y_1) + \rho^2(x_2, y_2)}\]
+    (so called \emph{Euclidean Metric})
+
+    Though many other metrics are possible, such as $\max(\rho_1, \rho_2)$ and $\rho_1 + \rho_2$. 
+
+    In general, we will simply take the Euclidean metric because all these metrics are equivalent in the sense that $\exists C_1, C_2$ such that 
+    \[C_1(\rho_1 \times \rho_2)_1 \leq C_2(\rho_1 \times \rho_2)_2 \leq C_2(\rho_1 \times \rho_2)_3\]
+
+    \emph{Properties:}
+    \begin{itemize}
+        \item $\rho_1 \times \rho_2 \to 0 \iff \rho_1 \to 0$ and $\rho_2 \to 0$
+    \end{itemize}
+
+    \subsection*{Measure Theory Motivation}
+        \textbf{Riemann Integral:} Let $f: [a, b] \to \R$. We subdivide $[a, b]$ by 
+        \[a = x_0 < x_1 < \dots < x_n = b\]
+        and define subintervals $[x_i, x_{i+1}]$. 
+
+        Then 
+        \[\int f(x) \;dx = \lim_{n \to \infty}\sum_{i = 1}^{n} f(x_i)\cdot (x_{i+1} - x_i)\]
+
+        \textbf{Convergence:} Many times, we are interested in the question: 
+        \[\lim_{n \to \infty} \int_0^1 f_n(x)\; dx \overset{?}{=} \int_0^1 f(x)\; dx\]
+        for $f_n(x) \to f(x)$. 
+
+        This is easy when $f_n \to f$ uniformly but in general, we need something else. 
+
+        In Riemann integration, we divide the domain into intervals and sum the function over these intervals.
+
+        In Lebesgue intergration, we instead divide \emph{the range}, i.e. we take a set 
+        \[E_i = \{x: a_n \leq f(x)\leq a_{n+1}\}\] 
+
+        \textbf{Measure:} We define $\mu(E)$, the \emph{measure} of a subset, by:
+        \begin{enumerate}
+            \item (Countable Additivity) $\{E_n\}$ such that $E_i \cap E_j = \emptyset$ for $i \neq j$ then $\mu(\bigcup_{n=1}^{\infty} E_n) = \sum_{i=1}^n \mu(E_n)$
+            \item (Translation invariance) $\mu(E + r) = \mu(\{x + r: x \in E\})= \mu(E)$
+            \item $\mu([0,1]) = 1$
+        \end{enumerate} 
+
+        \begin{tbox}{\textbf{Proposition:} There is no measure $\mu$ satisfying the above properties which is defined for all subsets of $[0, 1)$}
+            \emph{Proof:} Step 1. Let $\Q_1 = \Q \cap [0, 1)$. Define an equivalence relation $x \sim y$ iff $x - y \in \Q_1$.
+
+            Now consider the equivalence class $\mathcal E_x = \{y \in [0, 1): y \sim x\}$. (As it is an equivalence class: $\Ec_x \cap \Ec_y \neq \emptyset \implies \Ec_x = \Ec_y$)
+
+            And clearly, 
+            \[[0, 1) = \bigcup_{x \in [0, 1)} \Ec_x\]
+
+            By the Axiom of Choice, choose a unique element $e_x \in \Ec_x$. Define $N = \{e_x\}$. Now $e_x - e_y \notin \Q_1$. 
+
+            Step 2. $\forall r \in \Q_1$, define 
+            \[N_r = \{e_x + r: e_x \in N \cap [0, 1 - r)\} \cup \{e_x + r - 1, e_x \in N \cap [1 - r, 1]\}\] 
+            (the first set is the points that don't leave the interval under translation, the second set is the pullback of the points that do) 
+
+            Step 3. We claim 
+            \[[0, 1) = \bigcup N_r, \; N_r \cap N_s = \emptyset \text{ for } r \neq s\]
+
+            \emph{Proof:} 
+            \begin{enumerate}
+                \item (Subset) $\forall y \in [0, 1)$, $\exists e_x \in N$ such that $y - e_x \in \Q_1$. 
+                
+                If $y \geq e_x$, $r = e_x - y +1$. Otherwise, $r = e_x - y$. 
+
+                \item (Disjoint Union) Suppose $N_r \cap N_s \neq \emptyset$. Let $r \neq s$. Select $y \in N_r \cap N_s$ so $y - s \in N$ and $y - r \in N$
+                
+                Case 1. $y - s \neq y - r$. But then 
+                \[(y - r) - (y - s) = s - r \in \Q_1\]
+                which is a contradiction of the construction of $N$.
+
+                Case 2. $y - s \neq y - r + 1$. Contradiction again by rational difference. 
+            \end{enumerate}
+
+            Step 4. By the definition of a measure,
+            \begin{align*}
+                \mu(N_r) &= \mu(N_r \cap (0, 1 -r)) + \mu(N_r \cap [1 - r, 1])\\ 
+                    &= \mu(N)
+            \end{align*}
+            \begin{exercise}
+                \textbf{Exercise:} Check that $\mu(N_r) = \mu(N)$
+            \end{exercise}
+
+            But by countable Additivity, 
+            \[1 = \mu([0, 1)) = \sum_{r \in \Q_1}^{\infty} \mu(N_r) = \begin{cases}
+                0\\ \infty
+            \end{cases}\] 
+            which is a contradiction.  
+        \end{tbox}
+
+        \textbf{Conclusion:} it is not always possible to define a measure so we need to be careful. 
+
+    \subsection*{Algebras}
+        \textbf{Algebra:} Given a set $X$, an \emph{algebra} is a collection of subsets $\A \sub P(X)$ such that if $E_1, \dots, E_n \sub \A$, 
+        \begin{enumerate}
+            \item $\bigcup_{i=1}^n E_i \in \A$
+            \item $E \in \A \implies E^c \in \A$
+        \end{enumerate}
+
+        Property 2 gives us that $X \in \A$ and $\emptyset \in \A$ ($E \cup E^c = X, \; X^c = \emptyset$)
+
+        \textbf{Sigma Algebra:} An algebra $\A$ is a \emph{$\sigma$-algebra} if it is closed under countable unions and complements, i.e. for $E_1, E_2, \dots \in \A$,
+        \begin{enumerate}
+            \item $\bigcup_{i=1}^{\infty} E_i \in \A$
+            \item $E \in \A \implies E^c \in \A$
+        \end{enumerate}
+
+        \emph{Remark:} It suffices to demand closure for disjoint countable unions since 
+        \[\bigcup_{n=1}^\infty E_i = \bigcup_{n=1}^\infty F_i\] 
+        for $F_k = E_k \setminus \bigcup_{i=1}^{k-1} E_i$ and $F_i \cap F_{i+1} = \emptyset$ 
+
+        \emph{Examples:}
+        \begin{itemize}
+            \item $P(X)$
+            \item $\phi$, $X$
+            \item $\A = \{E \sub X: E \text{ countable or } E^c \text{ countable}\}$
+        \end{itemize}
+
+        \begin{tbox}{\textbf{Proposition:} Let $\A_1, \A_2$ be two $\sigma$-algebras on $X$. Then $\A_1 \cap \A_2$ is also a $\sigma$-algebra}
+            \begin{exercise}
+                \textbf{Exercise:} Prove this proposition (easy using definition)
+            \end{exercise}
+        \end{tbox}
+
+        \textbf{Generated $\sigma$-algebra:} Given a collection of subsets $\Ec \sub P(X)$, there exists a smallest $\sigma$-algebra containing $\Ec$, denoted 
+        \[M(\Ec) = \bigcap_{\Ec \sub \A} \A\]
+
+        \begin{tbox}{\textbf{Lemma:} $\Ec \sub M(\Fc) \implies M(\Ec) \sub M(\Fc)$}
+            \emph{Proof:} Omitted
+        \end{tbox}
+
+    \subsection*{Metric Spaces}
+        \textbf{Borel $\sigma$-algebra:} Let $(X, \rho)$ be a metric space. We call the $\sigma$-algebra generated by the open sets of $X$, the \emph{Borel $\sigma$-algebra} $B_x$ on $X$. 
+    
+        This is a $\sigma$-algebra because $X, \emptyset, \bigcup_{i=A} U_i$ are all open since their union is open and we have complements from the generating set. 
+
+        We define 
+        \begin{align*}
+            \bigcup_{n=1}^\infty F_n &= F_{\sigma}\\ 
+            \bigcap_{n=1}^\infty O_n &= G_{\delta}
+        \end{align*}
+        for $F_n$ closed and $O_n$ open. 
+
+        \textbf{Example:} The Borel set of $\R$, $B_{\R}$ can be generated by any of the following:
+        \begin{enumerate}
+            \item open intervals $\Ec_1 = \{(a, b) : a < b\}$
+            \item closed intervals $\Ec_2 = \{[a, b]: a < b\}$ 
+            \item the half-open intervals $\Ec_3 = \{(a, b]: a < b\}$, $\Ec_4 = \{[a, b): a < b\}$
+            \item open rays $\Ec_5 = \{(a, \infty): a \in \R\}$, $\Ec_6 = \{(-\infty, a): a \in \R\}$
+            \item closed rays 
+        \end{enumerate}
+
+        \begin{exercise}
+            \textbf{Exercise:} 
+            \begin{enumerate}
+                \item Prove that $(a, b] = \bigcap_{n=1}^{\infty} (a, b + \frac{1}{n})$ and $(a, b) = \bigcup_{n=1}^{\infty} [a + \frac{1}{n}, b - \frac{1}{n}]$
+                \item Prove that the above methods all generate $B_{\R}$ 
+            \end{enumerate}
+        \end{exercise}
+
+        \textbf{Conclusion:} any open set in $\R$ is the countable union of open intervals
+
+\section{Sept 24}
+    Recall last time, we were trying to characterization the Borel $\sigma$-algebra of $\R$, $\B_{\R}$. 
+
+    
+    \begin{tbox}{\textbf{Proposition:} We claim that $\B_{\R}$ is generated by:
+        \begin{enumerate}
+            \item open intervals $\Ec_1 = \{(a, b) : a < b\}$
+            \item closed intervals $\Ec_2 = \{[a, b]: a < b\}$ 
+            \item the half-open intervals $\Ec_3 = \{(a, b]: a < b\}$, $\Ec_4 = \{[a, b): a < b\}$
+            \item open rays $\Ec_5 = \{(a, \infty): a \in \R\}$, $\Ec_6 = \{(-\infty, a): a \in \R\}$
+            \item closed rays 
+        \end{enumerate}}
+        \emph{Proof:} 
+        \begin{enumerate}
+            \item Open intervals. 
+            
+            Let $\E_1 = \{(a, b): a < b\}$. Clearly $B_{E_1} \sub B_{\R}$ because any open set $O \sub \B_{\R}$. 
+
+            For the other direction, we also have 
+            \[O = \bigcup_{i=1}^{\infty} (a_i, b_i)\]
+            (a countable union), so $B_{\R} \sub B_{\Ec_1}$ 
+
+            \item Closed intervals.
+            
+            We claim 
+            \[(a, b) = \bigcup_{n=1}^{N} [a + \frac{1}{n}, b - \frac{1}{n}]\]
+            for $N$ sufficiently large.
+
+            \begin{exercise}
+                \emph{Proof:} HW
+            \end{exercise}
+
+            Now $\forall y \in (a, b)$, 
+            \[y \in \bigcup_{n = 1}^N [a + \frac{1}{n}, \frac{b}{\frac{1}{n}}] \implies a < y < b\] 
+            for $N$ sufficiently large.
+
+            For the other direction, take $[a, b] \in \Ec_2$. Then 
+            \[[a, b] = \bigcap_{n=1}^{\infty} (a - \frac{1}{n}, b + \frac{1}{n})\]
+
+            \begin{proof}
+                \emph{Proof:} $[a, b] \sub \bigcap_{n=1}^{\infty} (a - \frac{1}{n}, b + \frac{1}{n})$ is clear.
+
+                For the other direction, let $y in \bigcap_{n=1}^{\infty} (a - \frac{1}{n}, b + \frac{1}{n})$. Suppose $a \leq y \leq b$ is false. Then $y \notin (a - \frac{1}{N}, b + \frac{1}{N})$ so it cannot be in the intersection
+            \end{proof}
+
+            \begin{exercise}
+                \textbf{Exercise:} Prove the last two versions: half intervals and rays
+            \end{exercise}
+        \end{enumerate}
+    \end{tbox}
+
+    \textbf{Recall:} For a cartesian product $X_1 \times X_2 \times \dots \times X_n$ of metric spaces with $(X_i, \rho_i)$, we define the \emph{product metric} by ($X_1 \times X_2 \times \dots \times X_n, \rho)$ where 
+    \[\rho(\bar x, \bar y) = \sqrt{\rho_1^2(x_1, y_1) + \dots + \rho_n^2(x_n, y_n)}\]
+    where $\bar x = (x_1, x_2, \dots, x_n)$ with $x_i \in X_i$ (and similarly for $\bar y$)
+
+    \begin{tbox}{\textbf{Proposition:} 
+        \[\lim_{m \to \infty} \rho(\bar x, \bar y) = 0 \iff \lim_{m \to \infty} \rho_i(x_i^m, y_i^m) = 0\]}
+        \emph{Proof:} Omitted
+    \end{tbox}
+
+    In this way, we can consider $\R^n$ as a metric space with this Euclidean metric. What is the Borel set of $\R^n$?
+
+    \begin{tbox}{\textbf{Proposition:} $B_{\R^n}$ is  }
+        \emph{Proof:} First take $O_i$ open set in $X_i$ 
+        \[\bigoplus_{i=1}^n O_i = O_1 \times O_2 \times \dots \times O_n \]
+
+        We claim that this is an open set in the $X_1 \times X_2 \times \dots \times X_n$ topology.
+
+        \begin{proof}
+            \emph{Proof:} Take $\bar x \in \bigoplus_{i=1}^n O_i$ with $x_i \in O_i$. 
+
+            It suffices to show $\exists \ep_0 > 0$ such that $B_{\ep_0}(\bar x) \sub \bigoplus_{i=1}^n O_i$ where 
+            \[B_{\ep_0}(\bar x) = \{\bar y: \rho(\bar x, \bar y) < \ep_0\}\]
+            so $\bar y \in B_{\ep}(\bar x)$ iff $\rho_i(x_i, y_i) < \ep_0$ for all $i$.
+
+            Hence $y_i \in B_{\ep_0}(x_i) \sub O_i$
+        \end{proof}
+
+        Let $\bigotimes_{i=1}^n \B_{x_i}$ be the Borel set generated by $\bigoplus_{i=1}^n O_i$
+
+        Clearly, $\bigoplus_{i=1}^n \B_{x_i} \sub \B_{x_1 \times x_2 \times \dots \times x_n}$
+        
+        \textbf{Lemma:} If $x_i$ is separable then 
+        \[\bigotimes_{i=1}^n B_{x_i} = \B_{x_1 \times x_2 \times \dots\times x_n}\]
+
+        In particular: 
+        \[\bigotimes_{i=1}^n \B_{\R} = \B_{\R^n}\]
+
+        \begin{proof}
+            \emph{Proof:} It suffices to show that $\forall \bar x, \ep$, 
+            \[\B_{(\bar x, \ep)} \sub \bigotimes_{i=1}^n B_{x_i}\]
+
+            Let $\mathcal{C}_i$ be a countable subset of $X_i$ such that $\bar{\mathcal{C}_i} = X_i$ for all $1 \leq i \leq n$
+
+            We claim 
+            \[B_{\ep}(\bar x) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B_{r_i}(c_i)\]
+
+            (And this has cardinality $\N^{2n}$ so countable)
+
+            Pick 
+            \[\bar y \in B_{\ep}(\bar x) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B_{r_i}(c_i) \sub \bigotimes_{i=1}^n \B_{x_i}\] 
+
+            Then 
+            \[\sigma(\bar x, \bar y) = \sqrt{\rho_1^2(y_1, x_2), \dots, \rho_n^2(y_n, x_n)} < \ep\]
+            but each $\rho_i^2(y_i, x_i$) is fixed so we may choose $c_i \in \mathcal C, r_i \in \Q$ such that 
+            \[\rho_i(y_i, c_i) < r_i = \rho_i(y_i, x_i) - [\rho(y_i, x_i) - \rho(y_i, c_i)]\]
+            by density (from separability) 
+
+
+        \end{proof}
+
+        Since $\Q^n \sub \R^n$ which is countable and dense, $\R^n$ is separable and we are done. 
+    \end{tbox}
+
+    \subsection*{Measure Spaces}
+        Recall that we could not always define a measure except on a $\sigma$-algebra. Therefore, we limit our attention.
+
+        \textbf{Measure space:} $(X, \M)$ where $X$ is a set and $\M$, a $\sigma$-algebra, is the ``measureable sets''
+
+        \textbf{Measure:} For a measure space $(X, \M)$, we define a \emph{measure} $\mu: \M \to [0, \infty]$ such that 
+        \begin{enumerate}
+            \item $\mu(\emptyset) = 0$
+            \item (Countable additivity) if $\{E_j\}_1^{\infty}$ is a sequence of pairwise disjoint sets in $\M$, then 
+            \[\mu\left(\bigcup_{j=1}^{\infty} E_j\right) = \sum_{j=1}^{\infty} \mu(E_j)\] 
+        \end{enumerate}
+
+        Intuitively, this countable additivity property lets us pull out the limits:
+        \[\mu\left(\lim_{n \to \infty} \bigcup_{1}^n E_j\right) = \lim_{n\to \infty} \sum_{i=1}^n \mu(E_j)\] 
+
+        \textbf{$\sigma$-finite:} If $\mu(X) = \infty$ but 
+        \[X = \bigcup_{i=1}^{\infty} X_i\]
+        where $\mu(X_i) < \infty$ for all $i$, then we call $X$ \emph{$\sigma$-finite}
+
+        \textbf{Example:} Let $(X, P(X))$ be a measure space. Let $f: X \to [0, \infty]$. For each $E \in P(X)$, we define 
+        \[\mu(E) = \sum_{x \in E} f(x) = \sup\{\sum_{x \in F} f(x): F \sub E \land F \text{ finite}\}\] 
+
+        \begin{exercise}
+            \textbf{Exercise:} Prove that $\mu$ is a measure on $P(X)$
+        \end{exercise}
+
+        In particular:
+        \begin{itemize}
+            \item $f(x) = 1$ for all $x$, then $\mu(E)$ is the \emph{counting measure}
+            \item Take $x_0 \in X$ and define 
+            \[f(x) = \begin{cases}
+                1 & x = x_0\\
+                0 & x \neq x_0
+            \end{cases}\] 
+            is the \emph{Dirac-Delta Mass} at $x_0$ 
+        \end{itemize}
+
+        \textbf{Example:} Let $X$ be an uncountable set. Let $\M = \{E \text{ is finite or } E^c \text{ is finite}\}$
+        
+        Define 
+        \[\mu(E) = \begin{cases}
+            0 & E \text{ is countable}\\
+            1 & E^c \text{ is countable}
+        \end{cases}\]
+
+        \begin{exercise}
+            \textbf{Exercise:} Check that $\M$ is a $\sigma$-algebra and that $\mu$ is a measure
+        \end{exercise}
+
+        \begin{tbox}{\textbf{Theorem (Properties of Measures)}: Let $(X, \M, \mu)$ be a measure space. Then:
+            \begin{enumerate}
+                \item (Monotonicity) with $E \sub F$ with $E, F \in \M$, then 
+                \[\mu(E) \leq \mu(F)\]
+                \item (Subadditivity) If $\{E_j\}_{1}^{\infty} \in \M$, then 
+                \[\mu\left(\bigcup_{j=1}^{\infty} E_j\right) \leq \sum_{j=1}^{\infty} \mu(E_j)\]
+                \item (Continuity from Below) If $\{E_j\}_1^{\infty} \sub \M$ and $E_1 \sub E_2 \sub \dots$, then
+                \[\mu\left(\bigcup_{j=1}^{\infty} E_j\right) = \lim_{j \to \infty} \mu(E_j)\] 
+                \item (Continuity from Above) If $\{E_j\}_1^{\infty} \sub \M$ and $E_1 \supset E_2 \supset \dots$ and $\mu(E_1) < \infty$, then 
+                \[\mu\left(\bigcap_{j=1}^{\infty} E_j\right) = \lim_{j \to \infty} \mu(E_j)\]
+            \end{enumerate}}
+            \emph{Proof:} 
+        \end{tbox}
+
+       
+
+
+
+
+
+\end{document}
