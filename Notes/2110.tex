@@ -1,4 +1,4 @@
-\documentclass[12pt]{article} 
+\documentclass[12pt]{report} 
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \geometry{letterpaper}
@@ -114,7 +114,7 @@
 
 \begin{document}
 \maketitle
-
+\chapter{Analysis and Metric Spaces}
 \section{Sept 05}
 Some basic notation:
 \begin{align*}
@@ -658,6 +658,8 @@ Some basic logic:
         \item $\rho_1 \times \rho_2 \to 0 \iff \rho_1 \to 0$ and $\rho_2 \to 0$
     \end{itemize}
 
+\chapter{Measure Theory}
+\section{Sept 19}
     \subsection*{Measure Theory Motivation}
         \textbf{Riemann Integral:} Let $f: [a, b] \to \R$. We subdivide $[a, b]$ by 
         \[a = x_0 < x_1 < \dots < x_n = b\]
@@ -894,12 +896,13 @@ Some basic logic:
 
         \begin{proof}
             \emph{Proof:} It suffices to show that $\forall \bar x, \ep$, 
-            \[\B_{(\bar x, \ep)} \sub \bigotimes_{i=1}^n B_{x_i}\]
+            \[\B_{\ep}(\bar x, \ep) \sub \bigotimes_{i=1}^n B_{x_i}\]
 
             Let $\mathcal{C}_i$ be a countable subset of $X_i$ such that $\bar{\mathcal{C}_i} = X_i$ for all $1 \leq i \leq n$
 
             We claim 
             \[B_{\ep}(\bar x) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B_{r_i}(c_i)\]
+            for $\sqrt{r_1^2 + \dots + r_n^2} < \ep$
 
             (And this has cardinality $\N^{2n}$ so countable)
 
@@ -967,6 +970,7 @@ Some basic logic:
             \textbf{Exercise:} Check that $\M$ is a $\sigma$-algebra and that $\mu$ is a measure
         \end{exercise}
 
+\section{Sept 26}
         \begin{tbox}{\textbf{Theorem (Properties of Measures)}: Let $(X, \M, \mu)$ be a measure space. Then:
             \begin{enumerate}
                 \item (Monotonicity) with $E \sub F$ with $E, F \in \M$, then 
@@ -979,12 +983,416 @@ Some basic logic:
                 \[\mu\left(\bigcap_{j=1}^{\infty} E_j\right) = \lim_{j \to \infty} \mu(E_j)\]
             \end{enumerate}}
             \emph{Proof:} 
+            (1) Take $E \sub F \in \M$. We want to use finite additivity. Consider $F \setminus E = F \cap E^c$. Certainly, $E \cap (F \cap E^c) = \emptyset$ so
+            \[\mu(F) = \mu(E \cup F \setminus E) = \mu(E) + \mu(F \setminus E)\]
+            but the measure is nonnegative so $\mu(E) \leq \mu(F)$. 
+
+            And in fact, if $\mu(F) < \infty$, then $\mu(F) - \mu(E) = \mu(F \setminus E)$.
+            
+            \div 
+
+            (2) Once again, we would like to take advantage of finite additivity by expressing $\bigcup_{j=1}^{\infty} E_j$ as a countable disjoint union.
+
+            Let 
+            \[F_k = E_k \setminus \bigcup_{i=1}^{k - 1} E_i = \bigcup_{j=1}^{\infty} F_k \]
+            so 
+            \[\mu\left(\bigcup_{j=1}^{\infty} E_j\right) = \mu\left(\bigcup_{j=1}^{\infty} F_j\right) = \sum_{j=1}^{\infty} \mu(F_j) \leq \sum_{j=1}^{\infty} \mu(E_j)\]
+
+            \div 
+
+            (3) Let $E_1 \sub E_2 \sub \dots \sub E_n \sub \dots$. Denote $E_0 = \emptyset$. Then 
+            \begin{align*}
+                E_1 &= E_1 \setminus \emptyset\\
+                E_2 &= E_1 \cup (E_2 \setminus E_1)\\
+                E_3 &= E_2 \cup (E_3 \setminus E_2)\\
+                &= E_1 \cup (E_2 \setminus E_1) \cup (E_3 \setminus E_2)\\
+                &= (E_1 \setminus \emptyset) \cup (E_2 \setminus E_1) \cup (E_3 \setminus E_2)\\
+            \end{align*}
+            and each of these sets are disjoint. 
+
+            Inductively define 
+            \[E_n = \bigcup_{k=0}^{n-1} E_{k+1}\setminus E_{k}\]
+
+            We claim 
+            \[\bigcup_{n=1}^{\infty} E_n = \bigcup_{n=0}^{\infty} (E_n \setminus E_{n-1})\]
+
+            By additivity, 
+            \begin{align*}
+                \mu\left(\bigcup_{i=1}^\infty E_n\right) &= \sum_{n=0}^{\infty} \mu(E_{n+1} \setminus E_{n})
+                    &= \lim_{N \to \infty} \sum_{n=0}^N \mu(E_{n+1} \setminus E_{n})\\ 
+                    &=  \lim_{n \to \infty} \mu(E_n)
+            \end{align*}
+
+            \div 
+
+            (4) Let $E_1 \supset E_2 \supset \dots$ and $\mu(E_1) < \infty$. Define $F_j = E_1 \setminus E_j$. 
+
+            Clearly, $F_n \sub F_{n+1}$. By part 3, 
+            \[\mu\left(\bigcup_{n=1}^\infty F_n\right) = \lim_{n\to \infty} \mu(F_n)\]
+            and 
+            \[F_j = E_1 \setminus E_j \implies \bigcup_{n=1}^n F_j = E_1 \setminus \bigcup_{n=1}^n E_j\]
+            (by $E_1 \supset E_2 \supset \dots$)
+
+            So 
+            \[\mu\left(E_1 \setminus \bigcap_{j=1}^{\infty}\right) = \lim_{n\to \infty} \mu(E_1 \setminus \bigcap_{j=1}^n E_j)\]
+
+            By Part 1, 
+            \begin{align*}
+                \lim_{n\to \infty} \mu(E_1 \setminus \bigcap_{j=1}^n E_j) &= \lim_{n \to \infty} \left[\mu(E_1) - \mu(\bigcap_{j=1}^n E_j)\right]\\ 
+                    &= \lim_{n \to \infty} \left[\mu(E_1) - \mu(E_n)\right]\\ 
+                    &= \lim_{n \to \infty} \mu(E_n)
+            \end{align*}
         \end{tbox}
 
-       
+    \subsection*{Constructing Measures}
+        We have showed that finding measures is hard in general. Let's construct them instead. 
+
+        \textbf{Outer Measure:} Let $X$ be a set and $\mu^*: P(X) \to [0, \infty]$ be an outer measure if
+        \begin{enumerate}
+            \item $\mu^*(\emptyset) = 0$
+            \item (Monotonicity) $E \sub F \implies \mu^*(E) \leq \mu^*(F)$
+            \item (Subadditivity) $\mu^*\left(\bigcup_{j=1}^{\infty} E_j\right) \leq \sum_{j=1}^{\infty} \mu^*(E_j)$
+        \end{enumerate}
+        (note: this is \emph{almost} a measure and would be if we allowed additivity rather than subadditivity)
+
+        \begin{tbox}{\textbf{Proposition:} Let $\Ec \sub P(X)$ such that $X, \emptyset \in \Ec$. Define $\rho: \Ec \to [0, \infty]$ with $\rho(\emptyset) = 0$. $\forall A \sub P(X)$, let
+            \[\mu^*(A) = \inf\left\{\sum_{i=0}^\infty \rho(E_j) \bigg\vert E_j \in \Ec, \; A \sub \bigcup_{j=1}^\infty E_j\right\}\]
+            (i.e. take the inf of the sum of all coverings of $A$). Then $\mu^*$ is an outer measure.}
+            
+            \emph{Proof:}
+            
+            First note that $\mu^*$ is well-defined: certainly $A \sub X$ so the set will not be empty and the inf is well defined. 
+
+            Clearly, $\mu^*(\emptyset) = 0$ because $\rho(\emptyset) = 0$.
+
+            (Monotonicity) Let $A \sub B$ and $\{E_j \in \Ec\}_1^{\infty}$ be any covering of $B$. Since $A \sub B$, 
+            \[\mu^*(A) \leq \sum_{n=0}^\infty \rho(E_j)\]
+
+            Taking the inf, 
+            \[\mu^*(A) \leq \inf\left\{\sum_{i=1}^{\infty} \rho(E_j)\right\} \sub \mu^*(B)\]
+
+            (Subadditivty) Take $\bigcup_{j=1}^{\infty} A_j$ for all $A_j \in P(X)$. 
+
+            By definition of $\inf$, $\forall \ep > 0$ there exists $E_{jk} \sub \Ec$ such that  
+            \[\sum_{i=1}^{\infty} \rho(E_{jk}) \leq \mu^*(A_j) + \frac{\ep}{2^j}\]
+            so 
+            \[\bigcup_{j=1}^{\infty} A_j \sub \bigcup_{jk}^{\infty} E_{jk}\]
+            for $E_{jk} \in \Ec$. 
+
+            Then 
+            \begin{align*}
+                \mu^*\left(\bigcup_{j=1}^\infty A_j\right) &\leq \sum_{j, k}^\infty  \rho(E_{jk})\\ 
+                    &\leq \sum_{j=1}^{\infty} \mu^*(A_j) + \ep
+            \end{align*}
+
+            Then certainly, 
+            \[\mu^*\left(\bigcup_{j=1}^\infty A_j\right) \leq \sum_{j=1}^\infty \mu^*(A_j)\]
+        \end{tbox}
+
+        \textbf{$\mu^*$-measurable (Carathéodory Criterion):} a collection $\M$ of subsets of $X$ is $\mu^*$-measurable if, given $A \in \M$, for all $E \sub P(X)$,
+        \[\mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c)\]
+
+        And in fact, it suffices to show 
+        \[\mu^*(E) \geq \mu^*(A \cup E) + \mu^*(E\cap A^c)\] 
 
 
+\section{Oct 01}
 
+    \begin{tbox}{\textbf{Carathéodory Procedure:} If $\mu^*$ is an outer measure and $\M$ are $\mu^*$-measurable sets, then $\M$ is a $\sigma$-algebra and $\mu^*\big\vert_{\M}$ is a measure on $\M$}
+        
+        \emph{Proof:} 
 
+        STEP 1. $A \in \M$, $A^c \in \M$ by definition
 
-\end{document}
+        \div 
+
+        STEP 2. Let $A, B \in \M$ and $A \cup B \in \M$. Then 
+        \[\mu^*(A \cup B) = \mu^*(A) + \mu^*(B), \; A \cap B = \emptyset\]
+
+        Since $\mu^* < \infty$ by definition, it suffices to show 
+        \begin{align*}
+            \mu^*(E) &\geq \mu^*(E \cap A) + \mu^*(E \cap A^c)\\ 
+            &\geq \mu^*(E \cap (A \cup B)) + \mu^*(E \cap (A \cup B)^c)
+        \end{align*}
+
+        Since $E \in \M$ satisfies the Carathéodory Criterion (by assumption), 
+        \begin{align*}
+            \mu^*(E) &= \mu^*(E \cap A) + \mu^*(E \cap A^c)\\ 
+            &= \mu^*(E \cap A \cap B) + \mu^*(E \cap A \cap B^c) + \mu^*(E \cap A^c \cap B) + \mu^*(E \cap A^c \cap B^c)\\
+        \end{align*}
+        
+        Now consider $A \cup B$. Using set algebra, 
+        \[A \cup B = (A \cap B) \cup (A \cap B^c) \cup (B \cap A^c)\]
+        (and this matches the first three terms above very nicely)
+
+        Then 
+        \[E \cap (A \cup B) = (E \cap A \cap B) \cup (E \cap A \cap B^c) \cup (E \cap B \cap A^c)\]
+        
+        By subadditivity of the outer measure, 
+        \[\mu^*(E \cap (A \cup B)) \leq \mu^*(E \cap A \cap B) + \mu^*(E \cap A \cap B^c) + \mu^*(E \cap B \cap A^c)\]
+
+        Further, 
+        \begin{align*}
+            \mu^*(E \cap A \cap B) &+ \mu^*(E \cap A \cap B^c) + \mu^*(E \cap A^c \cap B) + \mu^*(E \cap A^c \cap B^c)\\ 
+                &\geq mu^*(E \cap A \cap B) + \mu^*(E \cap A \cap B^c) + \mu^*(E \cap B \cap A^c)
+        \end{align*}
+        which is just 
+        \[\mu^*(E) \geq \mu^*(E \cap (A\cup B)) + \mu^*(E \cap (A \cup B)^c)\]
+
+        Now take $\mu^*(A \cup B)$. Using the above, 
+        \[\mu^*(A \cup B) = \mu^*(A \cup B \cap A) + \mu^*(A \cup B \cap A^c) = \mu^*(A) + \mu^*(B)\]
+        which is what we wanted to show. 
+
+        Now we can inductively extend this pairwise additivity to a finite union.
+
+        Let $A_i \in \M$ and 
+        \[\bigcup_{i=1}^N A_i \in \M\]
+        with $A_i \cap A_j = \emptyset$ for $i \neq j$
+
+        By induction, 
+        \[\mu^*\left(\bigcup_{i=1}^N A_i\right) = \sum_{i=1}^{N} \mu^*(A_i)\]
+        
+        \div 
+
+        STEP 3 (Countable Additivity): Let $A_i \in \M$ and $\bigcup_{i=1}^\infty A_i \in \M$ with $A_i \cap A_j = \emptyset$ for $i \neq j$.
+
+        Define 
+        \[B_n = \bigcup_{j=1}^n A_j\]
+
+        Take a test set $E$ with $\mu^*(E) < \infty$. 
+
+        By induction on the Carathéodory Criterion,
+        \begin{align*}
+            \mu^*(E) &= \mu^*(E \cap B_j) + \mu^*(E \cap B_j^c)\\ 
+                &= \mu^*\left(E \cap \bigcup_{j=1}^n A_j\right) + \mu^*\left(E \cap \bigcap_{j=1}^n A_j^c\right)\\ 
+                &= \sum_{j=1}^{n} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^n A_j^c) \qquad \text{Step 2}\\ 
+                &\geq \sum_{j=1}^{n} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^{\infty} A_j^c)\\ 
+                &\geq \sum_{j=1}^{\infty} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^n A_j^c)\\ 
+                &\geq \mu^*\left(E \cap \bigcup_{i=1}^\infty  A_i\right) + \mu^*\left(E \cap \bigcap_{i=1}^{\infty} A_j^c\right) \qquad \text{Subadditivity}
+        \end{align*}
+
+        \div
+
+        STEP 4 (Completeness) Let $\mu^*(A) = 0$, then $A \in \M$. 
+
+        Take any $E \sub P(X)$. We want to show 
+        \[\mu^*(E) \geq \mu^*(E \cap A) + \mu^*(E \cap A^c)\]
+
+        But by monotonicity, 
+        \[\mu^*(E \cap A) \leq \mu^*(A) = 0 \implies \mu^*(E \cap A) = 0\]
+
+        Using monotonicity again, we get the inequality. Hence, every set with outer-measure $0$ is in $\M$.  
+
+        Now take $A_1 \sub A$. By monotonicity, $\mu^*(A_1) = 0 \in \M$    
+    \end{tbox}
+
+    \textbf{Completeness:} A measure space $(X, \M, \mu)$ is complete if $\forall A \in \M$ with $\mu(A) = 0$, then $B \in \M$ for all $B \sub A$.
+
+    \begin{exercise}
+        \textbf{Exercise:} Use the Carathéodory Procedure to produce the Hausdorff Measure (HW 4)
+    \end{exercise}
+
+\subsection*{Lebesgue Measure} 
+    On the real numbers, it would be very nice to have a measure $\mu$ such that $\mu((a, b)) = \rho(a, b) = b - a$.
+    
+    \textbf{Lemma:} If $A \sub \bigcup_{i=1}^\infty (a_i, b_i)$,
+    \[\mu^*(A) = \inf \sum_{n=1}^{\infty} \rho(a_i, b_i)\] 
+    and $\mu^*((a, b)) = b - a$. 
+   
+    Then using the Carathéodory process, we get the Lebesgue Measure on $(\R, \M, \mu)$
+
+    \begin{tbox}{\textbf{Proposition (Faithfulness of the Lebesgue Measure):} Let $I$ be any interval (closed, open, half-open, etc.) on $\R$. Then $\mu(I) = \rho(I)$}
+        \emph{Proof:} 
+        
+        STEP 1. Suppose $I = [a, b]$ is closed and finite. $\forall \ep > 0$, consider $(a - \ep, b + \ep) \supset [a, b]$.
+
+        By definition of $\inf$, 
+        \[\mu^*([a, b]) \leq \rho((a - \ep, b + \ep)) = b - a + 2\ep\]
+
+        But by arbitrariness of $\ep$, $\mu^*([a, b]) \leq b - a$
+
+        On the other hand, take $\bigcup_{i=1}^\infty (a_i, b_i) \supseteq [a, b]$. By Heine-Borel, there exists a finite cover for $[a, b]$ so we can take 
+        \[[a, b] \sub \bigcup_{i=1}^N (a_i, b_i)\]
+
+        We want to show that 
+        \[\sum_{i=1}^{N} (b_i - a_i) \geq b - a \implies \mu^*([a, b]) \geq b - a\]
+
+        $a$ must be in some open interval, so call it $a \in (a_1, b_1)$. WLOG, suppose $b_1 \leq b$. 
+    
+        But then $b_1 \in (a_2, b_2)$. If $b_2 > b$, then $(a_1, b_1) \cup (a_2, b_2)$ would cover $[a, b]$ and 
+        \[b_2 - a_2 + b_1 - a_1 \geq b - a\]
+
+        Therefore, assume $b_2 \leq b$. Inductively define $b_n \in (a_{n+1}, b_{n+1})$. But because we have a finite cover, this process is not infinite, i.e. for some $N$, $b_N > b$. 
+
+        Then it suffices to show 
+        \[b_N - a_N + b_{N-1} - a_{N-1} + \dots + b_1 - a_1 \geq b - a\]
+        and by construction, each $-a_{i} + b_{i-1} > 0$
+
+        \div
+
+        STEP 2. Now take any interval $I$. Consider
+        \[[a + \ep, b - \ep] \sub I \sub (a - \ep, b + \ep)\] 
+
+        But this is an open cover so 
+        \[\mu^*(I) \leq b - a + 2\ep\] 
+
+        But in part 1, we showed that 
+        \[b - a - 2\ep \leq \mu^*(I)\]
+
+        So by arbitrariness of $\ep$, $\mu^*(I) = b - a$
+    \end{tbox}
+
+\section{Oct 03}
+    \begin{tbox}{\textbf{Corollary:} If $A$ is a countable subset of $\R$, $\mu^*(A) = 0$. Furthermore, $[0, 1]$ is not countable. }
+        \emph{Proof:} $\forall x \in \R$, $\{x\} = (x - \ep, x + \ep)$, so 
+        \[\mu^*(\{x\}) \leq 2\ep \implies \mu^*(\{x\})= 0\]
+
+        Now suppose $A = \bigcup_{n=1}^\infty a_n$ with $a_n \in \R$. 
+
+        By subadditivity, 
+        \[\mu^*(A) \leq \sum_{n=1}^{\infty} \mu^*(\{a_n\}) = 0\]
+        
+        \div 
+
+        Since $\mu^*([0, 1]) = 1 \neq 0$, $[0, 1]$ is not countable.
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Proposition:} $\B_{\R} \sub \M$}
+        \emph{Proof:} By the characterization of the Borel set on $\R$, it suffices to show that $(a, \infty) \in \M$ for all $a \in \R$. 
+
+        $\forall E \in \M$ with $\mu^*(E) < \infty$, we want to show 
+        \begin{align*}
+            \mu(E) &\geq \mu^*(E \cap (a, \infty)) + \mu^*(E \cap (a, \infty)^c)\\ 
+            &= \mu^*(E \cap (a, \infty)) + \mu^*(E \cap (-\infty, a])\\
+        \end{align*}
+
+        For notational convenience, let 
+        \begin{align*}
+            E_1 &= E \cap (a, \infty)\\ 
+            E_2 &= E \cap (-\infty, a]
+        \end{align*}
+
+        Let $\ep > 0$. By the sharpness of the outer measure, $\exists \bigcup_{n=1}^\infty I_n$ such that  
+        \[E \sub \bigcup_{n=1}^\infty I_n\]
+        and 
+        \[\sum_{n=1}^{\infty} \abs{I_n} < \mu^*(E) + \ep\]
+
+        Then 
+        \begin{align*}
+            E_1 &\sub \bigcup_{n=1}^\infty I_n \cap (a, \infty)\\ 
+            E_2 &\sub \bigcup_{n=1}^\infty I_n \cap (-\infty, a]
+        \end{align*}
+        so 
+        \begin{align*}
+            \mu^*(E_1) &\leq \sum_{n=1}^{\infty} \mu^*(I_n \cap (a, \infty))\\ 
+            \mu^*(E_2) &\leq \sum_{n=1}^{\infty} \mu^*(I_n \cap (-\infty, a])
+        \end{align*}
+
+        Now by the faithfulness of the Lebesgue Measure,
+        \[\mu(I_n) = \mu^*(I_n \cap (a, \infty)) +  \mu^*(I_n \cap (-\infty, a])\]
+        so 
+        \[\mu^*(E_1) + \mu^*(E_2) \leq \sum_{n=1}^{\infty} \mu(I_n) \leq \mu^*(E)\]
+    \end{tbox}
+
+\subsection*{Transformations}
+
+\textbf{Definitions:} Given $E \sub \R$, we define 
+\begin{itemize}
+    \item (Translation) $E + a := \{x + a: x \in E\}$
+    \item (Dilation) $rE := \{rx: x \in E\}$
+\end{itemize}
+
+\begin{tbox}{\textbf{Lemma:} For the Lebesgue outer measure and $E \in \M$, 
+    \begin{enumerate}
+        \item $\mu^*(E + a) = \mu^*(E)$
+        \item $\mu^*(rE) = \abs{r}\mu^*(E)$
+    \end{enumerate}}
+    \emph{Proof Sketch:} Let $E \sub \bigcup_{n=1}^\infty I_n$. 
+
+    Certainly, 
+    \begin{align*}
+        E + a &\sub \bigcup_{n=1}^\infty \{I_n + a\}\\ 
+        rE &\sub \bigcup_{n=1}^\infty \{\abs{r}I_n\}
+    \end{align*}
+
+    Then
+    \[\sum_{n=1}^{\infty} \rho(I_n) = \sum_{n=1}^\infty \rho(I_n+ a) \geq \mu^*(E + a)\]
+
+    And taking the infimum,
+    \[\mu(E) \geq \mu^*(E + a)\]
+
+    For dilation, notice $\abs{I_n} = \frac{1}{\abs{r}} \abs{rI_n}$. The result follows similarly. 
+
+    The other direction is exactly the same. 
+\end{tbox}
+
+\subsection*{Approximation of Measurable Sets}
+    \begin{tbox}{\textbf{Lemma:} 
+        \begin{enumerate}
+            \item (Approximation from Above) $\forall E \sub P(X)$ and $\forall \ep > 0$, then exists an open set $O$ such that $E \sub O$ and 
+            \[\mu(O) \geq \mu^*(E) \geq \mu(O) - \ep\]
+            \item (Approximation from Below) $\forall E \sub \M$ and $\forall \ep > 0$, $\exists K$ closed such that 
+            \[\mu(K) \leq \mu(E) \leq \mu(K) + \ep\] 
+        \end{enumerate}}
+        \emph{Proof:} 
+
+        1. By definition of $\mu^*(E)$, $\exists O = \bigcup_{n=1}^\infty I_n \supset E$ such that 
+        \[\mu^*(E) \geq \sum_{n=1}^{\infty} \rho(I_n) - \ep\] 
+        and by subadditivity, $\mu^*(E) \geq \mu^*(O) - \ep$. 
+        
+        2. Assume $E \sub [a, b]$. Consider $E^c \cap [a, b]$. By part 1, $\exists O \supset E^c \cap [a, b]$ such that 
+        \[\mu^*(E^c \cap [a, b]) \geq \mu^*(O) - \ep\]
+        and with some algebra, 
+        \[\abs{b - a} - \mu^*(E^c) \leq \abs{b - a} - \mu^*(O) + \ep\]
+
+        By measurability, 
+        \begin{align*}
+            \mu(E) &\leq \abs{b - a} - \mu^*(O \cap [a, b]) - \mu^*(O \cap [a, b]^c) + \ep\\ 
+            &\leq \abs{b - a} - \mu^*(O \cap [a, b])\\ 
+            &= \mu^*([a, b] \cap O^c) + \ep
+        \end{align*}
+
+        \begin{exercise}
+            \textbf{Exercise:} Complete the case $E \not\sub [a, b]$
+        \end{exercise}
+    \end{tbox}
+
+\chapter{Measurable functions}
+\section{Oct 03}
+    \textbf{Measurable function:} Let $(X, \M, \mu)$ be a measure space. Let $f: X \to \R$. $f$ is \emph{measurable} iff $\forall \alpha \in \R$, 
+    \[\{x \in X, f(x) > \alpha\} \in \M\] 
+
+    Equivalently, $f$ is measurable iff $\forall \alpha \in \R$, $\{f \geq \alpha\}$ is measurable. 
+
+    \begin{tbox}{\textbf{Proposition:} If $f, g$ are measurable, so is
+            \begin{enumerate}[label=(\alph*)]
+                \item $f + c$
+                \item $f + g$
+                \item $cf$
+                \item $fg$
+            \end{enumerate} 
+            for $c \in \R \setminus \{0\}$}
+        \emph{Proof:}
+        1a. For all $\alpha \in \R$,
+        \[\{x: f(x) + c > \alpha\} = \{x: f(x) > \alpha - c\} \in \M\] `
+        
+        1b. Consider $\{x: f(x) + g(x) > \alpha\}$. We claim 
+        \[\{x: f(x) + g(x) > \alpha\} = \bigcup_{r \in \Q} \{f(x) > r\} \cap \{g(x) > x - r\}\]
+
+        \begin{proof}
+            \emph{Proof:} Certainly, 
+            \[\{x: f(x) + c > \alpha\} = \{x: g(x) > \alpha - f(x)\}\] 
+            and for fixed $x$, we can invoke the density and countability of the rational numbers...
+        \end{proof}
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Proposition:} If $\{f_n\}$ are measurable, so are 
+        \begin{enumerate}[label=(\alph*)]
+            \item $\sup_n f_n$
+            \item $\inf_n f_n$
+            \item $\limsup_n f_n$
+            \item $\liminf_n f_n$
+        \end{enumerate}}
+        \emph{Proof:} ...
+    \end{tbox}
+\end{document}  
