@@ -1,0 +1,339 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, 
+    margin=0.25in}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\renewcommand{\H}{\mathcal{H}}
+
+\newcommand{\X}{\chi}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+    \begin{tcolorbox}[
+    parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        coltext=#1,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\begin{multicols}{2}
+\section*{Definitions}
+    \begin{align*}
+        \limsup E_n &= \bigcap_{k=1}^{\infty} \bigcup_{n=k}^{\infty} E_k\\ 
+            & = \{x : x\in E_n \text{ for infinitely many } n\}\\ 
+            &= -\liminf \{-E_n\}\\
+        \liminf E_n &= \bigcup_{k=1}^\infty \bigcap_{n=k}^{\infty} E_n\\ 
+            &= \{x: x \in E_n \text{ for all but finitely many } n\}\\ 
+            &= -\limsup \{-E_n\}
+    \end{align*}
+
+    \tbf{De Morgan's Laws:}
+    \begin{align*}
+        \left(\bigcup_{\alpha \in A} E_{\alpha}\right)^c = \bigcap_{\alpha \in A} E_{\alpha}^c\\ 
+        \left(\bigcap_{\alpha \in A} E_{\alpha}\right)^c = \bigcup_{\alpha \in A} E_{\alpha}^c
+    \end{align*}
+
+    \tbf{Equivalence relation:}
+    \begin{itemize}
+        \item Reflexive: $x\sim x$
+        \item Symmetric: $x\sim y \iff y\sim x$
+        \item Transitive: $x\sim y \land  y\sim z \implies x\sim z$
+    \end{itemize}
+
+    \tbf{Useful inverse properties:}
+    \begin{align*}
+        f^{-1}\left(\bigcup_{\alpha \in A} E_{\alpha}\right) &= \bigcup_{\alpha \in A} f^{-1}(E_{\alpha})\\ 
+        f^{-1}\left(\bigcap_{\alpha \in A} E_{\alpha}\right) &= \bigcap_{\alpha \in A} f^{-1}(E_{\alpha})\\ 
+        f^{-1}(E^c) = (f^{-1}(E))^c
+    \end{align*}
+
+    \tbf{Partial Ordering:}
+    \begin{itemize}
+        \item $X$ nonempty 
+        \item Reflexivity: $xRx$
+        \item Antisymmetry: $xRy \land yRx \implies x = y$
+        \item Transitivity: $xRy \land yRz \implies xRz$
+    \end{itemize}
+
+    \tbf{Linear ordering:}
+    \begin{itemize}
+        \item Partial ordering
+        \item $\forall x, y$, either $xRy$ or $yRx$
+    \end{itemize}
+
+    \tbf{Well-ordering:}
+    \begin{itemize}
+        \item Linearly ordered
+        \item Every nonempty subset has a least element
+    \end{itemize}
+
+    \tbf{Choice function:}
+    \[\prod_{\alpha \in A} X_{\alpha} = \left\{f: A \to \bigcup_{\alpha \in A} X_{\alpha} \land f(\alpha \in X_{\alpha})\, \forall \alpha \in A\right\}\]
+
+    \tbf{Metric space:} $\rho: X \times X \to [0, \infty]$
+    \begin{enumerate}
+        \item $\rho(x, y) = 0 \iff x = y$
+        \item $\rho(x, y) = \rho(y, x)$
+        \item $\rho(x, y) \leq \rho(x, z) + \rho(z, y)$
+    \end{enumerate}
+
+    \tbf{Open and Closed Sets:}
+    \begin{itemize}
+        \item $E$ open $\iff \forall x\in E, \; \exists \ep > 0 \st B_{\ep}(x) \sub E$
+        \item $E$ closed $\iff E^c$ open 
+        \item $\{U_x\}$ open $\implies \bigcup_{x \in A} U_x$ open 
+        \item $\{F_x\}$ closed $\implies \bigcap_{x \in A} F_x$ closed
+    \end{itemize}
+    
+    \tbf{Density:}
+    \begin{itemize}
+        \item $E \sub X$ dense $\iff \bar E = X$ 
+        \item $E$ nowhere dense $\iff (\bar E)^{\circ} = \emptyset$
+        \item $X$ separable $\iff \exists E \sub X$ countable and dense
+    \end{itemize}
+
+    \tbf{Complete:} $E \sub X$ complete $\iff \forall \{x_n\} \in E, x_n \to x \in E$
+
+    \tbf{Distance:}
+    \begin{itemize}
+        \item $\rho(x, E) = \inf\{\rho(x, y): y \in E\}$
+        \item $\rho(E, F) = \inf\{\rho(x, y): x\in E, y \in F\}$
+        \item $\diam E = \sup\{\rho(x, y): x, y \in E\}$
+        \item $E$ bounded $\iff \diam E < \infty$
+        \item $E$ totally bounded $\iff \forall \ep > 0$, $E \sub \bigcup_{i=1}^N B_{\ep}(x_i)$
+    \end{itemize}
+
+    \tbf{Algebra:} $\A \sub P(X)$ such that for $E_1, \dots, E_n \sub \A$,
+    \begin{enumerate}
+        \item $\bigcup_{i=1}^n E_i \in \A$ 
+        \item $E \in \A \implies E^c \in \A$
+    \end{enumerate}
+
+    \tbf{Sigma Algebra:}
+    \begin{itemize}
+        \item Algebra 
+        \item $\bigcup_{I=1}^{\infty} E_i \in \A$ for $\{E_i\} \in \A$ 
+        \item $E \in \A \implies E^c \in \A$ 
+    \end{itemize}
+    Equivalently, $\A$ is a $\sigma$-algebra if for $\{E_i\} \in \A$, $E_1 \sub E_2 \sub \dots \implies \bigcup_{j=1}^\infty E_j \in \A$.
+
+    \tbf{Borel Algebra:} the $\sigma$-algebra generated by the open sets of $X$ 
+
+    \tbf{Measure:} $\mu: \M \to [0, \infty]$ satisfies 
+    \begin{enumerate}
+        \item $\mu(\emptyset) = 0$
+        \item $\{E_j\} \in \M$ pairwise disjoint, $\mu\left(\bigcup_{j=1}^\infty E_j\right) = \sum_{j=1}^{\infty} \mu(E_k)$
+    \end{enumerate}
+
+    \tbf{Outer Measure:} 
+    \begin{enumerate}
+        \item $\mu^*(\emptyset) = 0$
+        \item $A \sub B \implies \mu^*(A) \leq \mu^*(B)$
+        \item $\mu^*\left(\bigcup_{j=1}^\infty A_j \right) \leq \sum_{j=1}^\infty \mu^*(A_j)$
+    \end{enumerate}
+
+    \tbf{Carathéodory Criterion:} If $\mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c)$, $A$ is $\mu^*$-measurable 
+
+    \tbf{Lebesgue-Stieltjes Measure:}
+    \[\mu^*(A) = \inf\left\{\sum_n \rho(a_i, b_i) \bigg\vert A \sub \bigcup_i (a_i, b_i)\right\}\]
+    for 
+    \begin{itemize}
+        \item $\rho(a, b) = b - a$ on $\R$ 
+        \item $\rho(\tbf{a}, \tbf{b}) = \prod_{j=1}^n (b_j - a_j)$ on $\R^n$
+    \end{itemize}
+
+    \tbf{Hausdorff Measure:} 
+    \[\H_{\alpha} = \inf\left\{\lim_{\ep \to 0} \sum_k \diam(A_k)^{\alpha} \bigg\vert A \sub \bigcup_k A_k, \, \diam A_k \leq \ep\right\}\]
+
+    \tbf{Lebesgue-Stieltjes Measure:} 
+    \[\mu^*(A) = \inf\left\{\sum_n \rho(a_i, b_i] \bigg\vert A \sub \bigcup_i (a_i, b_i]\right\}\]
+    for $\rho(a, b] = f(b) - f(a)$ and $f$ monotone increasing. If $f$ is further right-continuous, $\mu^*(a, b] = \rho(a, b]$. 
+
+\section*{Useful Results}
+    \tbf{Archimedean Property:} $\forall x\in \R$, $\exists n \in \Z \st x < n$
+
+    \tbf{Zorn's Lemma:} If $X$ is partially ordered and every linearly ordered subset of $X$ has an upper bound, $X$ has a maximal element
+
+    \tbf{Well-ordering principle:} Every non-empty set can be well-ordered
+
+    \tbf{Axiom of Choice:} If $\{X_{\alpha \in A}\} \neq \emptyset$, $\prod_{\alpha \in A} X_{\alpha} \neq \emptyset$
+
+    \tbf{Cardinality Results:}
+    \begin{itemize}
+        \item $\card X \leq \card Y \iff \card Y \geq \card X$
+        \item Either $\card X \leq \card Y$ or $\card Y\leq \card X$
+        \item $\card X < \card P(X)$
+    \end{itemize}
+
+    \tbf{Schröder-Berstein Theorem:} If $f: X \inj Y$ and $g: Y \inj X$, then $\exists h: X \biject Y$
+
+    \tbf{Countability Results:} 
+    \begin{itemize}
+        \item $X$ countable $\iff \card X \leq \card \N \iff \mu(X) = 0$
+        \item $X, Y$ countable $\implies$ $X \times Y$ countable
+        \item $A, \{X_{\alpha}\}_{\alpha \in A}$ countable $\implies \bigcup_{\alpha \in A} X_{\alpha} X_{\alpha}$ countable 
+        \item Every open set in $\R$ is a countable disjoint union of open intervals
+    \end{itemize}
+
+    \tbf{Metric space results:}
+    \begin{itemize}
+        \item $E^{\circ} = \bigcup_{O \sub E} O \sub E$ 
+        \item $E \sub \bar E = \bigcap_{F \supset E} F$
+        \item $\lim_{n \to\infty} \rho(\tbf{x}, \tbf{y}) = 0 \iff \lim_{n \to \infty} \rho(x_i^{n}, y_i^n) = 0$
+    \end{itemize}
+    
+    \tbf{Characterization of Closure:} For all $x \in X$, $E \sub X$, 
+    \begin{itemize}
+        \item[$\iff$] $E$ closed
+        \item[$\iff$] $x \in \bar E$ 
+        \item[$\iff$] $B_{\ep}(x) \cap E \neq \emptyset \quad \forall \ep > 0$
+        \item[$\iff$] $\exists \{x_n\} \sub E \st x_n \to x$
+    \end{itemize}
+
+    \tbf{Continuity results:}
+    \begin{itemize}
+        \item $\{f_n\} \in \R$ continuous and $f_n \to f$ uniformly $\implies$ $f$ continuous
+        \item $f$ continuous on bounded set $\implies$ $f$ attains a max/min on the set
+    \end{itemize}
+
+    \tbf{Ascoli-Arzela:} With $(X, \rho)$ bounded and separable,  $\{f_n\} \in \F$ equicontinuous (i.e. $\forall x \in X \exists O_x > 0 \st \sigma(f_n(x), f_n(y)) < \ep \; \forall y \in O_x$), and the closure of $\{f_n(x): 0 \leq n <\infty\}$ compact for all $x \in X$, $\exists f_{n_k} \to f$ pointwise for $f$ continuous. 
+
+    \tbf{Characterization of compactness:}
+    \begin{itemize}
+        \item[$\iff$] $E$ compact 
+        \item[$\iff$] $E$ complete and totally bounded
+        \item[$\iff$] every sequence has convergent subsequence with limit in $E$ 
+        \item[$\iff$] every open cover has finite subcover
+    \end{itemize}
+
+    \tbf{Generated $\sigma$-algebras:} $\Ec \sub M(\F) = \bigcap_{\F \sub \A} \A \implies M(\Ec) \sub M(\F)$
+
+    \tbf{Generating Borel sets:} If $\{X_i\}$ are separable, 
+    \begin{align*}
+        \bigoplus_{i=1}^n \B_{X_i} &= \B_{X_1} \times \B_{X_2} \times \dots \times \B_{X_n}\\ 
+        &= \B_{X_1 \times X_2 \times \dots \times X_n}
+    \end{align*}
+
+    \tbf{Properties of Measures:} 
+    \begin{enumerate}
+        \item Monotonicity: $E \sub F \in \M \implies \mu(E) \leq \mu(F)$
+        \item Subadditivity: $\mu\left(\bigcup_{j=1}^\infty E_j\right) \leq \sum_{j=1}^\infty \mu(E_j)$ 
+        \item Continuity from below: $E_1 \sub E_2 \sub \dots \implies \mu\left(\bigcup_{j=1}^\infty E_j \right) = \lim_{j \to \infty} \mu(E_j)$
+        \item Continuity from above: $E_1 \supseteq E_2 \supseteq \dots \land \mu(E_1) < \infty \implies \mu\left(\bigcap_{j=1}^\infty E_j \right) = \lim_{j \to \infty} \mu(E_j)$
+        \item $E, F \in \M \implies \mu(E) + \mu(F) = \mu(E \cup F) + \mu(E \cap F)$
+        \item $\mu(\liminf E_j) \leq \liminf \mu(E_k)$
+        \item If $\mu\left(\bigcup_{j=1}^\infty E_j\right) < \infty$, $\mu(\limsup E_j) \geq \limsup \mu(E_j)$
+    \end{enumerate}
+
+    \tbf{Property of Outer measure:} If $\sum_{k=1}^\infty \mu^*(E_k) < \infty$, $\mu^*(\limsup E_k) = 0$
+
+    \tbf{Carathéodory Process:} $\mu(E) = \mu^*(E)\big\vert_{\M}$ is a measure if $\mu^*$ is an outer measure and $\M$ is the collection of $\mu^*$ measurable sets (a sigma algebra)
+
+    \tbf{Properties of the Lebesgue Measure:} 
+    \begin{itemize}
+        \item for any interval $I \sub \R$, $\mu(I) = \rho(I)$. 
+        \item $\mu^*(E + a) = \mu^*(E)$
+        \item $\mu^*(rE) = \abs{r} \mu^*(E)$
+    \end{itemize}
+
+    \tbf{Property of the Hausdorff Measure:} If $\H_{\alpha}(A) < \infty$, $\H_{\beta}(A) = 0$ for $\beta > \alpha$. 
+
+    \tbf{Approximation of Measurable Sets:}
+    \begin{itemize}
+        \item $\exists O$ open such that $E \sub O$ and $\mu(O) \geq \mu(E) \geq \mu(O) - \ep$
+        \item $\exists K$ closed such that $\mu(K) \leq \mu(E) \leq \mu(K) + \ep$
+    \end{itemize}
+\end{multicols}
+\end{document}

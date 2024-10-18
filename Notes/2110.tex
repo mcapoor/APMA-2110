@@ -29,7 +29,7 @@
 \usepackage{mathtools}
 \usepackage{empheq}
 \usepackage{xcolor}
-
+\usepackage{bbm}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{tikz-cd}
@@ -64,6 +64,7 @@
 \newcommand{\Cc}{\mathcal{C}}
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
 
 \newcommand{\sub}{\subseteq}
 \newcommand{\st}{\text{ s.t. }}
@@ -76,6 +77,7 @@
 \newcommand{\overcirc}[1]{\overset{\circ}{#1}}
 \newcommand{\diam}{\text{diam }}
 
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
 
 \usepackage{tcolorbox}
 \tcbuselibrary{breakable, skins}
@@ -429,7 +431,7 @@ Some basic logic:
             \color{red}
             Consider $g((m, n)) \to 2^m 3^n \in \N$. Is this injective? Consider $g(m_1, n_1) = 2^{m_1} 3^{n_1}$. By the unique prime factorization of integers, $2^{m_1} 3^{n_1} = 2^m 3^n$ iff $(m_1, n_1) = (m, n)$ so $g$ is injective.
 
-            Now we can use Schroder-Bernstein and we are done. 
+            Now we can use Schröder-Bernstein and we are done. 
 
             \item As $A$ is countable, $\forall \alpha \in A$, $\exists f_{\alpha}: \N \to X_{\alpha}$ So we can define $F: \N \times A \to \bigcup_{\alpha \in A} X_{\alpha}$ by 
             \[F(n, \alpha) = f_{\alpha}(n)\]
@@ -676,7 +678,7 @@ Some basic logic:
 
         In Riemann integration, we divide the domain into intervals and sum the function over these intervals.
 
-        In Lebesgue intergration, we instead divide \emph{the range}, i.e. we take a set 
+        In Lebesgue integration, we instead divide \emph{the range}, i.e. we take a set 
         \[E_i = \{x: a_n \leq f(x)\leq a_{n+1}\}\] 
 
         \textbf{Measure:} We define $\mu(E)$, the \emph{measure} of a subset, by:
@@ -924,7 +926,7 @@ Some basic logic:
     \subsection*{Measure Spaces}
         Recall that we could not always define a measure except on a $\sigma$-algebra. Therefore, we limit our attention.
 
-        \textbf{Measure space:} $(X, \M)$ where $X$ is a set and $\M$, a $\sigma$-algebra, is the ``measureable sets''
+        \textbf{Measure space:} $(X, \M)$ where $X$ is a set and $\M$, a $\sigma$-algebra, is the ``measurable sets''
 
         \textbf{Measure:} For a measure space $(X, \M)$, we define a \emph{measure} $\mu: \M \to [0, \infty]$ such that 
         \begin{enumerate}
@@ -1071,7 +1073,7 @@ Some basic logic:
             Taking the inf, 
             \[\mu^*(A) \leq \inf\left\{\sum_{i=1}^{\infty} \rho(E_j)\right\} \sub \mu^*(B)\]
 
-            (Subadditivty) Take $\bigcup_{j=1}^{\infty} A_j$ for all $A_j \in P(X)$. 
+            (Subadditivity) Take $\bigcup_{j=1}^{\infty} A_j$ for all $A_j \in P(X)$. 
 
             By definition of $\inf$, $\forall \ep > 0$ there exists $E_{jk} \sub \Ec$ such that  
             \[\sum_{i=1}^{\infty} \rho(E_{jk}) \leq \mu^*(A_j) + \frac{\ep}{2^j}\]
@@ -1358,7 +1360,7 @@ Some basic logic:
     \end{tbox}
 
 \chapter{Measurable functions}
-\section{Oct 03}
+\section{Oct 08}
     \textbf{Measurable function:} Let $(X, \M, \mu)$ be a measure space. Let $f: X \to \R$. $f$ is \emph{measurable} iff $\forall \alpha \in \R$, 
     \[\{x \in X, f(x) > \alpha\} \in \M\] 
 
@@ -1368,31 +1370,470 @@ Some basic logic:
             \begin{enumerate}[label=(\alph*)]
                 \item $f + c$
                 \item $f + g$
-                \item $cf$
                 \item $fg$
+                \item $cf$
             \end{enumerate} 
             for $c \in \R \setminus \{0\}$}
         \emph{Proof:}
-        1a. For all $\alpha \in \R$,
+        (a.) For all $\alpha \in \R$,
         \[\{x: f(x) + c > \alpha\} = \{x: f(x) > \alpha - c\} \in \M\] `
         
-        1b. Consider $\{x: f(x) + g(x) > \alpha\}$. We claim 
-        \[\{x: f(x) + g(x) > \alpha\} = \bigcup_{r \in \Q} \{f(x) > r\} \cap \{g(x) > x - r\}\]
+        (b.) Consider $\{x: f(x) + g(x) > \alpha\}$. We claim 
+        \[\{x: f(x) + g(x) > \alpha\} = \bigcup_{q \in \Q} \{f(x) > \alpha - q\} \cap \{g(x) > q\}\]
 
-        \begin{proof}
+        \begin{proof}[red]
             \emph{Proof:} Certainly, 
             \[\{x: f(x) + c > \alpha\} = \{x: g(x) > \alpha - f(x)\}\] 
             and for fixed $x$, we can invoke the density and countability of the rational numbers...
         \end{proof}
+
+        (c.) Consider $\{f^2 > \alpha\} = \{f > \sqrt{\alpha}\} \cup \{f < -\sqrt{\alpha}\}$. So $f^2$ is measurable. But then
+        \[fg = \frac{1}{2}\left[(f + g)^2 - (f - g)^2\right]\] 
+
+        The rest follows from (b.)
+
+        (d.) Let $g(x) = c$ and the result follows from (c.) 
     \end{tbox}
 
     \begin{tbox}{\textbf{Proposition:} If $\{f_n\}$ are measurable, so are 
         \begin{enumerate}[label=(\alph*)]
+            \item $\max_i f_i(x)$
+            \item $\min_i f_i(x)$
             \item $\sup_n f_n$
             \item $\inf_n f_n$
             \item $\limsup_n f_n$
             \item $\liminf_n f_n$
         \end{enumerate}}
-        \emph{Proof:} ...
+        \emph{Proof:}
+
+        (a.) Suppose $n < \infty$. Then $\max_i f_i(x) > \alpha \iff \exists 1 \leq i_0 \leq n$ such that $f_{i_0}(x) > \alpha$. 
+
+        Hence 
+        \[\{x: \max_i f_i(x) > \alpha\} = \bigcup_{i=1}^n \{f_i(x) > \alpha\}\] 
+        which are measurable by assumption. 
+
+        (b.) Analogously, 
+        \[\{x: \min_i f_i(x) > \alpha\} = \bigcap_{i=1}^n \{f_i(x) > \alpha\}\]
+
+        (c.) Now suppose we have countably many $f_i$. We claim 
+        \[\{\sup_n f_n(x) > \alpha\} = \bigcup_{n=1}^\infty \{f_i(x) > \alpha\}\]
+
+        \begin{proof}
+            \emph{Proof:} If $x \in \bigcup_{i=1}^\infty \{f_i(x) > \alpha\}$, then $\exists f_{i_0}(x) > \alpha$ so $\sup_n f_n(x) > \alpha$. 
+
+            Now we want to show that if $\sup_n f_n(x) > \alpha$, $\exists i_0$ such that $f_{i_0}(x) > \alpha$. Suppose not. 
+
+            Then $f_{i_0}(x) \leq \alpha \implies \sup_n f_n(x) \leq \alpha$, a contradiction.
+        \end{proof}
+
+        (d.) Now we want to show $\inf_n f_n > \alpha$
+        
+        \textbf{Warning:} when taking an infinite sequence, the strict inequality may not be preserved
+
+        \begin{proof}
+            \textbf{Fact (Sup/Inf Parity):} 
+
+            \begin{align*}
+                \inf_n f_n &= -\sup_n \{-f_n\}\\ 
+                \sup_n f_n &= -\inf_n \{-f_n\}
+            \end{align*}
+            and 
+            \begin{align*}
+                \limsup_n f_n &= -\liminf_n \{-f_n\}\\
+                \liminf_n f_n &= -\limsup_n \{-f_n\}
+            \end{align*}
+        \end{proof}
+
+        \begin{exercise}
+            \textbf{Exercise:} Prove the fact above 
+        \end{exercise}
+
+        The proof of (d.) follows from (c.)
+    \end{tbox}
+
+\subsection*{Preparations for Integration}
+    \textbf{Characteristic Function:} Given $E \in \M$, we define 
+    \[\X_E = \ind_E = \begin{cases}
+        1 & x \in E\\
+        0 & x \not\in E
+    \end{cases}\]
+
+    \begin{exercise}
+        \textbf{Homework:} Show $\ind_E$ is measurable
+    \end{exercise}
+
+    And now we can define an integral 
+    \[\int_x \X_E \; dx = \mu(E)\]
+
+    \textbf{Simple functions:} Let $E_1, \dots, E_n \in \M$. We define \emph{simple functions} 
+    \[\phi = a_1 \X_{E_1} + \dots + a_n \X_{E_n}\]
+    with \emph{standard representation} 
+    \[\phi = \sum_{i=1}^{n} a_i \X_{E_i}\]
+    where $a_i < \infty$ and $a_i \neq a_j$ for $E_i \cap E_j = \emptyset$ 
+
+    Now we define a new integral 
+    \[\int \phi := \sum_{i=1}^{n} a_i \mu(E_i)\]
+
+    \textbf{Remark:} The integral $\int_x \X_E \; dx = \mu(E)$ corresponds to the Riemann integral and works by dividing the domain. $\int \phi$ is the \emph{Lebesgue integration} and partitions the range of the function instead 
+    
+    \begin{tbox}{\textbf{Theorem:} Let $(X, \M)$ be a measurable space
+        \begin{enumerate}[label=(\alph*)]
+            \item If $f: X \to [0, \infty]$ is measurable, then $\exists \{\phi_n\}$ of simple functions such that
+            \[0 \leq \phi_1 \leq \phi_2 \leq \dots \leq f\] 
+            Further, $\phi_n \to f$ pointwise on $X$ and uniformly on any set which $f$ is bounded.
+            \item If $f: X \to \R$ is measurable, then $\exists \{\phi_n\}$ of simple functions such that 
+            \[0 \leq \abs{\phi_1} \leq \abs{\phi_2} \leq \dots \leq \abs{f}\]
+            and $\phi_n \to f$ pointwise on $X$ and uniformly on any set where $f$ is bounded.
+        \end{enumerate}}
+        \emph{Proof:} 
+
+        \begin{enumerate}[label=(\alph*)]
+            \item (Proof by construction) Fix $n$ and choose $0 \leq k \leq 2^{2n}  -1$. 
+            
+            Define 
+            \begin{align*}
+                E_n^k &= \{x: \frac{k}{2^n} < f(x) \leq \frac{k+1}{2^n}, \quad 0 \leq k \leq 2^{2n} - 1\}\\ 
+                F_n &= \{x: f(x) \geq 2^n\}
+            \end{align*}
+
+            So we can choose
+            \[\phi_n(x) = \sum_{k=0}^{2^{2n}  -1} \frac{k}{2^n} \X_{E_n^k} + 2^n \X_{F_n}\] 
+            (Each $n$ subdivides the range and then rounds down to each subdivision. As we iterate, each range is further divided in such a way that $\phi_{n+1} > \phi_n$ for all $n$ because the value on $E_{n+1}$ is rounded down to a higher value than $E_n$. )
+
+            So by construction, 
+            \[0 \leq \phi_n \leq \phi_{n+1} \leq f(x)\]
+
+            If we fix any $x < \infty$, for $f(x) < 2^{n_0}$ and $n \geq n_0$, we have 
+            \[\abs{\phi_n - f(x)} \leq \abs{(k+1)2^{-n} - k2^{-n}} = \frac{1}{2^n}\]
+            i.e., we have uniform convergence on any set where $f$ is bounded.
+
+            \item For a general function $f$, we can write $f = f^+ - f^-$ (so $\abs{f} = f^+ + f^-$) where $f^+ = \max\{f, 0\}$ and $f^- = \max\{-f, 0\}$. Since $f^+$ and $f^-$ are nonnegative, we can apply part (a.) to each. 
+            
+            In particular, 
+            \[0 \leq \abs{f_n} \leq \abs{f_{n+1}} \leq \abs{f(x)}\]
+            and the rest follows. 
+        \end{enumerate}
+    \end{tbox}
+
+    \textbf{Conclusion:} these simple functions can approximate \emph{any} measurable function in this very strong sense. 
+
+\section{Oct 10}
+\subsection*{Integration of Non-negative functions} 
+    In this section, assume $f \geq 0$. 
+
+    For any $f: E_i \to [0, \infty]$, we consider the simple functions $\phi = \sum_{i=1}^{n} a_i - \X_{E_i}$ in standard representation ($a_i, a_j$ distinct when $E_i, E_j$ disjoint) 
+
+    Then, as above, the integral is defined as
+    \[\int \phi \; d\mu = \sum_{i=1}^{n} a_i \mu(E_i)\]
+    with respect to measure $\mu$
+
+    \begin{tbox}{\textbf{Proposition:} If $\phi$ and $\psi$ are two simple functions, 
+        \begin{enumerate} 
+            \item If $c \geq 0$, $\int c \phi \; d\mu= c\int \phi \; d\mu$ 
+            \item $\int \phi + \psi  \; d\mu = \int \phi\; d\mu + \int \psi \; d\mu$
+            \item If $\phi \leq \psi$, then $\int \phi\; d\mu \leq \int \psi\; d\mu$
+        \end{enumerate} }
+        \emph{Proof:} 
+
+        1) is trivial 
+
+        2) Let $\phi = \sum_{i=1}^{n} a_i \X_{E_i}$ and $\psi = \sum_{j=1}^{m} b_j \X_{F_j}$. Then
+        \begin{align*}
+            \int \phi\; d\mu + \int \psi\; d\mu &= \sum_{i=1}^{n} a_i \mu(E_i) + \sum_{j=1}^{m} b_j \mu(F_j)\\
+            &= \sum_{i=1}^{n} a_i \mu(E_i \cap (\bigcup F_j)) + \sum_{j=1}^{m} b_j \mu(F_j \cap E_i)\\ 
+            &= \sum_{i=1}^{n} a_i \mu(E_i \cap F_j) + \sum_{j=1}^{m} b_j \mu(E_i \cap F_j)\\
+            &= \sum_{i=1}^{n} \sum_{j=1}^{m} (a_i + b_j) \mu(E_i \cap F_j)\\
+        \end{align*}
+
+        Now we can cut $\phi = \sum_{i=1}^{n} a_i \X_{E_i \cap \bigcup_{j=1}^n F_j}$ and $\psi$ similarly. 
+
+        \textbf{Lemma:} $\X_E + \X_F = \X_{E \cup F}$
+
+        \begin{proof}
+            \emph{Proof:} Exercise
+        \end{proof}
+
+        So 
+        \begin{align*}
+            \psi + \phi &= \sum_{i, j} a_i \X_{E_i \cap F_j} + \sum_{i, j} b_j \X_{E_i \cap F_j}\\
+            &= \sum_{i, j} (a_i + b_j) \X_{E_i \cap F_j}\\
+        \end{align*}
+
+        However, integration is only defined in standard representation. But $E_i, E_j$ are pairwise disjoint so $(a_i + b_i)$ distinct. 
+
+        By definition, 
+        \[\psi + \phi = \sum (a_i + b_j) \mu(E_i \cap F_j) = RHS\] 
+    
+        3) \textbf{Claim:} $\phi \leq \psi$ iff $a_i \leq b_i$ on $\X_{E_i \cap E_j}$
+
+        \begin{proof}
+            Exercise
+        \end{proof}
+        
+        The result follows. 
+
+    \end{tbox}
+
+    \textbf{Integrals on subsets:} Let $A \in \M$. Then 
+    \[\int_A \phi \; d\mu = \int_X \X_A \cdot \phi \; d\mu\]
+    with $\X_{A_1} \cdot \X_{A_2} = \X_{A_1 \cap A_2}$
+
+    \begin{tbox}{\textbf{Proposition:} For $A \in \M$, the mapping $A \to \inf_A \phi\; d\mu$ is a measure on $\M$}
+        \emph{Proof:} 
+
+        The hardest part is to show that $\inf_A \phi\; d\mu$ is countably additive, that is 
+        \[\int_{\bigcup A_i} \phi = \sum_{i=1}^\infty \int_{A_i} \phi\] 
+
+        By definition, 
+        \begin{align*}
+            \int_{\bigcup A_i} \phi &= \int \X_{\bigcup A_i} \cdot \phi\\
+            &= \sum_{i=1}^n a_i \mu(E_i \cap \bigcup_{j=1}^\infty A_j)
+        \end{align*}
+
+        So it suffices to show that 
+        \[\sum_{i=1}^n a_i \mu(E_i \cap \bigcup_{j=1}^\infty A_j) = \sum a_n \left[\sum_{i = 1, k = 1}^{\infty} \mu(E_i \cap A_j)\right]\] 
+        and in fact all we need is 
+        \[\mu(E_i \cap \bigcup_{j=1}^\infty A_j) = \sum_{ij} \mu(E_i \cap A_j)\]
+        which follows from countable additivity of the measure.
+    \end{tbox}
+
+    \textbf{Integral of general functions:} For a general function $f \geq 0$ on $(X, \M, \mu$), we define 
+    \[\int f\; d\mu = \sup_{\phi\leq f} \int \phi \; d\mu\]
+    for all simple functions $\phi$
+
+    \begin{tbox}{\textbf{Properties:} For $f \geq 0$, we have the following properties:
+        \begin{enumerate}
+            \item $c \int f \; d\mu = \int cf \; d\mu$
+            \item If $f \leq g$, then $\int f \; d\mu \leq \int g \; d\mu$
+            \item $\int f + g \; d\mu = \int f \; d\mu + \int g \; d\mu$
+        \end{enumerate}}
+        \emph{Proof:} 
+
+        1. We have a 1-1 correspondence between $cf$ and $f$ so the result follows from the same proof as above 
+
+        2. Follows from $\sup$ and definition
+
+        3. The third one is much harder and we will need to come back to it. 
+    \end{tbox}
+    
+    \begin{tbox}{\textbf{Theorem (Monotone Convergence Theorem):} Assume $0 \leq f_n \leq f_{n+1}$ for $f$ measurable. Then 
+        \[\int \lim_{n\to\infty} f_n \; d\mu = \lim_{n\to\infty} \int f_n \; d\mu\]}
+        \emph{Proof:} 
+
+        $\lim_{n \to \infty} f_n$ is increasing so we can say $\lim_{n \to \infty} f_n = f$ in the extended reals and the LHS is well defined. 
+
+        From monotonicity, 
+        \[\lim_{n \to \infty} \int f_n \leq \int f\]
+
+        The other direction is harder. 
+
+        Take any simple function $\phi \leq f$ and pick $0 < \alpha < 1$. Consider 
+        \[E_n = \{x: f_n(x) \geq \alpha \phi,\; \phi > 0\} \]
+        for fixed $x$. 
+
+        Since $f_n$ is non-decreasing, $E_n \sub E_{n+1}$. We claim 
+        \[\bigcup_{n=1}^\infty E_n = \{f(x) > \alpha \phi(x),\; \phi > 0\} := E\] 
+
+        $\sub$ is clear. For $\supseteq$, notice $\forall x, \; f_n \to f > \alpha \phi(x) \implies \exists n_0$ such that for $n \geq n_0$, $f_n(x) > \alpha \phi(x)$.
+
+        Now take 
+        \[\int f_n \geq \int f_n \, \X_{E_n} = \int_{E_n} f_n > \alpha \int_{E_n} \phi\]
+
+        By the proposition above, we can take $\nu(E_n) = \int_{E_n} \phi$ to be a measure so 
+        \[\alpha \int_{E_n} \phi = \alpha \nu(E_n) \overset{n\to \infty}{\longrightarrow} \alpha \nu\left(\bigcup_{n=1}^\infty E_n\right)\]
+
+        Taking the limit, we cannot keep the strict inequality, but we do have 
+        \[\int f_n \geq \int f_n \, \X_{E_n} \geq \alpha \nu\left(\bigcup_{n=1}^\infty E_n\right) \alpha \nu(E)\] 
+        and the integral of $E$ is just 
+        \[\alpha \nu(E) = \alpha \int \phi \X_{\{f(x) > \alpha \phi(x),\; \phi > 0\}}\]
+
+        Since $\phi \leq f$, for any $x$, $\phi(x) > 0$ so $\alpha \phi(x) < f(x)$. Note that for $\phi(x) = 0$, $\int_{\phi = 0} \phi = 0$ so 
+        \[\alpha \int \phi \X_{\{f(x) > \alpha \phi(x),\; \phi > 0\}} = \alpha \int \phi\]
+
+        \begin{exercise}
+            \textbf{Exercise:} Check $\int \phi \X_{\{f(x) > \alpha \phi(x),\; \phi > 0\}} = \alpha \int \phi$ using the standard expression
+        \end{exercise}
+
+        But by definition, 
+        \[\int f \geq \sup_{\phi \leq f} \int \phi = \int f\]
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Fatou's Lemma:} Let $0 \leq f_n$. Then 
+        \[\int \liminf f_n \; d\mu \leq \lim_{n \to \infty} \int f_n\; d\mu\]}
+        \emph{Proof:} By definition, 
+        \[\int \liminf f_n = \sup_n \inf_{k \geq n} f_k\]
+
+        Note $\inf_{k \geq n} f_k$ is increasing in $n$. 
+
+        We claim 
+        \[\sup_n \inf_{k \geq n} f_k = \lim_{n \to \infty} \inf_{k \geq n} f_k\]
+
+        \begin{exercise}
+            \textbf{Exercise:} Check the above claim
+        \end{exercise}
+
+        And then by the Monotone Convergence Theorem,
+        \[\int \lim f_n = \int \lim_{n \to \infty} \inf_{k \geq n} f_k = \lim_{n \to \infty} \int \inf_{k \geq n} f_k\] 
+
+        For any $m \geq n$, 
+        \[\int \inf_{k \geq n} f_k \leq \int f_m\]
+        but this is true for all $n$ so 
+        \[\int \inf_{k \geq n} f_k \leq \inf_{k \geq n} \int f_k\]
+
+        Taking limits, 
+        \begin{align*}
+            \lim_{n \to \infty} \int \inf_{k \geq n} f_k &\leq \lim_{n \to \infty} \inf_{k \geq n} \int f_k\\ 
+            &= \liminf \int f_k
+        \end{align*}
+    \end{tbox}
+
+\section{Oct 17}
+    \begin{tbox}{\textbf{Corollary of MCT:}  If $f_n \geq 0$, 
+        \[\sum_{n=1}^{\infty} \int f_n \; d\mu = \int \sum_{n=1}^\infty f_n \; d\mu\]}
+        \emph{Proof:} Define $F_N = \sum_{n=1}^{N} f_n$. Clearly $F_N$ is increasing so by MCT, 
+        \[\lim_{N \to \infty} \int F_N \; d\mu = \int \lim_{N \to \infty} F_N \; d\mu\]
+        and we are done.  
+    \end{tbox}
+
+    Now at last we can verify the that the integral is additive for general functions by just taking the finite sum and applying this corollary.
+
+    \begin{tbox}{\textbf{Theorem (Lebesgue Dominated Convergence):} Assume $f_n \geq 0$, $f_n \leq g$ for $g$ fixed function with $\int g\; d\mu < \infty$. If $\lim_{n \to \infty} f_n = f$, then
+        \[\lim_{n \to \infty} \int f_n \; d\mu = \int f \; d\mu\]}
+        \emph{Proof:} By Fatou, 
+        \[\int \liminf f_n \; d\mu \leq \lim \int f_n \; d\mu\]
+        but $\liminf f_n = f$ so 
+        \[\int f \; d\mu \leq \liminf \int f_n \; d\mu\]
+
+        So it suffices to show 
+        \[\limsup \int f_n \; d\mu = \liminf \int f_n = \int f\]
+
+        Further, $g - f_n \geq 0$, so again by Fatou 
+        \[\int \liminf\, (g - f_n) \;d\mu \leq \liminf \int (g - f_n) \; d\mu\]
+        but $\lim f_n = f$ so 
+        \[\int \liminf\, (g - f_n) \;d\mu  = \int (g - f)\; d\mu\]
+
+        On the RHS, 
+        \begin{align*}
+            \liminf \int (g - f_n)\; d\mu &= \liminf \left[\int g\; d\mu - \int f_n \; d\mu\right]\\ 
+            &\overset{*}{=} \int g\;d \mu + \liminf\left[-\int f_n \;  d\mu\right]
+        \end{align*}    
+
+        \begin{exercise}
+            \textbf{Exercise:} Verify (*) above
+        \end{exercise}
+
+        Now using the parity of the $\liminf$, 
+        \[RHS = \int g\; d\mu - \limsup \int f_n \; d\mu\]
+
+        Then,
+        \begin{align*}
+            \int g - \int f &\leq \int g - \limsup \int f_n\\ 
+            \int f &\geq \limsup \int f_n
+        \end{align*} 
+
+        \tbf{Warning:} that subtraction only works because $\int g$ is finite by assumption
+
+        All together, 
+        \[\limsup \int f_n\; d\mu \leq \int f\; d\mu \leq \limsup \int f_n \; d\mu\]
+
+    \end{tbox}
+
+    \tbf{Integrable function:} $f$ is \emph{integrable} if $\int_X f \; d\mu < \infty$
+
+\subsection*{Zero Measure Sets}
+    \tbf{Almost Everywhere:} We say a statement $S$ is valid \emph{almost everywhere} if $\exists E, \, \mu(E) = 0$ such that $S$ is valid on $X \setminus E$
+
+    \begin{tbox}{\textbf{Lemma:}
+        \begin{enumerate}
+            \item If $\mu(E) = 0$, then $\int_E f = 0$ for any $f \geq 0$ 
+            \item If $\int_X f\; d\mu = 0$ for $f \geq 0$, then $f = 0$ almost everywhere
+            \item If $\int_X f\; d\mu < \infty$, then $f < \infty$ almost everywhere
+        \end{enumerate} }
+        \emph{Proof:} 
+
+        1. Choose any simple function $\phi \leq f$. Notice 
+        \begin{align*}
+            \int_E \phi \; d\mu &= \int_X \ind_E \cdot \phi \; d\mu\\ 
+                &= \int_X \ind_E \sum_{i=1}^{m} a_i \ind_{E_i} \; d\mu\\ 
+                &= \int_X \sum_{i=1}^{m} a_i \ind{E_i \cap E}\; d\mu\\ 
+                &= \sum_{i=1}^{m} a_i \mu(E_i \cap E)\\
+                &\leq \mu(E) = 0
+        \end{align*}
+        So 
+        \[\int_E f = \sup_{\phi \leq f} \int_E \phi = 0\]
+        for $\phi$ simple function.
+
+        \tbf{Remark:} This depends on our convention that $0 \cdot \infty = 0$
+
+        2. Consider $E = \{x: f(x)> 0\}$. It suffices to show $\mu(E) = 0$ (because $E^c = \{x: f = 0\}$). 
+
+        We can write 
+        \[E = \bigcup_{n=1}^\infty \{x: f(x) \geq \frac{1}{n}\} = \bigcup_{n=1}^\infty E_n\]
+        so 
+        \[\int_X f \; d\mu \geq \int_X \ind_{E_n} \; d\mu = \int_{E_n} f\; d\mu\]
+        and by monotonicity, 
+        \[\int_{E_n} f\; d\mu \geq \int_{E_n} \frac{1}{n} d\mu = \frac{1}{n} \int_{E_n} \; d\mu = \frac{1}{n}\mu(E_n)\]
+
+        But $\int_X f\; d\mu = 0$ so $\mu(E_n) = 0$ for all $n$ and 
+        \[\mu(E) = \lim_{n \to\infty} \mu(E_n) = 0\]
+
+        3. This statement is equivalent to the claim that $F = \{f(x): f(x) = \infty\}$ has measure zero.
+
+        Let $F_n = \{x: f(x) \geq n\}$ so $F \sub F_n$ for all $n$, and in fact, $F = \bigcap{n=1}^{\infty} F_n$
+
+        By exactly the same argument as before, 
+        \begin{align*}
+            \int_X f\; d\mu &\geq \int_X \ind_{F_n} f\; d\mu\\ 
+            &= \int_{F_n} f\; d\mu \\ 
+            &\geq n \mu(F_n) 
+        \end{align*}
+        so 
+        \[\mu(F_n) = \lim_{n \to \infty} \mu(F_n) = 0\]
+    \end{tbox}
+
+    Note that this gives a powerful fact: for all $\int f < \infty$, 
+    \[\int f\; d\mu = \int_{F^c} f\; d\mu = \int_{\{x: f< \infty\}} f\; d\mu\]
+
+    Let $G = \{x: f < \infty\}$. we know
+    \[G = \bigcup_{n=1}^\infty \{x: f(x) \leq n\} = \bigcup_{n=1}^\infty G_n\] 
+    and $G_n \uparrow G$ so $f \ind_{G_n} \to f\ind_G$ (pointwise) and $\ind_{G_n} \leq \ind_{G_{n+1}}$ so 
+    \[\int_X f \; d\mu = \lim_{n \to \infty} \int f \ind_{G_n} \; d\mu = \lim_{n \to \infty} \int_{\{x: f\leq n\}} f\; d\mu\]
+
+    \begin{exercise}
+        \textbf{Exercise:} Prove that for MCT, Fatou, and LDC it suffices to take the condition to be true almost everywhere. 
+
+        For example, the MCT holds if $f_n \leq f_{n+1}$ almost everywhere. 
+    \end{exercise}
+
+\subsection*{Integration for General Functions} 
+    For any function $f$, we can write $f = f^+ - f^-$ where $f^+ = \max\{f, 0\}$ and $f^- = \max\{-f, 0\}$. This is powerful because both $f^+$ and $f^-$ are nonnegative and measurable. 
+
+    \tbf{$\L^1$ Space:} We say $f \in \L^1$ (i.e. $f$ is integrable) if 
+    \[\int \abs f \; d\mu < \infty\]
+    or equivalently, 
+    \[\int f^+ \; d\mu + \int f^- \; d\mu < \infty\] 
+    
+    In this case, we define 
+    \[\int d \; d\mu = \int(f^+  f^-) \; d\mu = \int f^+ \; d\mu - \int f^- \; d\mu\]
+
+    \begin{tbox}{\textbf{Proposition:} If $f, g \in \L^1$ and $a, b \in \R$, then 
+        \begin{enumerate}
+            \item $af+ bg \in \L^1$
+            \item $\int af + bg \; d\mu = a\int f \; d\mu + b\int g \; d\mu$
+        \end{enumerate} }
+        \emph{Proof:} By the triangle inequality 
+        \[\abs{af  +bg} \leq \abs{a}\, \abs{f} + \abs{b}\, \abs{g}\]
+        so 
+        \[\int \abs{af + bg} \; d\mu \leq \abs{a} \int \abs{f} \; d\mu + \abs{b} \int \abs{g} \; d\mu < \infty\]
+
+        First let us check the easier linearity condition $\int f + g\; d\mu = \int f\; d\mu + \int g\; d\mu$. 
+
+        Define $h = f + g$ so $f^+ - f^- + g^+ - g^- = h^+ - h^-$. We would like to rearrange this so we have two nonnegative functions. But we need to be careful that each of these is finite. And in fact, this is true a.e. since $f$ and $g$ are integrable.
+
+        So 
+        \[f^+ g^+ + h^- = h^+ + f^- + g^- \geq 0\]
+        which means we can integrate. Let $X \setminus E$ be the set where all six terms are finite. Then 
+        \[\int_{X \setminus E} h \; d\mu = \int_{X \setminus E} f\; d\mu + \int_{X \setminus E} g\; d\mu\]
+
     \end{tbox}
 \end{document}  
