@@ -65,6 +65,7 @@
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\M}{\mathcal{M}}
 \newcommand{\X}{\chi}
+\renewcommand{\L}{\mathcal{L}}
 
 \newcommand{\sub}{\subseteq}
 \newcommand{\st}{\text{ s.t. }}
@@ -76,6 +77,10 @@
 \renewcommand{\bar}[1]{\overline{#1}}
 \newcommand{\overcirc}[1]{\overset{\circ}{#1}}
 \newcommand{\diam}{\text{diam }}
+
+\renewcommand{\Re}{\text{Re}\,}
+\renewcommand{\Im}{\text{Im}\,}
+\newcommand{\sign}{\text{sign}\,}
 
 \newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
 
@@ -1578,10 +1583,10 @@ Some basic logic:
     \[\int_A \phi \; d\mu = \int_X \X_A \cdot \phi \; d\mu\]
     with $\X_{A_1} \cdot \X_{A_2} = \X_{A_1 \cap A_2}$
 
-    \begin{tbox}{\textbf{Proposition:} For $A \in \M$, the mapping $A \to \inf_A \phi\; d\mu$ is a measure on $\M$}
+    \begin{tbox}{\textbf{Proposition:} For $A \in \M$, the mapping $A \to \int_A \phi\; d\mu$ is a measure on $\M$}
         \emph{Proof:} 
 
-        The hardest part is to show that $\inf_A \phi\; d\mu$ is countably additive, that is 
+        The hardest part is to show that $\int_A \phi\; d\mu$ is countably additive, that is 
         \[\int_{\bigcup A_i} \phi = \sum_{i=1}^\infty \int_{A_i} \phi\] 
 
         By definition, 
@@ -1834,6 +1839,116 @@ Some basic logic:
         \[f^+ g^+ + h^- = h^+ + f^- + g^- \geq 0\]
         which means we can integrate. Let $X \setminus E$ be the set where all six terms are finite. Then 
         \[\int_{X \setminus E} h \; d\mu = \int_{X \setminus E} f\; d\mu + \int_{X \setminus E} g\; d\mu\]
-
     \end{tbox}
+
+\section{Oct 22}
+    \subsection*{Complex-Valued Functions}
+        \[\int f = \int \Re(F) + i \int \Im(F)\]
+
+        \tbf{Sign Functions:} Define
+        \begin{itemize}
+            \item $\sign x = x/\abs{x}$ for $x \in \R\setminus \{0\}$ 
+            \item $\sign z = z/\abs{z}$ for $z \in \C\setminus \{0\}$
+        \end{itemize}
+        so we have the useful property $\bar{\sign z} \, z = \abs{z}$
+
+        \begin{tbox}{\textbf{Lemma:} If $f \in \L^1$, then $\abs{\int f \; d\mu} \leq \int \abs{f} \; d\mu$}
+            \emph{Proof:} Assume $\int f \; d\mu \neq 0$. For $f$ real, 
+            \[\abs{\int f \; d\mu} = \abs{\int f^+ \; d\mu - \int f^- \; d\mu} \] 
+
+            Since these integrals are real numbers, 
+            \[\abs{\int f^+ \; d\mu - \int f^- \; d\mu} \leq \abs{\int f^+ \; d\mu + \int f^- \; d\mu} = \abs{\int (f^+ + f^-) \; d\mu} = \int \abs{f} \; d\mu\]
+
+            \div 
+
+            If $f$ is complex, we want to normalize it to the real case. By the property above, we can write $\alpha = \bar{\sign \int f \; d\mu}$ so
+            \begin{align*}
+                \abs{\int f \; d\mu} &= \alpha \cdot \int f \; d\mu\\ 
+                    &= \int \alpha f \; d\mu\\ 
+                    &= \Re\left(\int \alpha f \; d\mu\right)\\ 
+                    &= \int \Re(\alpha f) \; d\mu\\ 
+                    &\leq \int \abs{\alpha f} \; d\mu\\
+                    &= \int \abs{\alpha}\, \abs{f}\; d\mu
+            \end{align*}
+
+            Now we can invoke the LDC for non-negative functions ($f_n = f^+_n - f^-_n$ with $\abs{f_n^+} \leq \abs{g} \implies \int f_n \; d\mu \to \int f \; d\mu$) and we are done.
+        \end{tbox}
+
+        \begin{tbox}{\textbf{Lemma:} Assume $\sum_{n=1}^\infty \int \abs{f_n} \; d\mu < \infty$. Then $\sum_{n=1}^{\infty} f_n$ converges and 
+            \[\sum_{n=1}^\infty \int f_n \; d\mu = \int \sum_{n=1}^\infty f_n \; d\mu\] }
+            \emph{Proof:} Reduces to the positive case as in the proof above.
+        \end{tbox}
+
+    \subsection*{Approximation by $\L^1$ functions}
+        \begin{tbox}{\textbf{Theorem:} If $f\in L^1(d\mu)$, $\forall \ep > 0$, there exists a simple function $\phi = \sum a_j \X_j$ such that 
+            \[\int \abs{f - \phi} \; d\mu < \ep\]}
+            \emph{Proof:} Recall the dyadic (partitioning the range) approximation $\phi_n \to f$ pointwise for $\abs{\phi_n} \leq \abs{f}$. 
+
+            By LDC, $\int \phi_n \to \int f$ and 
+            \[\abs{\phi_n - f} \leq \abs{\phi_n} + \abs{f} \leq \int \abs{f} \in \L^1\]
+            so 
+            \[\lim_{n \to \infty} \int \abs{\phi_n - f} \; d\mu = 0\]
+
+            Now $\forall \ep > 0$, 
+            \[\phi_n = \sum_{i=1}^{i_n} a_i E_i, \qquad E_i \cap E_j = \emptyset,\; a_i \neq 0 \]
+
+            And if $\mu(E_j) < \infty$, 
+            \[\abs{a_j}\ \mu(E_j) = \int_{E_j} \abs{\phi_n} \leq \int \abs{f} \; d\mu < \infty\]
+        \end{tbox}
+
+        \begin{tbox}{\textbf{Theorem (Reduction to smooth functions in $\R$):} Let $\mu$ be the Lebesgue-Stieltjes measure on $\R$. Then $E_J$ (in the previous approximation) $\phi_n$ can be taken as a finite union of open intervals. Moreover, there exists a $C^{\infty}$ function $\phi$ that vanishes outside a bounded interval such that 
+        \[\int \abs{f - \phi} \; d\mu < \ep\]}
+            \emph{Proof:} $\mu(E_j)$ can be approximated by an open set so 
+            \[\int{O_j} \ind < \infty = \mu(O_j) = \sum_{k=1}^\infty \mu(I_k)\]
+            with $I_k$ disjoint. 
+
+            But since $\phi_n$ is approximated by finitely many open intervals, 
+            \[\sum_{k=1}^N \mu(I_k) \to \mu(O_j) \to \mu(E_j)\]
+            
+            But this is equivalent to 
+            \[\sum_{k=1}^N \mu(I_k) = \sum_{I_k}^N \int_{I_k} \; d\mu\to \mu(E_j)\]
+
+            Therefore, it suffices to find a smooth function $h$ such that 
+            \[\int_{\R} \abs{h - \ind_{[a, b]}} < \ep\]
+
+            Define the \emph{One-sided Mollifier function}
+            \[f(x) = \begin{cases}
+                \exp\left(-\frac{1}{e^{\frac{x}{1 - x}} - 1}\right) & 0 < x < 1\\ 
+                0 & x \leq 0\\ 
+                1 & x \geq 1
+            \end{cases}\]
+
+            \begin{center}
+                \includegraphics[width=0.6\textwidth]{Images/Cinfty function.png}
+            \end{center}
+
+            And with a little analysis, we can show that this is smooth: $\partial^m f \bigg\vert_{x=0, x= 1} = 0$ for all $m \in \N$. 
+
+
+            Define $h_{\ep}(x) = f(\frac{x}{\ep})$ so $0 \leq x/\ep \leq 1$. Given $\ind_{[a, b]}$, 
+            \[g_{\ep}(x) = \begin{cases}
+                h(x - a - \ep) & x \leq a + \ep\\
+                1 & a + \ep \leq x \leq b\\ 
+                h_{\ep}(b - x) & x \geq b
+            \end{cases}\]
+
+            Clearly, $g_{\ep}(x) \to \ind_{[a,b]}$ as $\ep \to 0$.  
+
+            And further, $0 \leq g_{\ep}(x) \leq \ind_{[a - 1, b+ 1]}$ for $\ep << 1$ so by the LDC, 
+            \[\int g_{\ep}(x) \; d\mu \to \int \ind_{[a, b]} \; d\mu\] 
+            or 
+            \[\int \abs{g_{\ep} - \ind_{[a, b]}} \; d\mu \to \ep \]
+        \end{tbox}
+
+        \tbf{Remark:} we could also define a (more standard) \emph{Symmetric Mollifier function}
+        \[\rho(x) = \begin{cases}
+            \exp(- \frac{1}{1 - \abs{x}^2}) & \abs{x} < 1\\ 
+            0 & \abs{x} > 1
+        \end{cases}\]
+        so 
+        \[j = \frac{\rho}{ \int \rho \; d\mu} \int j \; d\mu = 1\]
+
+        \begin{center}
+            \includegraphics[width=0.6\textwidth]{Images/symmetric mollifier.png}
+        \end{center}
 \end{document}  
