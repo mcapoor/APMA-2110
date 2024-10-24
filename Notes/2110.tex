@@ -1951,4 +1951,126 @@ Some basic logic:
         \begin{center}
             \includegraphics[width=0.6\textwidth]{Images/symmetric mollifier.png}
         \end{center}
+
+\section{Oct 24}
+    \begin{tbox}{\textbf{Theorem (Integrals with Parameter):} Let $f(x, t): X \times [a, b) \to \C$ where $f(;, t): X \to \C$ is integrable for $t \in [a, b]$. Define 
+        \[F(t) = \int f(x, t) \; d\mu\]
+        \begin{enumerate}[(a)]
+            \item Suppose $\exists g \in \L^1$ such that $\abs{f(x, t)} \leq g(x)$ (independent of $t$) a.e. $t$.  If $\lim_{t \to t_0} f(x, t) = f(x, t_0)$, for a.e. $t$, then 
+            \[\lim_{t \to t_0} F(t) = F(t_0)\]
+            In particular, if $f(x, t)$ is continuous in $t$, then $F(t)$ is continuous.
+            \item Assume $\frac{\partial f}{\partial t}$ exists and $\exists g \in L^1_{\mu}$ such that 
+            \[\abs{\frac{\partial f}{\partial t}(x, t)} \leq g(x)\]
+            then 
+            \[F'(t) = \int \frac{\partial f}{\partial t}(x, t) \; d\mu\] 
+        \end{enumerate} }
+        \emph{Proof:} 
+
+        (a) Choose any $t_n \to t_0$. Define $f_n(x) = f(x, t_n)$. By assumption $\abs{f_n(x)} = \abs{f(x, t_n)} \leq g \in \L^1$. By LDC, 
+        \[\lim_{n \to \infty} \int f_n(x) \; d\mu = \int \lim_{n \to \infty} f_n(x) \; d\mu = \int f(x, t_0) \; d\mu\] 
+
+        But $t_n$ is arbitrary so
+        \[\lim_{t \to t_0} \int f(x, t) \; d\mu = \int f(x, t_0) \; d\mu\]
+        
+        \div 
+
+        (b) Choose 
+        \[h_n(x) = \frac{f(x, t_n) - f(x, t_0)}{t_n - t_0} \]
+        so for $\xi$ between $t_n$ and $t_0$,
+        \[\abs{h_n(x)} = \abs{\frac{\partial f}{\partial t}(x, \xi_n)} \leq g \in L^1\]
+
+        Once again by LDC, 
+        \[\lim_{n \to \infty} \int h_n(x) \; d\mu = \int \lim h_n(x) \; d\mu = \int \partial_t f(x, t_0) \; d\mu\]
+    \end{tbox}
+
+    \subsection*{Riemann Integrals}
+        \tbf{Recall:} For $f: [a, b] \to \R$, we define the Riemann integral $(R)\int_a^b f \; dx$ by 
+        \begin{align*}
+            S_p(f) &= \sum_{j=1}^{n} M_j (t_j - t_{j - 1})\\ 
+            s_p(f) &= \sum_{j=1}^{n} m_j (t_j - t_{j - 1})\\ 
+            M_j &= \sup_{[t_{j-1}, t_j]} f(x) &\qquad m_j = \inf_{[t_{j-1}, t_j]} f(x)\\ 
+            \bar I_a^b &= \inf_P S_p f, \quad \underline{I}_a^b = \sup_P s_p f
+        \end{align*}
+        where 
+        \[(R) \int_a^b f \; dx = \bar I_a^b = \underline{I}_a^b\]
+
+        \begin{tbox}{\textbf{Theorem:} Let $f$ be a bounded real function and $\mu$ the Lebesgue measure on $\R$. 
+            \begin{enumerate}[(a)]
+                \item If $f$ is Riemann integrable, then $f$ is Lebesgue integrable and $(R) \int_a^b f(x) \; dx = \int_a^b f \; d\mu$
+                \item $f$ is Riemann integrable $\iff \{x: f(x) \text{ not continuous on } [a, b]\}$ has Lebesgue measure zero  
+            \end{enumerate} }
+            \emph{Proof:} 
+
+            (a) Notice that $\ind_{[t_j, t_{j+1}]}$ is building block of Riemann integration and $\ind_{E_j = \{j < f \leq j+1\}}$ (in general \emph{very} complicated) is the building block of Lebesgue integration.
+
+            Assume $f$ is R-integrable. Then, $\exists P_k, P_m$ such that
+            \begin{align*}
+                G_{P_k} &= \sum_{j=1}^{n} M_j \ind_{(t_{j-1}, t_j]} \implies \int G_{P_k} = \sum_{j=1}^{n} M_j(t_j - t_{j-1}) = S_{P_k}(f) \\ 
+                g_{P_m} &= \sum_{j=1}^{m} m_j \ind_{(t_{j-1}, t_j]} \implies \int g_{P, m} \sum_{j=1}^{m} m_j(t_j - t_{j-1}) = s_{P_m}(f)
+            \end{align*}
+            so 
+            \begin{align*}
+                \lim_{n \to \infty } \int G_{P_n} &= (R)\int_a^b f\\ 
+                \lim_{m \to \infty} s_{P_m}(f) &= 0
+            \end{align*}
+
+            Now if we take a refinement $P_n \sub P_{n+1}$, $G_{P_k} \downarrow G$ and $G_{P_m} \uparrow g$ (by def as $\sup$ and $\inf$) so 
+            \[(R)\int G_{P_n} \; dx \geq \int f\; d\mu \geq (R)\int g_{P_n}\;dx\]
+
+            Taking limits, 
+            \[\lim \int G_{P_n}\; dx = (R)\int_a^b f\; dx\] 
+            but $\int G_{P_n}\; dx = \int G_{P_n} \; d\mu$ so using the measure theory view and the LDC, 
+            \[\lim \int G_{P_n} \; d\mu = \int G \; d\mu\]
+
+            Therefore, 
+           \[(R)\int_a^b f \geq \int_a^b G \; d\mu \geq \int f \; d\mu \geq \int g \; d\mu = (R)\int d \; dx\]  
+           
+            So at last, $\int G \; d\mu = \int g \; d\mu \implies \int (G - g) \; d\mu \implies G = g$ a.e. 
+
+            \div 
+
+            \begin{exercise}
+                \textbf{Homework:} Prove part (b) 
+            \end{exercise}
+        \end{tbox}
+
+    \subsection*{Modes of Convergence}
+        \begin{tbox}{\textbf{Egnoff Theorem:} Suppose $\mu(X) < \infty$ and $f_n \to f$ a.e. Then $\forall \ep > 0$, $\exists E \sub X$ such that $\mu(E) < \infty$ with $f_n - f \to 0$ uniformly on $E^c$}
+            \emph{Proof:} 
+
+            Suppose $f_n \to f$ everywhere. 
+
+            Recall the set of no convergence: $\phi = \{x: \exists \delta_x > 0 \st \forall N, \exists n \geq N \; \abs{f_n(x) - f(x)} \geq \delta_x\}$
+
+            We want to construct a uniform set to approximate $\phi$. 
+
+            For $k \in \N$, define 
+            \[E_n(k) = \bigcup_{m=n}^\infty \{x: \abs{f_m(x) - f(x)} \geq \frac{1}{k}\}\]
+            so 
+            \[E_n^c(k) = \bigcap_{m=n}^{\infty} \{x: \abs{f_m(x) - f(x)} \leq \frac{1}{k}\}\]
+
+            Clearly, for fixed $k$, $E_n(k) \downarrow$ in $n$. We claim 
+            \[\bigcap_{n=1}^\infty E_n(k) = \emptyset\]
+            (because $\forall x \in \bigcap_{n=1}^\infty E_n(k), \; \forall n, \exists m \geq n \st \abs{f_m(x) - f(x)} \geq \frac{1}{k}$)
+
+            Since $\mu(X) < \infty$, 
+            \[\lim_{n \to \infty} \mu(E_n(k)) = \mu(\phi)\] 
+            and by assumption, $\mu(E_n(k)) = 0$. 
+
+            Now $\forall \ep > 0$, $\exists n_k < n_{k+1} \st \mu(E_{n_k}(k)) < \frac{\ep}{2^k}$. 
+
+            Therefore, 
+            \[\mu\left(\bigcup_{k=1}^\infty E_{n_k}(k)\right) < \sum_{k=1}^{\infty} \mu(E_{n_k}) \leq \ep \]
+
+            We let $E = \bigcup_{k=1}^\infty E_{n_k}(k)$ and claim $f_n \to f$ uniformly in $E^c$. 
+
+            We know $x \in E^c \iff x \in \bigcap_{k=1}^\infty E_{n_k}^c$ so by definition, $\forall k, \exists n_k \st \forall m \geq n_k,\; \abs{f_{m}(x) - f(x)} \leq \frac{1}{k}$. 
+            
+            \div 
+
+            \begin{exercise}
+                \textbf{Exercise:} Generalize this proof to the case $f_n \to f$ a.e. 
+            \end{exercise}
+        \end{tbox}
+
 \end{document}  
