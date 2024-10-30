@@ -1664,7 +1664,7 @@ Some basic logic:
     \end{tbox}
 
     \begin{tbox}{\textbf{Fatou's Lemma:} Let $0 \leq f_n$. Then 
-        \[\int \liminf f_n \; d\mu \leq \lim_{n \to \infty} \int f_n\; d\mu\]}
+        \[\int \liminf f_n \; d\mu \leq \liminf \int f_n\; d\mu\]}
         \emph{Proof:} By definition, 
         \[\int \liminf f_n = \sup_n \inf_{k \geq n} f_k\]
 
@@ -2035,12 +2035,13 @@ Some basic logic:
         \end{tbox}
 
     \subsection*{Modes of Convergence}
-        \begin{tbox}{\textbf{Egnoff Theorem:} Suppose $\mu(X) < \infty$ and $f_n \to f$ a.e. Then $\forall \ep > 0$, $\exists E \sub X$ such that $\mu(E) < \infty$ with $f_n - f \to 0$ uniformly on $E^c$}
+        \begin{tbox}{\textbf{Egorov Theorem:} Suppose $\mu(X) < \infty$ and $f_n \to f$ a.e. Then $\forall \ep > 0$, $\exists E \sub X$ such that $\mu(E) < \ep$ with $f_n - f \to 0$ uniformly on $E^c$}
             \emph{Proof:} 
 
             Suppose $f_n \to f$ everywhere. 
 
-            Recall the set of no convergence: $\phi = \{x: \exists \delta_x > 0 \st \forall N, \exists n \geq N \; \abs{f_n(x) - f(x)} \geq \delta_x\}$
+            Recall the set of no convergence: 
+            \[\phi = \{x: \exists \delta_x > 0 \st \forall N, \exists n \geq N \; \abs{f_n(x) - f(x)} \geq \delta_x\}\]
 
             We want to construct a uniform set to approximate $\phi$. 
 
@@ -2065,7 +2066,7 @@ Some basic logic:
             We let $E = \bigcup_{k=1}^\infty E_{n_k}(k)$ and claim $f_n \to f$ uniformly in $E^c$. 
 
             We know $x \in E^c \iff x \in \bigcap_{k=1}^\infty E_{n_k}^c$ so by definition, $\forall k, \exists n_k \st \forall m \geq n_k,\; \abs{f_{m}(x) - f(x)} \leq \frac{1}{k}$. 
-            
+
             \div 
 
             \begin{exercise}
@@ -2073,4 +2074,93 @@ Some basic logic:
             \end{exercise}
         \end{tbox}
 
+\section{Oct 29}
+    \subsection*{Modes of Convergence (Contd.)}
+        \tbf{Convergence in Measure:} We say $f_n \to f$ \emph{in measure} ($f_n \overset{\mu}{\longrightarrow} f$) if $\forall \ep > 0$,
+        \[\lim_{n \to \infty} \mu\{x: \abs{f_n(x) - f(x)} \geq \ep\} = 0\]
+
+        \tbf{Convergence in $\L^1$:} We say $f_n \to f$ in $\L^1$ if $\int \abs{f_n - f} \; d\mu \to 0$.
+
+        \begin{tbox}{\textbf{Lemma:} Assume $f_n \to f$ in $\L^1$. Then $f_n \overset{\mu}{\longrightarrow} f$}
+            \emph{Proof:} 
+            \[\lim \int \abs{f_n - f} \; d\mu = 0\]
+            and 
+            \begin{align*}
+                \lim \int \abs{f_n - f} \; d\mu &\geq \int \abs{f_n - f} \ind_{\{x: \abs{f_n - f} \geq \ep\}} \; d\mu && (\text{monotonicity})\\
+                    &= \int_{\{x: \abs{f_n - f} \geq \ep\}} \abs{f_n - f} \; d\mu\\
+                    &\geq \int_{\{x: \abs{f_n - f} \geq \ep\}} \ep \; d\mu && (\text{monotonicity})\\ 
+                    &= \ep \mu\{x: \abs{f_n - f} \geq \ep\}
+            \end{align*}
+            for all $\ep >0$. 
+
+            Letting $n \to \infty$,
+            \[0 = \lim \frac{1}{\ep} \int \abs{f_n - f} \; d\mu \geq \lim \mu\{x: \abs{f_n - f} \geq \ep\} \]
+                        
+        \end{tbox}
+
+        \tbf{Remark:} in the proof, we have the inequality 
+        \[\int \abs{f_n - f} \; d\mu \geq \ep \mu(\{x: \abs{f_n(x) - f(x)} \geq \ep\})\]
+        this is the \tbf{Chebyshev Inequality}.
+
+        \tbf{Cauchy in measure:} We say $f_n$ is \emph{Cauchy w.r.t measure} if $\forall \ep, \delta > 0$, $\exists N \st \forall n, m \geq N$, 
+        \[\mu\{x: \abs{f_n(x) - f_m(x)} \geq \ep\} < \delta\]
+
+        \begin{tbox}{\textbf{Theorem:} Assume $f_n$ is Cauchy w.r.t convergence in measure. Then $\exists f$ measurable and $f_{n_j}$ a subsequence such that $f_{n_j} \to f$ a.e. and $f_n \overset{\mu}{\longrightarrow} f$}
+            \emph{Proof:} Since $f_n$ is Cauchy, $\forall j$, we may choose $f_{n_j}$ s.t. 
+            \[E_j = \{x: \abs{f_{n_j}(x) - f_{n_{j+1}}(x)} \geq 2^{-j}\} \implies \mu(E_j) < 2^{-j}\]
+
+            STEP 1. $\mu(\limsup E_j) = 0$. 
+
+            Note $\sum_{j=1}^\infty \mu(E_j) \leq \sum_{j=1}^\infty 2^{-j} < \infty$. But by a HW, we know precisely that $\mu(\limsup E_j) = 0$.
+
+            STEP 2. If $\forall x \notin \limsup E_j$, $f_{n_j}(x)$ is Cauchy.
+
+            Notice that $\forall x \notin \limsup E_j = \bigcap_{j=1}^\infty \bigcup_{m=j}^\infty E_m$, $x \in \bigcup_{n=1}^\infty \bigcap_{j=n}^\infty E_j^c$. But this implies $\exists N \st \forall n \geq N$,
+            \[x \in \bigcap_{j = n}^\infty E_j^c = \bigcap_{j = n}^\infty \{x: \abs{f_{n_j}(x) - f_{n_{j+1}}(x)} < 2^{-j}\}\]
+
+            WTS $\exists j_0$ such that $j, l \geq j_0$ such that $\abs{f_{n_j}(x) - f_{n_l}(x)} < \ep$.
+
+            WLOG, assume $n_l \geq n_j$. Now,
+            \[\abs{f_{n_j}(x) - f_{n_l}(x)} \leq \sum_{j \geq l} \abs{f_{n_j}(x) - f_{n_{j+1}}(x)} + \abs{f_{n_{j+1}}(x) - f_{n_{j+2}}(x)} + \cdots + \abs{f_{n_{l-1}}(x) - f_{n_l}(x)} \leq 2^{-j} + 2^{-j-1} + \cdots + 2^{-j-l} \leq 2^{-j + 1}\]
+            and hence it is Cauchy. 
+
+            STEP 3. $f_n \overset{\mu}{\longrightarrow} f$.
+
+            Consider $\{x: \abs{f_n(x) - f(x)} \geq \ep\}$. We claim 
+            \[\{x: \abs{f_n(x) - f(x)} \geq \ep\} \sub \{x: \abs{f_n(x) - f_{n_j}(x)} \geq \frac{\ep}{2}\} \bigcup \{x: \abs{f_{n_j}(x) - f(x)} \geq \frac{\ep}{2}\}\]
+            
+            Notice 
+            \[\ep \leq \abs{f_n -f} \leq \abs{f_n - f_{n_j}} + \abs{f_{n_j} - f} \leq \frac{\ep}{2} + \frac{\ep}{2}\]
+
+            So 
+            \[\mu\{x: \abs{f_n(x) - f(x)} \geq \ep\} \leq \mu\{x: \abs{f_{n}(x) - f_{n_j}(x)} \geq \frac{\ep}{2}\} + \{x: \abs{f_{n_j}(x) - f(x)} \geq \frac{\ep}{2}\}\]
+
+            But by assumption (Cauchy), $\mu\{x: \abs{f_n(x) - f(x)} \geq \frac{\ep}{2}\} \to 0$. 
+
+            Further, 
+            \[\{x: \abs{f_{n_j}(x) - f(x)} \geq \frac{\ep}{2}\} = (\limsup E_j) \cup (\limsup E_j)^c\]
+            and for $j$ sufficiently large, 
+            \[\{\abs{f_{n_j} - f_{n_{j+1}}} \geq 2^{-j}\} \leq 2^{-j + 1}\]
+            so we are done. 
+        \end{tbox}
+
+        \tbf{Corollary 1:} If $f_n \overset{\mu}{\longrightarrow} f$, then $\exists n_j$ such that $f_{n_j} \to f$ a.e.
+
+        \tbf{Corollary 2:} If $f_n \to f \in \L^1$, $\exists n_j$ such that $f_{n_j} \to f$ a.e.
+
+        \tbf{Examples:} 
+        \begin{itemize}
+            \item For $f_n = \frac{1}{n} \ind_{[0, n]}$, $\int f_n \; d\mu = 1$ and $f_n \to 0$ uniformly but $f_n \not\to 0 \in \L^1$ 
+            
+            \item For $f_n = \ind_{[n, n+1]}$, $\int f_n \; d\mu = 1$ and $f_n \to 0$ a.e. but 
+            \[\int \abs{f_n - f} \; d\mu = \int \abs{f_n} \; d\mu = 1 \neq 0\] 
+            so $f_n \not\to 0$ in $\L^1$. Do we at least have convergence in measure? No: 
+            \[\mu\{x: \abs{f_n(x) - 0} > \frac{1}{2}\} = \mu(n, n+1) = 1\]
+
+            \item $f_n = n \ind_{[0, \frac{1}{n}]}$. 
+        
+            As before, $\int f_n \; d\mu = 1$ and $\forall x_0 \neq 0$, $\exists n_{x_0} \st \forall n \geq n_{x_0}$, $f_n(x_0) = 0$ so $f_n \to 0$ a.e. By the same argument, we can say $f_n \not\to f$ in $\L^1$.  
+
+            However, $\mu\{x: \abs{f_n(x) - 0} > \ep\} = \mu[0, \frac{1}{n}] = \frac{1}{n} \to 0$ so $f_n \overset{\mu}{\longrightarrow} 0$.
+        \end{itemize}
 \end{document}  
