@@ -2398,7 +2398,7 @@ Some basic logic:
         By uniqueness, the measure from HW and the measure here are the same. 
     \end{tbox}
 
-\subsection{Fubini's Theorem}
+\subsection*{Fubini's Theorem}
     Consider $E \sub \M \otimes \Nc$. For all $x$, take sections of $E$:
     \[E_x: \{y \in Y: (x, y) \in E\}\]
     and similarly for $y$:
@@ -2564,7 +2564,7 @@ Some basic logic:
     \end{tbox}
 
 \section{Nov 14}
-\subsection{The Lebesgue Measure on $\R^n$}
+\subsection*{The Lebesgue Measure on $\R^n$}
     Denote $m$ the Lebesgue measure and $\L^n$ the class of Lebesgue measurable sets.
 
     \begin{tbox}{\textbf{Theorem (Approximation):} If $E \in \L^n$,
@@ -2604,7 +2604,7 @@ Some basic logic:
 
     \end{tbox}
 
-\subsection{Dyadic Cubes}
+\subsection*{Dyadic Cubes}
     Let $Q_k$ the dyadic cube (an n-D closed rectangle with same sides) of length $2^{-k} \Z$. Conveniently, $Q_{k+1} \sub Q_k$. 
 
     Let $E \sub \R^n$. Define 
@@ -2632,7 +2632,7 @@ Some basic logic:
         which ensures we have a disjoint union. 
     \end{tbox}
 
-\subsection{Change of Variables}
+\subsection*{Change of Variables}
     \tbf{Remark:} one reasonably intuitive way is to:
     \begin{itemize}
         \item Show change of variables for Riemann integration 
@@ -2656,4 +2656,340 @@ Some basic logic:
         2) This gives us the result for the characteristic function which immediately gives us simple functions (and thus $\L^1$ functions by approximation).
 
     \end{tbox}
-\end{document}   
+
+\section{Nov 19}
+    \tbf{Recall:} Last time we showed that if $U$ is open, $U = \underbar A(U)$, a collection of dyadic cubes.
+
+    \begin{tbox}{\textbf{Corollary:} Let $U$ be open, then the \tbf{inner content} is $m(U) = m(\underbar A(U))$. Let $F \sub \R^n$ be a compact set. Then the \tbf{outer content} is $m(F) = m(\bar A(F))$.} 
+        \emph{Proof Sketch:} Define $Q_0 = \{x: \max\abs{x_j} \leq 2^M, \; M\}$ for $M$ sufficiently large. We have $F \in Q_0$. 
+
+        Consider $Q_k$, the $2^{-k}$ dyadic cubes. For any $Q \sub Q_k \land Q \sub Q_0$, then either $Q \cap F = \emptyset$ or $Q \sub Q_0\setminus F$ so that 
+        \[m(\bar A(F, k)) + m(\underbar A(Q_0 \setminus F, k)) = m(Q_k) = m(Q_0)\]
+
+        But $Q_0 \setminus F$ is open so taking $k \to \infty$, the result follows from the lemma.
+    \end{tbox}
+
+    \begin{tbox}{\textbf{Theorem:} Let $\Omega \sub \R^n$ be open. Let $G: \Omega \inj \R^n$ be $C^1$ differentiable (i.e. the jacobian $D_x G \in C^1$) and invertible. 
+        \begin{enumerate}
+            \item If $E \sub \Omega$, $E \in \L^n$, $G(E) \in \L^n$, then 
+            \[\int_{G(E)} \ind_{G(E)} = m(G(E)) = \int_E \abs{\det D_x G} \ind_E \; dx\]
+            \item If $f \in \L^1(G(\Omega))$, $f \circ G \in L^1(\Omega)$, and $f \geq 0$, 
+            \[\int_{G(\Omega)} f(y)\; dy = \int_{\Omega} f \circ G(x) \abs{\det D_xG} \; dx\]
+        \end{enumerate}}
+        \emph{Proof:} 
+
+        1. WLOG assume $m(E) < \infty$ (else invoke $\sigma$-finitude). 
+
+        STEP 1. (Translation Invariance). 
+        
+        Define $\tau_a(x) = x + a$ for $a \in \R^n$. WTS, 
+        \[m(E) = m(\tau_a(E))= m(\{x + a: x \in E\})\]
+
+        \begin{proof}
+            \emph{Proof:} This is exactly the same as the 1D proof:
+            \begin{itemize}
+                \item True for rectangles 
+                \item $\inf$ structure of $m$ implies a bijection between $E$ and $\tau_a(E)$
+            \end{itemize}
+        \end{proof}
+
+        STEP 2. Let $T_1, T_2, T_3$ be elementary linear maps:
+        \begin{align*}
+            T_1: (x_1, \dots, x_j, \dots, x_n) &\mapsto (x_1, \dots, cx_j, \dots, x_n)\\
+            T_2: (x_1, \dots, x_j, \dots, x_n) &\mapsto (x_1, \dots, x_j + cx_k, \dots, x_n), \quad j \neq k \\
+            T_3: (x_1, \dots, x_i, x_j, \dots, x_n) &\mapsto (x_1, \dots, x_j, x_i, \dots, x_n)
+        \end{align*}
+
+        WTS, $m(T(E)) = \det\abs{T} m(E)$ where $T \in \{T_1, T_2, T_3\}$. 
+
+        \begin{proof}
+            \emph{Proof:} Consider 
+            \begin{align*}
+                m(T_1(E)) &= \int \ind_{T_1(E)}\\ 
+                    &= \int \ind_{(x_j, \dots, cx_j, \dots, x_n), x \in E}\\ 
+                    &\overset{\text{Tonelli}}{=} \int\cdots \int \left(\int_{x_j \in E}  \ind_{(\dots, cx_j, \dots)} dx_j\right)\\ 
+                    &=\int\cdots \int \left(\abs{c}\abs{E(\dots, x_j, \dots)}\right)\; dx_1\,dx_2\dots dx_{j-1}\, dx_{j+1}\dots dx_n\\
+                    &= \abs{c} m(E)\\ 
+                    &= \abs{\det T_1}m(E)
+            \end{align*}
+    
+            In the $T_2$ and $T_3$ case, following the same process, the 1D integral again gives $\abs{\det T}$ 
+        \end{proof}
+
+        STEP 3. Let $T$ be a general invertible linear map. Let $S, W$ be elementary maps. By Step 2, 
+        \[m(SW(E)) = \abs{\det S} m(W(E)) = \abs{\det S} \abs{\det W} m(E) = \abs{\det SW} m(E)\]
+
+        From linear algebra, any invertible map can be written as a product of elementary maps. By induction, we have 
+        \[\int_{T(E)} \ind_{T(E)} = m(T(E)) = \abs{\det T} m(E) = \int \abs{\det T} \ind_E\]
+
+        STEP 4. Take $U$ open set. Then $U = \bigcup_{k=1}^\infty Q_k$ dyadic cubes. $\forall \ep > 0$, WLOG, $\abs{Q_k} \leq \ep$.
+
+        Consider $E = \bigcup_{k=1}^\infty Q_k \cap E$. Within $Q_k \cap E$, we use a Taylor Expansion for any $y, y_k \in E \cap Q_k$, 
+        \[G(y) = \underbrace{G(y_k) + DG(y_k)(y - y_k)}_{T_k} + o_{\ep}(1)m(G_k)\] 
+
+        By previous steps, 
+        \[\int_{E\cap Q_k} \abs{\det T_k(y_k)} - \int_{E \cap Q_k} \abs{\det DG(x)} = o_{\ep}(1) \int_{E \cap Q_k} \]
+
+        In particular, we claim the error is
+        \[\abs{m(G(E \cap Q_k)) - m(T_k(E \cap Q_k))} \leq o_{\ep}(1) m(Q_k)\]
+
+        \begin{exercise}
+            \textbf{Exercise:} Prove the error is bounded by $\ep m(Q_k)$. \emph{Hint:} $m(Q_k) \leq 2^{-nk}$ since $y - y_k \leq 2^{-k}$. 
+        \end{exercise}
+
+        So 
+        \[\int_{G(E \cap Q_k)} = \int_{E \cap Q_k}\abs{\det DG} + o_{\ep}(1)m(Q_k) \]
+
+        Summing over $k$, 
+        \begin{align*}
+            \sum_k \int_{G(E \cap Q_k)} &= \sum_k \int_{E \cap Q_k}\abs{\det DG} + o_{\ep}(1)m(Q_k)\\ 
+            \int_{G(E \cap U)} &= \int_{E \cap U} \abs{\det DG} + o_{\ep}(1)m(U)\\ 
+            \int_{G(E \cap U)} &= \int_{E \cap U} \abs{\det DG}
+        \end{align*}
+
+       So in fact, we have shown parts 1) and 2) in the special case $f = \ind_E$. 
+    \end{tbox} 
+
+\chapter{Signed Measure and Differentiation}
+\section{Nov 21}
+    \subsection*{Signed Measures}
+        \tbf{Definition:} Let $(X, \M)$ be a measurable space. $\forall m \in \M$, if $\nu: \M \to \bar \R$ satisfies
+        \begin{itemize}
+            \item $\nu(\emptyset) = 0$
+            \item $\nu$ assumes at most one of $\infty, -\infty$
+            \item If $\{E_j \in \M\}$ disjoint, 
+            \[\nu\left(\bigcup_{j=1}^\infty E_j\right) = \sum_{j=1}^\infty \nu(E_j)\] 
+            
+            Further, if $\nu(\bigcup_{j=1}^\infty E_j)$ is finite then $\sum_{i=1}^\infty \abs{\nu(E_i)} < \infty$
+        \end{itemize}
+
+        \tbf{Example:} $\nu = \mu_1 - \mu_2$ for $\mu_1, \mu_2$ measures with at least one finite 
+
+        \tbf{Example:} $f \in \L^1_{\mu}(m)$, $\nu(E) = \int_E f \; d\mu$
+
+        \begin{tbox}{\textbf{Proposition:} Let $\nu$ be a signed measure on $(X, \M)$.
+            \begin{itemize}
+                \item If $E_j \nearrow$, then 
+                \[\nu\left(\bigcup_{j=1}^\infty E_j\right) = \lim_{j \to \infty} \nu(E_j)  \]
+                \item If, in addition, $\nu(E_1) < \infty$ and $E_j \searrow$, then 
+                \[\nu\left(\bigcap_{j=1}^\infty E_j\right) = \lim_{j \to \infty} \nu(E_j)  \]
+            \end{itemize}}
+            \emph{Proof:} \begin{exercise}
+                \textbf{Exercise}
+            \end{exercise}
+        \end{tbox}
+
+        \tbf{Definition:} A set $E \sub \M$ is 
+        \begin{itemize}
+            \item \emph{positive} if $\forall F \sub E$, $\nu(F) \geq 0$
+            \item \emph{negative} if $\forall F \sub E$, $\nu(F) \leq 0$
+            \item \emph{null} if $\forall F \sub E$, $\nu(F) = 0$
+        \end{itemize}
+
+        Our goal in this section is to partition the set so $\nu = \mu_1 - \mu_2 = \nu_+ - \nu_-$ for $\nu_+, \nu_-$ positive measures. In this way, 
+        
+        \begin{tbox}{\textbf{Lemma:} Any measurable subset of a positive set is positive and the union of countably many positive sets is positive.}
+            \emph{Proof:} The first part is immediate.  
+
+            Let $P_1, \dots, P_n$ be positive sets. Define $Q_n = P_n \setminus \bigcup_{j=1}^{n-1} P_j$. Then $Q_n$ are disjoint, $Q_n \sub P_n$ (hence $Q_n$ is positive), and 
+            \[\bigcup_{n=1}^\infty P_n = \bigcup_{n-1}^\infty Q_n\] 
+
+            Take $E \sub \bigcup_{n=1}^\infty Q_n$. By additivity, 
+            \[\nu(E) = \sum_{n=1}^\infty \nu(E \cap Q_n) \geq 0\]
+        \end{tbox}
+
+        \begin{tbox}{\textbf{Hahn Decomposition Theorem:} If $\nu$ is a signed measure on $(X, \M)$, then there exists a positive set $P$ and a negative set $N$ such that $X = P \cup N$ and $P \cap N = \emptyset$. Further, if $P', N'$ is another pair of sets with this property, then $P \triangle P' = \emptyset$ and $N \triangle N' = \emptyset$.}
+            \emph{Proof:} 
+
+            STEP 1. WLOG suppose $\nu(X) \neq +\infty$ (else consider $-\nu$). Let $E$ be a positive set (must exist or else we are done). 
+
+            Let $\sup \nu(E) = m < \infty$. By definition, $\exists P_j$ positive sets such that $\lim_{j \to \infty} \nu(P_j) \to m$
+            
+            Let $P = \bigcup_{j=1}^\infty P_j$. By the lemma, $P$ is positive and $\nu(P) = \lim_[j \to \infty] \nu(P_j) = m$.
+
+            Let $N = X \setminus P$. It suffices to show that $N$ is negative. For contradiction, suppose $N$ is not negative. 
+
+            STEP 2. $N$ cannot contain any non-null positive set. 
+
+            \begin{proof}
+                \emph{Proof:} If $E \sub N$ is a positive set, then $\mu(E) > 0$ so $E \cup P$ is positive and 
+                \[\nu(E \cup P) = \nu(E) + \nu(P) > m\]
+                contradiction. 
+            \end{proof}
+
+            STEP 3. If $A \sub N$ is a positive-valued set, i.e. $\nu(A) > 0$, then $\exists B\sub A$ s.t. $\nu(B) > \nu(A)$
+
+            \begin{proof}
+                \emph{Proof:} By Step 2, $A$ cannot be a positive set. But then $\exists C \sub A$ such that $\nu(C) < 0$. Define $B = A \setminus C$ so $\nu(B) + \nu(C) = \nu(A)$. But $\nu(C) < 0$ so $\nu(B) > \nu(A)$.
+            \end{proof}
+
+            STEP 4. (Construction of $A_j \searrow$). 
+            
+            Consider $\sup \nu(B)$ for $B \sub N$ with $\nu(B) > 0$. If $\sup \nu(B) \geq 1$, then we can choose $A_1$ such that $\nu(A_1) \geq \frac{1}{n_1}$ and $\forall B$, 
+            \[\nu(B) \leq \frac{m}{n_1}\]
+            for $n_1 = 1$. 
+
+            If $\sup \nu(B) <1$, choose $n_1 > 1$ such that 
+            \[\frac{1}{n_1} \leq \sup(B) \leq \frac{1}{n_1 - 1}\]
+            and choose $A_1$ such that $\nu(A_1) > \frac{1}{n_1}$. In this case, $\forall B$ with $\nu(B) > 0$, $\nu(B) \leq \frac{1}{n_1- 1}$.
+
+            Hence, for $\nu(A_1) \geq \frac{1}{n_1}$, we will always have $\nu(B) \leq \min\left\{\frac{1}{n_1 - 1}, \frac{m}{n_1}\right\}$ for any $B$ with $\nu(B) > 0$. 
+
+            Repeating the $A_1$ case, we can choose $A_2 \sub A_1$ such that 
+            \[\nu(A_2) \geq \nu(A_1) + \frac{1}{n_2}\]
+            and $\nu(B) \leq \nu(A_1) + \min\left\{\frac{1}{n_2- 1}, \frac{m}{n_2}\right\}$. 
+
+            Inductively, we have $A_i \searrow$, a sequence of positive-values sets, with 
+            \begin{align*}
+                \nu(A_i) &\geq \nu(A_{i-1}) + \frac{1}{n_i}\\ 
+                \nu(B) &\leq \nu(A_{i-1}) + \min\left\{\frac{1}{n_i - 1}, \frac{m}{n_i}\right\}
+            \end{align*}
+            for $B \sub A_{i-1}$. 
+
+            Define $A = \bigcap_{i=1}^\infty A_i$, so $\lim_{i \to \infty} \nu(A_i) = \nu(A)$.
+
+            But by the $\nu(A_i)$ inequality, 
+            \[\nu(A) > \sum_{j=1}^{\infty} n_j^{-1} \implies \lim_{j \to \infty} n_j \to \infty\]
+
+            STEP 5. (Contradiction). 
+
+            Consider $A$ with $\nu(A) > 0$. By Step 3, $\exists B \sub A$ such that 
+            \[\nu(B) > \nu(A) + \frac{1}{\bar n}\] 
+            (for sufficiently large $\bar n$). By construction, $B \sub A_{j}$ but for $j$ sufficiently large, 
+            \[\nu(B) \geq \nu(A_j) + \frac{2}{\bar n}\]
+            and 
+            \[B \sub A_j \implies \nu(B) \leq \nu(A_j) + \min\left\{\frac{1}{n_j - 1}, \frac{m}{n_j}\right\}\]
+
+            But $\bar n$ is fixed and this right hand term goes to zero. Contradiction. 
+
+            STEP 6. (Uniqueness).
+
+            Suppose $P', N'$ is another pair of sets. We want to show that $P \setminus P' = \emptyset$. Certainly, $P \setminus P' \sub P$ so it is positive. Then $P' \cap N' = \emptyset$. 
+
+            But $P \setminus P' \sub N'$. As it is positive and negative, it must be null.
+        \end{tbox}
+
+\section{Nov 26}
+    \tbf{Mutual Singularity:} Two measures $\mu, \nu$ are \emph{mutually singular} ($\mu \perp \nu$) if $\exists E F \in \M$ disjoint such that $X = E \cup F$ and $\mu(E) = \nu(F) = 0$.
+
+    \tbf{A Canonical Example:} Let $\mu$ be the Lebesgue measure on $\R^n$ and $\delta_0$ be the counting measure at the origin (dirac-delta mass). Define $E = \{0\}$, $F = \R^n \setminus \{0\}$. Clearly, $\mu \perp \nu$. 
+
+    \tbf{Notation:} Recall that for $f \in \L^1$, $E \mapsto \int_E f \; d\mu$ is a signed measure. We denote this measure $f\; d\mu(E)$.
+
+    \begin{tbox}{\textbf{Jordan Decomposition Theorem:} If $\nu$ is a signed measure, there exists unique (positive) measures $\nu^+, \nu^-$ such that $\nu = \nu^+ - \nu^-$ and $\nu^+ \perp \nu^-$.}
+        \emph{Proof:} 
+
+        STEP 1. (Existence) By Hahn Decomposition, $\exists P, N$ such that $X = P \cup N$ and $P \cap N = \emptyset$. Define $\nu^+(A) = \nu(A \cap P)$ and $\nu^-(A) = -\nu(A \cap N)$. Clearly, $\nu = \nu^+ - \nu^-$.
+
+        \begin{exercise}
+            \textbf{Exercise:} Confirm that $\nu^+ \perp \nu^-$
+        \end{exercise}
+
+        STEP 2. (Uniqueness) Suppose $X = E \cup F$, and $\nu = \mu^+ - \mu^-$ for $\mu^+, \mu^-$ positive measures with $\mu^+ \perp \mu^-$ and $\mu^+(F) = \mu^-(E) = 0$. 
+
+        In particular, since $\mu^+ = \mu$ on $E$, by monotonicity of positive measures, we have that $E$ is a positive set for $\nu$ and $F$ is a negative set. 
+
+        But this implies that $(E, F)$ are a Hahn decomposition so $P \triangle E = N \triangle F = \emptyset$. Hence, $\forall A \in \M$, 
+        \[\mu^+(A) = \mu^+(A \cap E) = \nu(A \cap E) = \nu(A \cap P) = \nu^+(A \cap P) = \nu^+(A)\] 
+
+        By similar work, $\nu^- = \mu^-$  follows.
+    \end{tbox}
+
+    \tbf{Total Variation:} $\abs{\nu} = \nu^+ + \nu^-$
+
+    \begin{tbox}{\textbf{Fact:} $\nu \perp \mu \iff \abs{\nu} \perp \mu$ }
+        \emph{Proof:} \begin{exercise}
+            \textbf{Exercise} (Hint: Follows from definition) 
+        \end{exercise}
+    \end{tbox}
+
+    \subsection{The Lebesgue-Radon-Nikodym Theorem}
+        \tbf{Absolutely Continuous:} Let $\mu$ be a measure. Let $\nu$ be a signed measure. We say $\nu$ is \emph{absolutely continuous} with respect to $\mu$ ($\nu \ll \mu$) if $\forall E \in \M$, $\mu(E) = 0 \implies \nu(E) = 0$.
+
+        \emph{Note: In some sense, this is the opposite of mutual singularity.} 
+
+        \begin{tbox}{\textbf{Fact:} $\nu \ll \mu \iff \abs{\nu} \ll \mu \iff \nu^+ \ll \mu \land \nu^- \ll \mu$}
+            \emph{Proof:} \begin{exercise}
+                \textbf{Exercise} 
+            \end{exercise}
+        \end{tbox}
+
+        \begin{tbox}{\textbf{Theorem:} Let $\nu$ be a finite signed measure, $\mu$ a positive measure. Then $\nu \ll \mu$ if and only if $\forall \ep > 0$, $\exists \delta > 0$ such that $\mu(E) < \delta \implies \abs{\nu(E)} < \ep$}
+            \emph{Proof:} WLOG, take $\nu = \abs{\nu}$. 
+
+            ($\impliedby$) Trivial. (Take $\mu(E) = 0$. If $\abs{\nu(E)} = \ep_0 > 0$, we have a contradiction by taking $\ep = \ep_0 /2$)
+
+            ($\implies$) If not, $\exists \ep_0 > 0$ such that $\exists E_n$ such that $\mu(E_n) < 2^{-n}$ while $\abs{\nu(E_n)} \geq \ep_0$.
+
+            Let $F_k = \bigcup_{n\geq k}^\infty E_n \searrow$, $F = \bigcap_{k=1}^\infty F_k = \limsup E_n$. By construction, $\sum \mu(E_n) < \infty$. By HW, $\mu(F) = 0$.
+
+            On the other hand, by limit from below, 
+            \[\nu(F) = \lim_{k\to \infty} \nu(F_k) \geq \ep_0 > 0\]
+            (note: $\geq$ comes from assumption that $\nu = \abs{\nu}$ and monotonicity)
+
+        \end{tbox}
+
+        \tbf{Remark:} This is a very strong statement because the continuity is uniform in $E$
+
+        \tbf{Example:} $f\; d\mu \ll \mu$ for $f \in \L^1$.
+
+        \begin{tbox}{\textbf{Corollary:} If $f \in \L^1_{\mu}$, then $\forall \ep > 0$ $\exists \delta_f > 0$ s.t. $\mu(E) < \delta_f \implies f\; d\mu(E) < \ep$}
+            \begin{exercise}
+                \textbf{Exercise:} Give a direct proof without using the theorem. (Hint: limits, approximation)
+            \end{exercise}
+        \end{tbox}
+
+        \begin{tbox}{\textbf{Lemma (Dichotomy of $\perp$ and $\ll$):} Suppose $\nu$ and $\mu$ are positive, finite measures in $(X, \M)$. Then either 
+            \begin{enumerate}
+                \item $\mu \perp \nu$
+                \item $\exists \ep > 0$, $E \in \M$ which is a positive set for $\nu - \ep \mu$
+            \end{enumerate}}
+            \emph{Proof:} Consider $\nu - \frac{1}{n}\mu, \quad n = 1, 2, \dots$. By Hahn, $X = P_n \cup N_n$. 
+
+            Set $P = \bigcup_{n=1}^\infty P_n$ and $N = \bigcap_{n=1}^\infty N_n = P^c$.
+
+            By construction, $N$ is a negative set for all $\nu - \frac{1}{n}\mu$, i.e. 
+            \[0 \leq \nu(N) \leq n^{-1} \mu(N) \quad \forall n\]
+
+            Taking $n \to \infty$, $\nu(N) = 0$.
+
+            CASE 1. If $\mu(P) = 0$, then $\nu \perp \mu$. 
+
+            CASE 2. If $\mu(P) > 0$, then $\exists n_0$ such that $\mu(P_{n_0}) > 0$.
+
+            Since $P_n \nearrow$, 
+            \begin{align*}
+                v - \frac{1}{n}\mu &\geq 0 \quad P_n\\ 
+                v - \frac{1}{n+1}\mu &\geq P_{n+1}
+            \end{align*},
+            $P_{n_0}$ is positive for $\nu- n_0^{-1}\mu$.
+        \end{tbox}
+
+        \begin{tbox}{\textbf{Lebesgue-Radon-Nikodym Theorem:} Let $\nu$ be a $\sigma$-finite signed measure and $\mu$ be a $\sigma$-finite positive measure. Then there exists a unique (a.e. in $\mu$) $f \in \L^1_{\mu}$ such that 
+            \[\nu = \lambda + f\; d\mu \quad \st\quad  \lambda \perp \mu\]}
+            \emph{Proof:} WLOG, suppose $\mu, \nu$ finite and $\nu$ positive (else $\nu = \nu^+ - \nu^-$ and argue separately).
+
+        
+            STEP 1. (Construction of $f$). 
+            
+            We will seek to construct a maximal $f$ so $\lambda \to 0$ and thus $\lambda \perp \mu$. 
+
+            Let 
+            \[\Fc = \left\{f: X \to [0, \infty] \; \bigg\vert \; \int_E f\; d\mu \leq \nu(E) \quad \forall E\right\}\]
+
+            We have that 
+            \begin{itemize}
+                \item $\Fc$ is nonempty ($f = 0$) 
+                \item if $f_1, f_2 \in \Fc$, so is $h = \max(f_1, f_2)$
+            \end{itemize} 
+
+            Then 
+            \begin{align*}
+                \int_E h &= \int_{E\cap \{f_1 > f_2\}} + \int_{E\cap\{f_1 \leq f_2\}}\\ 
+                    &= \int_{E \cap \{f_1 > f_2\}} f_1 + \int_{E \cap \{f_1 \leq f_2\}} f_2\\ 
+                    &\leq \nu(E \cap \{f_1 > f_2\}) + \nu(E \cap \{f_1 \leq f_2\}) = \nu(E)\\
+            \end{align*}
+
+            Let $a = \sup \Fc$. Then, $\exists f_n \in \Fc$ such that 
+        \end{tbox}
+\end{document}  
