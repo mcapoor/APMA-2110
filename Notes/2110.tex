@@ -62,13 +62,13 @@
 
 \newcommand{\Ec}{\mathcal{E}}
 \newcommand{\A}{\mathcal{A}}
-\newcommand{\Fc}{\mathcal{F}}
+\newcommand{\F}{\mathcal{F}}
 \newcommand{\Cc}{\mathcal{C}}
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\M}{\mathcal{M}}
 \newcommand{\Nc}{\mathcal{N}}
 \newcommand{\X}{\chi}
-\renewcommand{\L}{\mathcal{L}}
+\renewcommand{\L}{\text{L}}
 
 \newcommand{\sub}{\subseteq}
 \newcommand{\st}{\text{ s.t. }}
@@ -125,7 +125,7 @@
 \begin{document}
 \maketitle
 \chapter{Analysis and Metric Spaces}
-\section{Sept 05}
+\section*{Sept 05}
 Some basic notation:
 \begin{align*}
     \N &:= \{1, 2, 3, \ldots\} \\
@@ -262,7 +262,7 @@ Some basic logic:
 
     \emph{Example:} Inclusion is not a total ordering on $P(X)$ since (in general) $E_1 \not\sub E_2$ and $E_2 \not\sub E_1$ for $E_1 \neq E_2$.
 
-\section{Sept 10}
+\section*{Sept 10}
     \textbf{Recall:} a \emph{partial ordering} is a relation that satisfies
     \begin{enumerate}
         \item if $xRy$ and $yRz$, then $xRz$ 
@@ -356,7 +356,7 @@ Some basic logic:
             Conversely, if $g: Y \to X$ is surjective, consider $g^{-1}(\{x\})$ for $x \in X$. These sets are non-empty and disjoint because $f$ is a map (each $x$ can map to a single $y$). Then any $f \in \prod_{x \in X} g^{-1}(\{x\})$ is an injection from $X$ to $Y$.
         \end{tbox}
 
-\section{Sept 12}
+\section*{Sept 12}
     \begin{tbox}{\textbf{Property:} For any sets $x$ and $Y$, either $\card X \leq \card Y$ or $\card Y \leq \card X$}
         \emph{Proof Sketch:} Consider the (non-empty) set 
         \[J = \{\text{all injections } f_E: X \to Y \text{ with respect to } E \sub X\}\]
@@ -518,7 +518,7 @@ Some basic logic:
         \textbf{Exercise:} Check the above are metric spaces
     \end{exercise}
 
-\section{Sept 17}
+\section*{Sept 17}
 \subsection*{Closed and Open Sets}  
     \textbf{Open ball:} Let $(X, \rho)$ be a metric space. If $x \in X$, $r > 0$, we define the \emph{open ball} $B(x, r) = \{y \in X \st \rho(x, y) < r\}$
 
@@ -653,7 +653,7 @@ Some basic logic:
         \emph{Proof:} HW
     \end{tbox}
 
-\section{Sept 19}
+\section*{Sept 19}
     \textbf{Products of Metric Spaces:} Let $(X, \rho_1)$ and $(Y, \rho_2)$ be metric spaces. Define the \emph{product metric} on $X \times Y$ by $(X_1 \times X_2, \rho_1 \times \rho_2)$ where
     \[\rho_1 \times \rho_2 = \sqrt{\rho_1^2(x_1, y_1) + \rho^2(x_2, y_2)}\]
     (so called \emph{Euclidean Metric})
@@ -669,7 +669,7 @@ Some basic logic:
     \end{itemize}
 
 \chapter{Measure Theory}
-\section{Sept 19}
+\section*{Sept 19}
     \subsection*{Measure Theory Motivation}
         \textbf{Riemann Integral:} Let $f: [a, b] \to \R$. We subdivide $[a, b]$ by 
         \[a = x_0 < x_1 < \dots < x_n = b\]
@@ -781,7 +781,7 @@ Some basic logic:
         \textbf{Generated $\sigma$-algebra:} Given a collection of subsets $\Ec \sub P(X)$, there exists a smallest $\sigma$-algebra containing $\Ec$, denoted 
         \[M(\Ec) = \bigcap_{\Ec \sub \A} \A\]
 
-        \begin{tbox}{\textbf{Lemma:} $\Ec \sub M(\Fc) \implies M(\Ec) \sub M(\Fc)$}
+        \begin{tbox}{\textbf{Lemma:} $\Ec \sub M(\F) \implies M(\Ec) \sub M(\F)$}
             \emph{Proof:} Omitted
         \end{tbox}
 
@@ -816,7 +816,7 @@ Some basic logic:
 
         \textbf{Conclusion:} any open set in $\R$ is the countable union of open intervals
 
-\section{Sept 24}
+\section*{Sept 24}
     Recall last time, we were trying to characterization the Borel $\sigma$-algebra of $\R$, $\B_{\R}$. 
 
     
@@ -980,7 +980,7 @@ Some basic logic:
             \textbf{Exercise:} Check that $\M$ is a $\sigma$-algebra and that $\mu$ is a measure
         \end{exercise}
 
-\section{Sept 26}
+\section*{Sept 26}
         \begin{tbox}{\textbf{Theorem (Properties of Measures)}: Let $(X, \M, \mu)$ be a measure space. Then:
             \begin{enumerate}
                 \item (Monotonicity) with $E \sub F$ with $E, F \in \M$, then 
@@ -1106,7 +1106,7 @@ Some basic logic:
         \[\mu^*(E) \geq \mu^*(A \cup E) + \mu^*(E\cap A^c)\] 
 
 
-\section{Oct 01}
+\section*{Oct 01}
 
     \begin{tbox}{\textbf{Carathéodory Procedure:} If $\mu^*$ is an outer measure and $\M$ are $\mu^*$-measurable sets, then $\M$ is a $\sigma$-algebra and $\mu^*\big\vert_{\M}$ is a measure on $\M$}
         
@@ -1252,7 +1252,7 @@ Some basic logic:
         So by arbitrariness of $\ep$, $\mu^*(I) = b - a$
     \end{tbox}
 
-\section{Oct 03}
+\section*{Oct 03}
     \begin{tbox}{\textbf{Corollary:} If $A$ is a countable subset of $\R$, $\mu^*(A) = 0$. Furthermore, $[0, 1]$ is not countable. }
         \emph{Proof:} $\forall x \in \R$, $\{x\} = (x - \ep, x + \ep)$, so 
         \[\mu^*(\{x\}) \leq 2\ep \implies \mu^*(\{x\})= 0\]
@@ -1368,7 +1368,7 @@ Some basic logic:
     \end{tbox}
 
 \chapter{Measurable functions}
-\section{Oct 08}
+\section*{Oct 08}
     \textbf{Measurable function:} Let $(X, \M, \mu)$ be a measure space. Let $f: X \to \R$. $f$ is \emph{measurable} iff $\forall \alpha \in \R$, 
     \[\{x \in X, f(x) > \alpha\} \in \M\] 
 
@@ -1525,7 +1525,7 @@ Some basic logic:
 
     \textbf{Conclusion:} these simple functions can approximate \emph{any} measurable function in this very strong sense. 
 
-\section{Oct 10}
+\section*{Oct 10}
 \subsection*{Integration of Non-negative functions} 
     In this section, assume $f \geq 0$. 
 
@@ -1695,7 +1695,7 @@ Some basic logic:
         \end{align*}
     \end{tbox}
 
-\section{Oct 17}
+\section*{Oct 17}
     \begin{tbox}{\textbf{Corollary of MCT:}  If $f_n \geq 0$, 
         \[\sum_{n=1}^{\infty} \int f_n \; d\mu = \int \sum_{n=1}^\infty f_n \; d\mu\]}
         \emph{Proof:} Define $F_N = \sum_{n=1}^{N} f_n$. Clearly $F_N$ is increasing so by MCT, 
@@ -1844,7 +1844,7 @@ Some basic logic:
         \[\int_{X \setminus E} h \; d\mu = \int_{X \setminus E} f\; d\mu + \int_{X \setminus E} g\; d\mu\]
     \end{tbox}
 
-\section{Oct 22}
+\section*{Oct 22}
     \subsection*{Complex-Valued Functions}
         \[\int f = \int \Re(F) + i \int \Im(F)\]
 
@@ -1955,7 +1955,7 @@ Some basic logic:
             \includegraphics[width=0.6\textwidth]{Images/symmetric mollifier.png}
         \end{center}
 
-\section{Oct 24}
+\section*{Oct 24}
     \begin{tbox}{\textbf{Theorem (Integrals with Parameter):} Let $f(x, t): X \times [a, b) \to \C$ where $f(;, t): X \to \C$ is integrable for $t \in [a, b]$. Define 
         \[F(t) = \int f(x, t) \; d\mu\]
         \begin{enumerate}[(a)]
@@ -2077,7 +2077,7 @@ Some basic logic:
             \end{exercise}
         \end{tbox}
 
-\section{Oct 29}
+\section*{Oct 29}
     \subsection*{Modes of Convergence (Contd.)}
         \tbf{Convergence in Measure:} We say $f_n \to f$ \emph{in measure} ($f_n \overset{\mu}{\longrightarrow} f$) if $\forall \ep > 0$,
         \[\lim_{n \to \infty} \mu\{x: \abs{f_n(x) - f(x)} \geq \ep\} = 0\]
@@ -2300,7 +2300,7 @@ Some basic logic:
             \[(\mu \times \nu) (A \times B) \leq \mu(A) \nu(B)\]
         \end{tbox}
 
-\section{Nov 7}
+\section*{Nov 7}
     \tbf{Recall:} For measure spaces $(X, \M, \mu)$ and $(Y, \Nc, \nu)$, we would like to construct a product measure $\mu \times \nu$ on $X \times Y$ such that
     \[\mu\times\nu(A \times B) = \mu(A)\mu(B)\]
 
@@ -2484,7 +2484,7 @@ Some basic logic:
 
     \tbf{Remark:} This works just fine for integration in general but we would still like a more general result that does not depend on losing a measure $0$ set. 
 
-\section{Nov 12}
+\section*{Nov 12}
     Last time, we gave a weak form of the proof of the Tonelli Theorem:
     \begin{enumerate}
         \item $(\mu \times \nu)E = 0 \implies \mu(E^y)= 0, \; \nu(E^x) = 0$ and measurable
@@ -2563,7 +2563,7 @@ Some basic logic:
 
     \end{tbox}
 
-\section{Nov 14}
+\section*{Nov 14}
 \subsection*{The Lebesgue Measure on $\R^n$}
     Denote $m$ the Lebesgue measure and $\L^n$ the class of Lebesgue measurable sets.
 
@@ -2657,7 +2657,7 @@ Some basic logic:
 
     \end{tbox}
 
-\section{Nov 19}
+\section*{Nov 19}
     \tbf{Recall:} Last time we showed that if $U$ is open, $U = \underbar A(U)$, a collection of dyadic cubes.
 
     \begin{tbox}{\textbf{Corollary:} Let $U$ be open, then the \tbf{inner content} is $m(U) = m(\underbar A(U))$. Let $F \sub \R^n$ be a compact set. Then the \tbf{outer content} is $m(F) = m(\bar A(F))$.} 
@@ -2751,7 +2751,7 @@ Some basic logic:
     \end{tbox} 
 
 \chapter{Signed Measure and Differentiation}
-\section{Nov 21}
+\section*{Nov 21}
     \subsection*{Signed Measures}
         \tbf{Definition:} Let $(X, \M)$ be a measurable space. $\forall m \in \M$, if $\nu: \M \to \bar \R$ satisfies
         \begin{itemize}
@@ -2869,7 +2869,7 @@ Some basic logic:
             But $P \setminus P' \sub N'$. As it is positive and negative, it must be null.
         \end{tbox}
 
-\section{Nov 26}
+\section*{Nov 26}
     \tbf{Mutual Singularity:} Two measures $\mu, \nu$ are \emph{mutually singular} ($\mu \perp \nu$) if $\exists E F \in \M$ disjoint such that $X = E \cup F$ and $\mu(E) = \nu(F) = 0$.
 
     \tbf{A Canonical Example:} Let $\mu$ be the Lebesgue measure on $\R^n$ and $\delta_0$ be the counting measure at the origin (dirac-delta mass). Define $E = \{0\}$, $F = \R^n \setminus \{0\}$. Clearly, $\mu \perp \nu$. 
@@ -2903,7 +2903,7 @@ Some basic logic:
         \end{exercise}
     \end{tbox}
 
-    \subsection{The Lebesgue-Radon-Nikodym Theorem}
+    \subsection*{The Lebesgue-Radon-Nikodym Theorem}
         \tbf{Absolutely Continuous:} Let $\mu$ be a measure. Let $\nu$ be a signed measure. We say $\nu$ is \emph{absolutely continuous} with respect to $\mu$ ($\nu \ll \mu$) if $\forall E \in \M$, $\mu(E) = 0 \implies \nu(E) = 0$.
 
         \emph{Note: In some sense, this is the opposite of mutual singularity.} 
@@ -2942,7 +2942,7 @@ Some basic logic:
         \begin{tbox}{\textbf{Lemma (Dichotomy of $\perp$ and $\ll$):} Suppose $\nu$ and $\mu$ are positive, finite measures in $(X, \M)$. Then either 
             \begin{enumerate}
                 \item $\mu \perp \nu$
-                \item $\exists \ep > 0$, $E \in \M$ which is a positive set for $\nu - \ep \mu$
+                \item $\exists \ep > 0$, $\exists E \in \M$ which is a positive set for $\nu - \ep \mu$
             \end{enumerate}}
             \emph{Proof:} Consider $\nu - \frac{1}{n}\mu, \quad n = 1, 2, \dots$. By Hahn, $X = P_n \cup N_n$. 
 
@@ -2969,27 +2969,265 @@ Some basic logic:
             \[\nu = \lambda + f\; d\mu \quad \st\quad  \lambda \perp \mu\]}
             \emph{Proof:} WLOG, suppose $\mu, \nu$ finite and $\nu$ positive (else $\nu = \nu^+ - \nu^-$ and argue separately).
 
-        
             STEP 1. (Construction of $f$). 
             
-            We will seek to construct a maximal $f$ so $\lambda \to 0$ and thus $\lambda \perp \mu$. 
+            We will seek to construct a maximal $f_{\text{max}}$ so $\lambda \to 0$ and thus $\lambda \perp \mu$. 
 
             Let 
-            \[\Fc = \left\{f: X \to [0, \infty] \; \bigg\vert \; \int_E f\; d\mu \leq \nu(E) \quad \forall E\right\}\]
+            \[\F = \left\{f: X \to [0, \infty] \; \bigg\vert \; \int_E f\; d\mu \leq \nu(E) \quad \forall E\right\}\]
 
-            We have that 
-            \begin{itemize}
-                \item $\Fc$ is nonempty ($f = 0$) 
-                \item if $f_1, f_2 \in \Fc$, so is $h = \max(f_1, f_2)$
-            \end{itemize} 
+            Trivially, $\F$ is nonempty ($f = 0$). 
+            
+            Further, if $f, g \in \F$, then $h = \max(f, g) \in \F$.
+            
+            \begin{proof}
+                \emph{Proof:} 
+                \begin{align*}
+                    \int_E h \; d\mu &= \int_{f > g} f \; d\mu + \int_{f \leq g} g \; d\mu\\
+                        &= \nu(\{f > g\}) + \nu(\{f \leq g\})\\
+                        &= \nu(E)
+                \end{align*}
+            \end{proof}
 
-            Then 
+            We also know $\int_E f \; d\mu$ has an upper bound $\nu(E) \leq \nu(X) < \infty$ so let $a = \sup \{\int f \; d\mu: f \in \F\} < \infty$. Then, $\exists \{f_n\} \in \F$ such that $\int f_n \; d\mu \to a$. 
+
+
+            Let $g_n = \max\{f_1, f_2, \dots, f_n\}$. Trivially, $g_n \nearrow$ so denote 
+            \[f_{\max} = \lim_{n \to \infty} g_n\]
+
+            Clearly, 
+            \[\lim_{n \to \infty} \int f_n \leq \int g_n\]
+            but $\int f_n \to a$ pointwise so by monotone convergence theorem, 
+            \[\int g_n \to \int f_{\text{max}}\]
+
+            Therefore, $\int f_{\text{max}}\; d\mu = a$.
+
+            Finally, we claim that $f_{\text{max}} \in \F$.
+
+            \begin{proof}
+                \emph{Proof:} 
+                \[\forall E \in \M \quad \int_E f_{\text{max}} \; d\mu = \lim_{n \to \infty} \int_E g_n \leq \nu(E)\]
+                So $f_{\text{max}}$ is indeed a maximizer inside $\F$. 
+            \end{proof}
+
+            STEP 2. $\lambda = \nu - f_{\text{max}}\; d\mu \perp \mu$.
+
+            $\lambda$ is a positive measure so we have $\nu - f_{\text{max}}\; d\mu \geq 0$. 
+
+            Suppose $\nu - f_{\text{max}}\; d\mu$ is not mutually singular with $\mu$. Then by the dichotomy lemma, $\exists \ep_0 > 0$, $\exists E_0 \in \M$ with $\mu(E_0) > 0$ such that $(\lambda - \ep_0 \mu)(E) > 0 \quad \forall E \sub E_0$.
+
+            We claim $f_{\text{max}} + \ep_0 \ind_{E_0} \in \F$.
+
+            \begin{proof}
+                \emph{Proof:} $\forall E$,
+                \begin{align*}
+                    \int_E f_{\text{max}} + \ep_0 \ind_{E_0} &= \int_{E \setminus E_0} [f_{\text{max}} + \ep_0 \ind_{E_0}]+ \int_{E \cap E_0}[f_{\text{max}} + \ep_0 \ind_{E_0}]\\ 
+                        &= \int_{E \setminus E_0} f_{\text{max}} + \int_{E \cap E_0} f_{\text{max}} + \ep_0 \mu(E_0)\\
+                        &\leq \nu(E \setminus E_0) + \nu(E \cap E_0) \qquad \text{(By construction)}\\ 
+                        &= \nu(E)
+                \end{align*}
+            \end{proof}
+
+            But $\ep_0 \ind_{E_0} \geq 0$ so this contradicts the maximality of $f_{\text{max}}$ and thus $\lambda \perp \mu$.
+
+            STEP 3. (Uniqueness).
+
+            If $\exists f' \in \L^1(\mu)$ such that $\nu = \lambda' + f'\; d\mu$ and $\lambda \perp \mu$, then 
+            \[\lambda- \lambda' = -(f' - f)\; d\mu\]
+
+            However, $\lambda - \lambda'$ is singular and $-(f' - f)\; d\mu$ is absolutely continuous, so they must be zero.
+
+            \begin{exercise}
+                \textbf{Exercise:} Check that $\lambda - \lambda'$ is singular and $-(f' - f)\; d\mu$ is absolutely continuous.
+            \end{exercise}
+
+            In particular, 
+            \[f'\; d\mu = f\; d\mu\implies f = f' \text{ a.e.} \qed\]
+
+        \end{tbox}
+
+\section*{Dec 3} 
+    By the Radon-Nikodym theorem, we have that $\nu \ll \mu \implies \exists f \in \L^1 \st \nu$. We will denote this $f$ by $\frac{d\nu}{d\mu}$. 
+
+    \begin{tbox}{\textbf{Proposition (Chain Rule):} Suppose $\nu$ is a $\sigma$-finite signed measure and $\mu, \lambda$ are $\sigma$-finite positive measures. Assume $\nu \ll \mu$ and $\mu \ll \lambda$. Then 
+        \begin{enumerate}
+            \item If $g \in \L^1(\nu)$, then $g \frac{d\nu}{d\mu} \in \L^1(\mu)$ and 
+            \[\int g \; d\nu = \int g \frac{d\nu}{d\mu} \; d\mu\]
+            \item $\nu \ll \lambda$ and 
+            \[\frac{d\nu}{d\lambda} = \frac{d\nu}{d\mu}\cdot \frac{d\mu}{d\lambda} \quad (\lambda-\text{a.e.})\]
+        \end{enumerate}}
+        \emph{Proof:} 
+
+        1. WLOG $\nu \geq 0$. By Radon-Nikodym, $\forall E$, we have 
+        \[\nu(E) = \int_E f \; d\mu \iff \text{(1) is valid for } g = \ind_E \]
+
+        Since it follows for characteristic functions, linearity demands it follows for simple functions, and then by approximation for all $g \in \L^1(\nu)$.
+
+        2. We have $\frac{d\nu}{d\mu} \in \L^1(\mu)$ and 
+        \[\nu(E) = \int \frac{d\nu}{d\mu}\; d\mu\]
+        by Part 1. 
+
+        Letting $\mu = \nu$ and $\lambda = \mu$, we have 
+        \[\int \frac{d\nu}{d\mu}\; d\mu = \int \frac{d\nu}{d\mu} \frac{d\mu}{d\lambda} \; d\lambda\]
+        and 
+        \[\nu(E) = \int_E \frac{d\nu}{d\lambda} d\lambda\]
+
+        Therefore, 
+        \[\frac{d\nu}{d\mu} = \frac{d\nu}{d\mu} \frac{d\mu}{d\lambda} \quad (\lambda-\text{a.e.})\]
+    \end{tbox}
+
+\subsection*{Differentiation in $\R^n$}
+    \begin{tbox}{\textbf{Vitali Covering Lemma:} Let $\Cc$ be a collection of open balls in $\R^n$ and $U = \bigcup_{B \in \Cc} B$. If $c < m(U)$, then $\exists \{B_j\}_{j=1}^k \in \Cc$ disjoint such that 
+        \[\sum_{j=1}^k m(B_j) > 3^{-n}c\]}
+        \emph{Proof:} BSince $c < m(U)$, by approximation theorem, $\exists K$ compact such that $K \sub U$ and $\mu(K) > c$. 
+
+        Since $K$ is compact, we have a finite cover $\Cc_k = \{B_1, \dots, B_k\}$ such that $K \sub \bigcup_{j=1}^k B_j$. 
+
+        First choose $B_1$ to have the maximum radius among $\Cc_k$. Let $I_{B_1}$ denote all the balls $B_j \in \Cc_k$ such that $B_j \cap B_1 \neq \emptyset$. Let $N_{B_1}$ denote $\{B_j: B_j \cap B_1 = \emptyset\}$.
+
+        Because $B_1$ has maximal radius, any set in $I_{B_1}$ can have a radius at most that of $B_1$ so $3B_1 \supseteq I_{B_1}$. 
+
+        Now take $B_2$ to be the ball with maximum radius in $N_{B_1}$. Let $I_{B_2} = \{B_j \in N_{B_1}: B_j \cap B_2 \neq \emptyset\}$ and $N_{B_2} = \{B_j \in N_{B_1}: B_j \cap B_2 = \emptyset\}$. By the same argument, $I_{B_2} \sub 3B_2$.
+
+        Since $\Cc_k$ is finite, this process will terminate and yield a disjoint maximizing sequence $B_1, \dots, B_m$ such that $K \sub \bigcup_{j=1}^m B_j$ and
+        \[c < m(K) \leq \sum_{j=1}^m m(3B_j) = 3^n \sum_{j=1}^m m(B_j)\]
+    \end{tbox}
+
+    \tbf{Average value:} Let $f \in \L^1_{\text{loc}}$ (locally integrable, i.e. integrable on bounded measurable sets). $\forall (r, x)$, 
+    \[\text{Ar}(f)(x) = \frac{1}{B(r, x)} \int_{B(r, x)} f \; d\mu\]
+
+    \begin{tbox}{\textbf{Lemma:} If $f\in \L^1_{\text{loc}}$, $\text{Ar}(f(x))$ is jointly continuous in $r$ and $x$ ($r > 0, x \in \R^n$)}
+        \emph{Proof:} We are interested in 
+        \[\int_{\R^n} \ind_{B(r, x)} f\; d\mu\]
+
+        Fix $(r_0, x_0)$. We claim $\ind_{B(r, x)} \to \ind_{B(r_0, x_0)}$ a.e.
+    \end{tbox}
+
+\section{Dec 05}
+    \subsection*{Lebesgue Differentiation}
+        Recall 
+        \[A_r f(x) = \frac{1}{m(B(r, x))} \int_{B(r, x)} f(y)\; dy\]
+
+        Our goal is to show 
+        \[\lim_{r \to 0} A_r f(x) = f(x) \; \text{a.e} \]
+
+        This requires some special machinery.
+
+        \begin{exercise}
+            \textbf{Exercise (Homework):} Show the weaker form of Lebesgue differentiation ($\exists$ subsequence $r_n \to 0$ such that $A_{r_n} f(x) \to f(x)$ a.e.) using our normal convergence tools
+        \end{exercise}
+
+        \tbf{Hardy-Littlewood Maximal Function:} For $f \in \L^1_{\text{loc}}$, define
+        \[H f(x) = \sup_{r > 0} A_r \abs{f}(x) = \sup_{r > 0} \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y)} \; dy\]
+
+        \begin{tbox}{\textbf{Maximal Theorem:} $\exists c(n) > 0$ such that for $f \in \L^1$, 
+            \[m(\{x: H f > \alpha\}) \leq \frac{C}{\alpha} \int_{\R^n} \abs{f(y)}\; dy\]}
+
+            \emph{Remark:} $m(\{x: H f > \alpha\})$ is the \emph{distribution function} of $H f$. We have shown several times in HW that this is especially important. In particular, this gives us measurability immediately.
+
+            In another HW, we showed 
+            \[\int \abs{H f}^p \sim \int_0^{\infty} \alpha^{p-1} m(H f > \alpha)\; d\alpha\]
+
+            \emph{Proof:} 
+
+            Let $E_{\alpha} = \{x: H f(x) > \alpha\}$. By definition of $\sup$, $\forall x \in E_{\alpha}$, $\exists r_x$ s.t. 
+            \[A_{r_x} f(x) = \frac{1}{m(B(r_x, x))} \int_{B(r_x, x)} \abs{f(y)} \; dy > \alpha\]
+
+            Equivalently, $\forall x$, we can find a ball $B(r_x, x)$ such that
+            \[\int_{B(r_x, x)} \abs{f(y)}\; dy > \alpha \abs{B(r_x, x)}\]
+
+            Hence,
+            \[E_{\alpha} \sub \bigcup_{x \in E_{\alpha}} B(r_x, x)\]
+            and $\forall c$, 
+            \[c < m(E_{\alpha}) \leq m\left(\bigcup_{x \in E_{\alpha}} B(r_x, x)\right)\]
+
+            By Vitali, $\exists x_1, \dots, x_k \in E_{\alpha}$ with $B(r_{x_j}, x_j)$ disjoint such that 
             \begin{align*}
-                \int_E h &= \int_{E\cap \{f_1 > f_2\}} + \int_{E\cap\{f_1 \leq f_2\}}\\ 
-                    &= \int_{E \cap \{f_1 > f_2\}} f_1 + \int_{E \cap \{f_1 \leq f_2\}} f_2\\ 
-                    &\leq \nu(E \cap \{f_1 > f_2\}) + \nu(E \cap \{f_1 \leq f_2\}) = \nu(E)\\
+                c &< 3^n \sum_{j=1}^k \abs{B(r_{x_j}, x_j)}\\ 
+                    &<  \frac{3^n}{\alpha} \sum_{j=1}^k \int_{B(r_{x_j}, x_j)} \abs{f(y)}\; dy\\
+                    &\leq \frac{3^n}{\alpha} \int_{\R^n} \abs{f(y)}\; dy
+            \end{align*}
+        \end{tbox}
+
+        In fact, we can go a little further. We want to show that the inequality given in the maximal theorem is sharp. 
+
+        \begin{proof}
+            \emph{Proof:} By HW, for large $R$ constant,
+            \[\frac{1}{m(B(R, x))} \int f(y)\; dy \geq c \frac{\int f(y)\; dy}{R^n}\]
+
+            Choose $\abs{x} \sim R$ and take $B(R/2, x)$. Then for any $x \in B(R/2, x)$,
+            \[\frac{1}{m(B(R/2, z))} \int_{B(R/2, x)} f(y)\;dy \geq \frac{c\int f(y)\;dy}{2^n R^n}\]
+
+            Take $\alpha \sim R^{-n}$. Consider the set 
+            \[\left\{x: \sup_{r > 0} \left[\frac{1}{m(B(r, x))} \int_{B(r, x)} f(x) \; dx\right] > \alpha\right\} \supseteq B(R/2, x)\]
+            but $m(B(R/2, x)) \sim R^n \sim \frac{1}{\alpha}$ so for $\alpha$ small, 
+            \[m(\{x: H f > \alpha\}) \sim \frac{c}{\alpha} \int_{\R^n} \abs{f(y)}\; dy\]
+        \end{proof}
+
+        In particular, this means that we do not have integrability. This idea is so important, though, that we introduce $\L^1$-weak functions. 
+        
+        \tbf{$\L^1$-weak functions:} $g \in \L^1_W$ if 
+        \[m(\{x: \abs{g} > \alpha\}) \leq \frac{C}{\alpha} \int \abs{g}\]
+    
+        \begin{tbox}{\textbf{Theorem:} If $f \in \L^1_{\text{loc}}$< then $\lim_{r \to 0} A_r f(x) = f(x)$ a.e. for $x \in \R^n$} 
+            \emph{Proof:} WLOG Assume $f \in \L^1$. Recall 
+            \[\limsup_{r \to r_0} \phi(r) = \lim_{\ep \to 0} \sup_{0 < \abs{r - r_0} < \ep} \phi(r) = c \iff \lim_{r \to r_0} \phi(r) =c\] 
+
+            STEP 1. If $f$ is continuous, $\forall \delta > 0$, $\exists r_x > 0$ such that $\abs{f(x) - f(y)} < \delta, \abs{x - y} < r_x$. Then
+            \begin{align*}
+                A_r f(x) - f(x) &= \frac{1}{m(B(r, x))} \int_{B(r, x)} f(y)\;dy - \frac{1}{m(B(r, x))} \int_{B(r, x)} f(x)\;dy\\ 
+                    &\leq \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - f(x)}\; dy\\ 
+                    &< \delta \qquad \forall r < r_x
             \end{align*}
 
-            Let $a = \sup \Fc$. Then, $\exists f_n \in \Fc$ such that 
+            Hence, 
+            \[\limsup_{r \to 0} \abs{A_r f - f} = 0\]
+
+            STEP 2. For $f \in \L^1$, choose a continuous function $g$ such that $\forall \ep > 0$, $\norm{f - g}_{\L^1} < \ep$. Then 
+            \begin{align*}
+                \limsup_{r \to 0} \abs{A_r f(x) - f(x)} &\leq \limsup_{r \to 0} \abs{A_r(f(x) - g(x)) + A_r(g) - g(x) - f(x) + g(x)}\\ 
+                &\leq \limsup_{r \to 0} \abs{A_r (f(x) - g(x))} + \limsup_{r \to 0} \abs{A_r g - g} + \abs{f(x) - g(x)}\\ 
+                &= \limsup_{r \to 0} \abs{A_r (f(x) - g(x))} + \abs{f(x) - g(x)}\\ 
+                &\leq  H(f - g)(x) + \abs{f(x) - g(x)}
+            \end{align*}
+
+            Let $E_{\alpha} = \{x: \limsup_{r \to 0} \abs{A_r f(x) - f(x)} > \alpha\}$. 
+
+            For $x \in E_{\alpha}$, $\alpha < \limsup_{r \to 0} \abs{A_r f(x) - f(x)}$ so either $H(f - g)(x) > \frac{\alpha}{2}$ or $\abs{f(x) - g(x)} > \frac{\alpha}{2}$.
+
+            Therefore,  
+            \[E_{\alpha} \sub \{H(f - g)(x) > \frac{\alpha}{2}\} \cup \{\abs{f(x) - g(x)} > \frac{\alpha}{2}\}\]
+
+            First consider $m\{x: \abs{f(x) - g(x)} > \frac{\alpha}{2}\}$. By Chebyshev,
+            \[m\{x: \abs{f(x) - g(x)} > \frac{\alpha}{2}\} \leq \frac{2}{\alpha} \norm{f - g}_{\L^1} < \frac{2}{\alpha}\ep\]
+
+            Further, by the Maximal Theorem
+            \[m\{x: \abs{H(f - g)(x) > \frac{\alpha}{2}}\} \leq \frac{c}{\alpha} \norm{f - g}_{\L^1} < \frac{c}{\alpha}\ep\]
+
+            All together, 
+            \[m(E_{\alpha}(\{x: \abs{A_r f - f}(x) > \alpha\})) \lesssim \frac{C}{\alpha} \ep \to 0 \] 
+
+            In particular, $m(E_{\alpha}) = 0$ for all $\alpha > 0$ so letting $\alpha = \frac{1}{n}$, 
+            \[m\{x: \abs{A f - f}(x) > 0\} = \bigcup_{n=1}^\infty E_{\frac{1}{n}}\]
+            
         \end{tbox}
-\end{document}  
+
+        \begin{tbox}{\textbf{Corollary:} 
+            \[\frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - f(x)}\; dy \to 0 \text{ a.e}\]}
+            \emph{Proof:} $\forall c$, consider $\abs{f(x) -c}$.
+
+            By the theorem, $\exists E$ with $m(E) = 0$ such that
+            \[\lim_{r \to 0} \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - c}\; dy = 0\]
+
+            Choose any countable dense set, say $\Q$. Now, $\forall \ep >0$, 
+            \[\abs{c - f(x)} < \ep \quad c \in \Q, \;x \in E\]
+
+            Hence, 
+            \begin{align*}
+                \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - f(x)}\; dy &= \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - c + c - f(x)}\; dy\\ 
+                &\leq \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - c}  + \abs{c - f(x)}\; dy\\
+                &\leq \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - c}\; dy + \ep\\ 
+                &= \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - c}\; dy 
+            \end{align*}
+        \end{tbox}
+\end{document} 
