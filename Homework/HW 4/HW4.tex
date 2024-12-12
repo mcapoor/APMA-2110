@@ -1,0 +1,550 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=0.5in}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\newcommand{\F}[1]{\mathcal{F}(#1)}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\B}{\mathcal{B}}
+
+\newcommand{\Ec}{\mathcal{E}}
+\renewcommand{\H}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\diam}{\text{diam}\,}
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        coltext=#1,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\title{APMA 2110: Homework 4}
+\author{Milan Capoor}
+\date{}
+
+\begin{document}
+\maketitle
+
+1. Let $\mu$ be the Lebesgue measure in $\R$ and $\mu(E) = 0$. Prove 
+\[\mu(\{x^2: x \in E\}) = 0\]
+
+\color{blue}
+    If $E = \emptyset$, certainly $\mu(\{x^2: x \in E\}) = \mu(\emptyset) = 0$.
+
+    Therefore, suppose $E \neq \emptyset$.
+
+    $\mu(\{x^2: x \in E\}) \geq 0$ so it suffices to show that $\mu(\{x^2: x \in E\}) \leq 0$.
+
+    For notational convenience, let $E^2 = \{x^2: x \in E\}$ and let $\ep > 0$.
+
+    Because $E \sub \R$, 
+    \[E = (E \cap (-\infty, 0)) \cup (E \cap [0, \infty))\] 
+    
+    First consider $E \cap [0, \infty)$. By monotonicity of $x^2$ on $[0, \infty)$ and the existence of the covering $(a_i, b_i)$,
+    \[x \in E \cap [0, \infty) \implies x \in (a_n, b_n) \text{ for some } n \implies x^2 \in (a_n^2, b_n^2)\]
+
+    Similarly, for $E \cap (-\infty, 0)$,
+    \[x \in E \cap (-\infty, 0) \implies -x \in E \cap [0, \infty) \implies (-x)^2 = x^2 \in (a_m^2, b_m^2) \text{ for some } m\]
+
+    Then, 
+    \[E^2 \sub \bigcup_{i=1}^\infty (a_i^2, b_i^2)\]
+
+    By monotonicity and subadditivity, 
+    \[\mu(E^2) \leq \sum_{i=1}^{\infty} \mu((a_i^2, b_i^2))\]
+
+    By the faithfulness of the measure, $\mu((a_i^2, b_i^2)) = \rho(a_i^2, b_i^2) = \abs{b_i^2 - a_i^2}$.
+    
+    And 
+    \[\abs{b_i^2 - a_i^2} = \abs{b_i - a_i} \cdot \abs{b_i + a_i} = \rho(b_i, a_i) \cdot \abs{b_i + a_i}\]
+
+    And 
+    \[\mu(E) = 0\implies \exists (a_i, b_i) \st \bigcup_{i=1}^\infty (a_i, b_i) \supset E \text{ and } \rho(a_i, b_i) = 0\;  \forall i\geq 1\]
+
+    So 
+    \[\mu(E^2) \leq \sum{i=1}^{\infty} \mu((a_i^2, b_i^2)) = \rho(a_i, b_i)\cdot \abs{b_i + a_i} = 0\]
+
+    So $\mu(E^2) = 0$ as well.    
+    
+\color{black}
+
+\pagebreak 
+
+2. Define the $n$-dimensional open intervals 
+\[I= \{x: a_j < x_j < b_j,\; j = 1, \dots, n\}\]
+and their volume 
+\[\rho(I) = \prod_{j=1}^n (b_j - a_j)\]
+
+Construct the Lebesgue measure $\mu$ on $\R^n$ by constructing an outer measure $\mu^*$ and using the Carathéodory construction.
+
+Show that 
+\begin{enumerate}
+    \item $\mu(I) = \rho(I)$ and $I$ is measurable 
+    \item $\mu^*$ is the same if we choose closed cubes with length less than a fixed $\ep >0$
+\end{enumerate}
+
+\color{blue}
+    We claim that for $I$ an open $n$-dimensional interval,
+    \[\mu^*(I) = \inf\left\{\sum_{j=1}^{\infty} \rho(E_j) \;\bigg\vert\; I \sub \bigcup_{j=1}^\infty E_j \right\}\]
+    is an outer measure on $\R^n$. 
+
+    1. $\mu^*(\emptyset) = 0$
+
+    Clearly $\rho(\emptyset) = 0$ and $\emptyset \sub \bigcup_{j=1}^\infty I_j$ for any $I_j$, so it suffices to take $I_j = \{j\}$ so 
+    \[\mu^*(\emptyset) \leq \sum_{j=1}^\infty \rho(I_j) = 0\]
+    
+    Hence, $\mu^*(\emptyset) = 0$.
+
+    \div 
+
+    2. Monotonicity 
+
+    Suppose $A \sub B$ and $\{E_j \in \mathcal I\}_{1}^{\infty}$ is a covering of $B$. 
+
+    $A \sub B$ so $\{E_j\}_{1}^{\infty}$ is a covering of $A$ as well. 
+
+    Then by definition of the measure as inf, 
+    \[\mu^*(A) \leq \sum_{j=1}^{\infty} \rho(E_j)\]
+    and taking the inf of both sides, 
+    \[\mu^*(A) \leq \inf\left\{\sum_{j=1}^{\infty} \rho(E_j)\right\} = \mu^*(B)\]
+
+    \div 
+
+    3. Subadditivity 
+
+    Let $\{A_j\}_{j=1}^{\infty} \sub P(\R^n)$ and $\ep > 0$. Let $\{E_{jk}\}_{k=1}^{\infty}$ be a cover of $A_j$ such that 
+    \[\sum_{k=1}^{\infty} \rho(E_{jk}) \leq \mu^*(A_j) + \frac{\ep}{2^j}\]
+    (existence guaranteed by definition of measure as $\inf$)
+
+    By construction, 
+    \[\bigcup_{j=1}^{\infty} A_j \sub \bigcup_{j=1}^{\infty} \left(\bigcup_{k=1}^\infty E_{jk}\right)\]
+    so 
+    \begin{align*}
+        \mu^*\left(\bigcup_{j=1}^{\infty} A_j\right) &\leq \sum_{j=1}^{\infty} \left(\sum_{k=1}^{\infty} \rho(E_{jk})\right)\\ 
+        &\leq \sum_{j=1}^{\infty}\left(\mu^*(A_j) + \frac{\ep}{2^j}\right) \\
+        &= \sum_{j=1}^{\infty} \mu^*(A_j) + \ep\\ 
+        &= \sum_{j=1}^{\infty} \mu^*(A_j)
+    \end{align*} 
+
+    Hence, $\mu^*$ is an outer measure on $\R^n$.
+
+    Let $\M$ be the $\mu^*$-measurable sets on $\R^n$. By the Carathéodory construction, $\mu =\mu^*\bigg\vert_{\M}$ is a measure. 
+
+    \div 
+    1. We claim $\mu(I) = \rho(I)$.
+
+    \begin{proof}
+        \emph{Proof:}
+    
+        Let $\ep > 0$ and $I = \{x: a_j < x_j < b_j,\; j = 1, \dots, n\}$.
+
+        Clearly, $I \sub \{x: a_j - \ep < x_j < b_j + \ep,\; j=1, \dots, n\}$ so by the definition of $\mu^*$,
+        \begin{align*}
+            \mu^*(I) &\leq \rho(\{x: a_j - \ep < x_j < b_j + \ep,\; j=1, \dots, n\})\\ 
+                &= \prod_{j=1}^n (b_j - a_j + 2\ep)\\ 
+                &\overset{\ep \to 0}{=} \prod_{j=1}^n (b_j - a_j)\\ 
+                &= \rho(I)
+        \end{align*}
+
+        It remains to show that $\mu^*(I) \geq \rho(I)$. 
+
+        Define $\lambda \in \R$ such that $\lambda < \rho(I)$. Pick a closed, bounded interval $J \sub I$ such that $\lambda < \rho(J) < \rho(I)$. 
+
+        Let $\{E_j\}_{j=1}^{\infty}$ be an open covering of $I$ (and hence a covering of $J$). By Heine-Borel, there exists a finite subcover $\{E_j\}_{j=1}^N$.
+
+        Then 
+        \[\rho(J) \leq \sum_{j=1}^N \rho(E_j)\]
+        by finite subadditivity.
+
+        Taking the limit, 
+        \[\rho(J) \leq \sum_{j=1}^\infty \rho(E_j) \implies \lambda < \rho(J) \leq \mu^*(I)\]
+
+        And since $\lambda$ was arbitrary with $\alpha < \rho(I)$, we can take $\lambda = \rho(I)$ to show that 
+        \[\rho(I) \leq \mu^*(I)\]
+    \end{proof}
+
+    Now we can show that $I$ is in fact measurable.
+
+    \begin{proof}
+        \emph{Proof:}
+
+        It suffices to show 
+        \[\mu^*(E) \geq \mu^*(I \cap E) + \mu^*(I^c \cap E)\]
+
+        Notice 
+        \[\mu^*(I \cap E) + \mu^*(I^c \cap E) = \mu^*((\mathbf{a}, \mathbf{b}) \cap E) + \mu^*((-\infty, \mathbf{a}] \cap E) + \mu^*([\mathbf{b}, \infty) \cap E)\] 
+        because $I \sub \R^n$.
+
+        For notational convenience, let 
+        \begin{align*}
+            E_1 &= (\mathbf{a}, \mathbf{b}) \cap E\\
+            E_2 &= (-\infty, \mathbf{a}] \cap E\\
+            E_3 &= [\mathbf{b}, \infty) \cap E
+        \end{align*}
+
+        Let $\ep > 0$. By the sharpness of the outer measure, $\exists \bigcup_{n=1}^\infty I_n$ such that 
+        \[E \sub \bigcup_{n=1}^\infty I_n\] 
+        and 
+        \[\sum_{n=1}^\infty \rho(I_n) < \mu^*(E) + \ep\]
+
+        So 
+        \begin{align*}
+            E_1 &\sub \bigcup_{n=1}^\infty I_n \cap (\mathbf{a}, \mathbf{b})\\
+            E_2 &\sub \bigcup_{n=1}^\infty I_n \cap (-\infty, \mathbf{a}]\\
+            E_3 &\sub \bigcup_{n=1}^\infty I_n \cap [\mathbf{b}, \infty)
+        \end{align*}
+        
+        Then by subadditivity, 
+        \begin{align*}
+            \mu^*(E_1) &\leq \sum_{n=1}^\infty \mu^*(I_n \cap (\mathbf{a}, \mathbf{b}))\\
+            \mu^*(E_2) &\leq \sum_{n=1}^\infty \mu^*(I_n \cap (-\infty, \mathbf{a}])\\
+            \mu^*(E_3) &\leq \sum_{n=1}^\infty \mu^*(I_n \cap [\mathbf{b}, \infty)) 
+        \end{align*}
+
+        And by the faithfulness of the measure (as shown above), 
+        \[\mu(I_n) = \mu^*(I_n \cap (\mathbf{a}, \mathbf{b})) + \mu^*(I_n \cap (-\infty, \mathbf{a}]) + \mu^*(I_n \cap [\mathbf{b}, \infty))\]
+        so 
+        \[\mu^*(E_1) + \mu^*(E_2) + \mu^*(E_3) \leq \sum_{n=1}^\infty \mu(I_n) \leq \mu^*(E)\] 
+    \end{proof}
+    
+    \div 
+
+    2. Let $\ep > 0$ and define 
+    \[F = \{x: a_j \leq x_j \leq b_j, \; j = 1, \dots, n,\; b_j - a_j < \ep\}\]
+    with 
+    \[\rho(F) = \prod_{j-1}^n (b_j - a_j)\]
+
+    We claim that 
+    \[\mu^*(F) = \inf\left\{\sum_i E_i : F \sub \bigcup_i E_i,\right\}\]    
+    is an outer measure and $\mu^*(F) = \rho(F)$ 
+
+    First, we show that $\mu^*(F)$ is an outer measure. 
+
+    \begin{proof}
+        1. $\mu^*(\emptyset) = 0$. Let $\{E_i\}$ be any collection with $\rho(E_i) = 0$ for all $i$. Then $\emptyset \sub \bigcup_i E_i$ so $\mu^*(\emptyset) = 0$.
+
+        2. Monotonicity. Let $A \sub B$. By sharpness of the measure, there exists a covering of $B$ (and thus a covering of $A$) such that 
+        \[\mu^*(A) \leq \sum_i \rho(E_i) \implies \mu^*(A) \leq \inf\{\sum_i \rho(E_i)\} = \mu^*(B)\]
+
+        3. Subadditivity. Let $\{A_j\}$ be a collection of sets and $\ep > 0$. Let $\{E_{jk}\}$ be a covering of $A_j$ such that $\sum_k \rho(E_{jk}) \leq \mu^*(A_j) + \frac{\ep}{2^j}$. 
+
+        Then $\bigcup_j A_j \sub \bigcup_{jk} E_{jk}$ so
+        \[\mu^*\left(\bigcup_j A_j\right) \leq \sum_{j, k}\rho(E_{jk}) \leq \sum_j \mu^*(A_j) + \ep \overset{\ep \to 0}{=} \sum_j \mu^*(A_j)\]
+
+        Hence, $\mu^*$ is an outer measure.
+    \end{proof}
+
+    Now we show that $\mu^*(F) = \lambda(F)$, where
+    \begin{itemize}
+        \item $\mu^*$ is the outer measure constructed above
+        \item $\lambda$ is the Lebesgue measure on $\R^n$ (defined in part 1)
+        \item $F$ is the closed cube defined above
+    \end{itemize}
+
+    \begin{proof}
+        Certainly $\mu^*(F)$ is well defined by the construction above. Similarly, 
+        \[F \sub I = \{x: a_j - \delta < x_j < b_j + \delta,\; b_j - a_j < \ep\}\] 
+        for any $\delta > 0$ (an open $n$-dimensional interval) and 
+        \[\rho(F) = \prod_{i=1}^n (b_i - a_i) \overset{\delta \to 0}{=} \prod_{i=1}^n (b_i - a_i + 2\delta) = \rho(I)\]
+
+        Fix $\delta > 0$. 
+
+        By the sharpness of the outer measure, $\exists \{E_i\}$ such that $F \sub \bigcup_i E_i$ and
+        \[\sum_i \rho(E_i) < \mu^*(F) + \delta\]
+
+        But by definition of $\lambda$, $\lambda(F) \leq \sum_i \rho(E_i)$ for any covering $\{E_i\}$ of $F$ so 
+        \[\lambda(F) \leq \sum_i \rho(E_i) < \mu^*(F) + \delta \implies \lambda(F) \leq \mu^*(F)\]
+
+        But we can argue identically that for any cover $\{J_i\}$ of $F$, $\sum_i \rho(J_i) < \lambda(F) + \delta$ and 
+        \[\mu^*(F) \leq \sum_i \rho(J_i) < \lambda(F) + \delta \implies \mu^*(F) \leq \lambda(F)\]
+        and we are done.     
+    \end{proof}
+  
+\color{black}
+
+
+\pagebreak
+
+3. (Hausdorff Measure) Let $(X, \rho)$ be a metric space. Show that 
+\[\H_{\alpha}^{\ep}(A) = \inf_{\begin{subarray}{c} A \sub \bigcup_{k=1}^\infty A_k\\ \diam A_k \leq \ep \end{subarray}} \sum_k \diam(A_k)^\alpha\]
+is an outer measure, where $\diam A = \sup_{x,y \in A} \rho(x,y)$.
+
+Prove that $\mu^* = \lim_{\ep \to 0} \H_{\alpha}^{\ep}$ is again an outer measure.
+
+The resulting measure $\H_{\alpha}$ via Carathéodory construction is called the Hausdorff measure. Show that if $\H_{\alpha}(A) < \infty$, then $\H_{\beta}(A) = 0$ for all $\beta > \alpha$. 
+
+\color{blue}
+    We claim that $\H_{\alpha}^{\ep}$ is an outer measure on $X$.
+
+    1. $\H_{\alpha}^{\ep}(\emptyset) = 0$ because $\emptyset \sub \bigcup_{k=1}^\infty A_k$ for any $A_k$ so we can simply choose $A_k = \{k\} \implies \diam(A_k)^{\alpha} = 0 \forall k$ and then 
+    \[\H_{\alpha}^{\ep}(\emptyset) \leq \sum_k \diam(A_k)^{\alpha} = 0 \implies \H_{\alpha}^{\ep}(\emptyset) = 0\]
+
+    2. (Monotonicity)
+
+    Let $A \sub B$ and $\{E_j\}_1^{\infty}$ be a covering of $B$ (and hence also a covering of $A$)
+
+    By definition of $\H_{\alpha}^{\ep}$,
+    \begin{gather*}
+        \H_{\alpha}^{\ep}(A) \leq \sum_{j=1}^{\infty} \diam(E_j)^\alpha\\ 
+        \implies \H_{\alpha}^{\ep}(A) \leq \inf\left\{\sum_{j=1}^{\infty} \diam(E_j)^\alpha\right\} = \H_{\alpha}^{\ep}(B)
+    \end{gather*}
+    
+    3. (Subadditivity)
+
+    Let $\{A_j\}_1^{\infty} \sub P(X)$ and $\delta > 0$. Let $\{E_{jk}\}_1^{\infty}$ be a cover of $A_j$ such that
+    \[\sum_{k=1}^{\infty} \diam(E_{jk})^\alpha \leq \H_{\alpha}^{\ep}(A_j) + \frac{\delta}{2^j}\]
+
+    Now 
+    \[\bigcup_{j} A_j \sub \bigcup_{jk} E_{jk}\]
+    so 
+    \begin{align*}
+        \H_{\alpha}^{\ep}\left(\bigcup_j A_j\right)&\leq \sum_{j,k} \diam(E_{jk})^{\alpha}\\ 
+        &\leq \sum_{j} \left(\H_{\alpha}^{\ep}(A_j) + \frac{\delta}{2^j}\right)\\
+        &= \sum_{j} \H_{\alpha}^{\ep}(A_j) + \delta\\
+        &= \sum_{j} \H_{\alpha}^{\ep}(A_j)
+    \end{align*}
+
+    \div 
+
+    Now, let $\mu^* = \lim_{\ep \to 0} \H_{\alpha}^{\ep}$.  We claim that $\mu^*$ is an outer measure on $X$.
+
+    1. Choose $A_k = \{k\}$ so $\diam(A_k) = 0 \leq \ep$ for all $\ep \geq 0$ and $\emptyset \sub \bigcup_{k=1}^\infty A_k$ so 
+    \[\mu^*(\emptyset) \leq \sum_k \diam(A_k)^{\alpha} = 0 \implies \mu^*(\emptyset) = 0\]
+
+    2. (Monotonicity)
+
+    Let $A \sub B$ and $\bigcup_{k=1}^\infty A_k \supset B$. Then
+    \begin{align*}
+        \mu^*(A) &= \lim_{\ep \to 0} \H_{\alpha}^{\ep}(A)\\
+        &\leq \lim_{\ep \to 0} \sum_k \diam(A_k)^{\alpha}\\ 
+        &\leq \lim_{\ep \to 0} \sum_k \ep^{\alpha}\\ 
+        &= 0 
+    \end{align*}
+    and since $\mu^*: P(X) \to [0, \infty]$, $\mu^*(A) = 0 \leq \mu^*(B)$.
+
+    3. (Subadditivity)
+
+    Let $\bigcup_{j} A_j \sub P(X)$ and $\ep > 0$. 
+
+    Define 
+    \[O_{\ep} = \left\{E_{jk}: \bigcup_{k} E_{jk} \supset A_j,\; \diam(E_{jk}) \leq \ep, \; \sum_k \diam(E_{jk})^{\alpha} \leq \mu^*(E_{jk}) + \frac{\ep}{2^j}\right\}\]
+
+    Now
+    \[\bigcup_{j} A_j \sub \bigcup_{jk} E_{jk}\]
+    for $E_{jk} \in O_{\ep}$. 
+    and 
+    \[\mu^*\left(\bigcup_j A_j\right) = \lim_{\ep \to 0} \inf\left\{\sum_{j,k} \diam(E_{jk})^{\alpha} \; \bigg\vert\; E_{jk} \in O_{\ep}\right\}\]
+
+    But as $\ep \downarrow 0$, $O_{\ep} \downarrow \emptyset$. 
+
+    Suppose $\exists \ep_1 > 0$ such that $O_{\ep_1} = \emptyset$. Then by (1), $\forall \ep \leq \ep_1$, 
+    \[\mu^*(\bigcup_j A_j) = \lim_{\ep \to 0} \inf\{0\} = 0\leq \sum_j \mu^*(A_j) \] 
+
+    Therefore, assume WLOG that $O_{\ep} \neq \emptyset$ for all $\ep > 0$. 
+
+    Then
+    \begin{align*}
+        \mu^*\left(\bigcup_j A_j\right) &= \lim_{\ep \to 0} \inf\left\{\sum_{j,k} \diam(E_{jk})^{\alpha} \; \bigg\vert\; E_{jk} \in O_{\ep}\right\}\\ 
+        &\leq \lim_{\ep \to 0}\left[\sum_{j,k} \diam(E_{jk})^{\alpha}\right]\\
+        &\leq \lim_{\ep \to 0}\left[\sum_{j} \mu^*(E_{jk}) + \frac{\ep}{2^j}\right]\\
+        &= \lim_{\ep \to 0}\left[\sum_{j} \mu^*(A_j) + \ep\right]\\
+        &= \sum_{j} \mu^*(A_j)
+    \end{align*}
+
+    Hence $\mu^*$ is an outer measure on $X$. Henceforth, call the measure associated with $\mu^*$ as $\H_{\alpha}$.
+    
+    \div
+
+    Finally, we seek to show that if $\H_{\alpha}(A) < \infty$, then $\H_{\beta}(A) = 0$ for all $\beta > \alpha$. 
+
+    By definition of the measure as $\inf$, choose $\{E_i\}$ as the covering of $A$ with $\diam E_i < \ep$ such that 
+    \[\sum_i \diam(E_i)^{\alpha} \leq \sum_i \diam(F_i)^{\alpha}\]
+    for all other coverings of $A$ with $\diam F_i < \ep$.
+
+    Then 
+    \begin{align*}
+        H_{\beta}(A) &\leq \sum_{i} (\diam E_i)^\beta\\
+            &= \sum_i (\diam E_i)^{\beta - \alpha} (\diam E_i)^{\alpha}\\ 
+            &\leq \ep^{\beta - \alpha} \sum_i (\diam E_i)^\alpha\\
+            &= \ep^{\beta - \alpha} \H_{\alpha}(A) < \infty
+    \end{align*}
+
+    Letting $\ep \to 0$, $H_{\beta}(A) \leq 0 \implies H_{\beta}(A) = 0$. 
+
+\color{black}
+
+
+\pagebreak 
+
+4. (Lebesgue-Stieltjes Measure) Let $f$ be a monotone increasing function ($f(x) \leq f(y)$ for $x \leq y$). Define $\rho((a, b]) = f(b) - f(a)$ and 
+\[\mu^*(A) = \inf\left\{\sum \rho((a, b]) : A \sub \bigcup_{k=1}^\infty (a_k, b_k]\right\}\]
+    
+Prove that $\mu^*$ is an outer measure in $\R$ and the corresponding measure $\mu$ from the Carathéodory construction is called the Lebesgue-Stieltjes measure. 
+
+Is it true $\mu^*((a, b]) = \rho((a, b])$? If not, give a sufficient condition on $f$ such that this is true, then show $(a, b]$ is measurable in this case.
+
+\color{blue}
+    1. Choose $a_k = b_k$ so $\rho((a_k, b_k]) = 0$ and $\emptyset \sub \bigcup_{k=1}^\infty (a_k, b_k]$. 
+
+    Then 
+    \[\mu^*(\emptyset) \leq \sum_k \rho((a_k, b_k]) = 0 \implies \mu^*(\emptyset) = 0\]
+
+    2. (Monotonicity)
+
+    Let $A \sub B$ and choose a covering $\{(a_j, b_j]\}_{j=1}^{\infty}$ of $B$ (which is hence a covering of $A$). 
+
+    Then 
+    \begin{align*}
+        \mu^*(A) &\leq \sum_j \rho((a_j, b_j])\\ 
+        &\implies \inf \mu^*(A) \leq \inf\{\sum_j \rho((a_j, b_j])\} \\ 
+        &\implies \mu^*(A) \leq \mu^*(B)
+    \end{align*}
+
+    3. (Subadditivity)
+
+    Let $\{A_j\}_1^{\infty} \sub P(\R)$ and $\ep > 0$. Let $\{(a_{jk}, b_{jk}]\}_1^{\infty}$ be a cover of $A_j$ such that 
+    \[\sum_k \rho((a_{jk}, b_{jk}]) \leq \mu^*(A_j) + \frac{\ep}{2^j}\]
+
+    Then
+    \[\bigcup_j A_j \sub \bigcup_{jk} (a_{jk}, b_{jk}]\]
+    and 
+    \begin{align*}
+        \mu^*\left(\bigcup_j A_j\right) &\leq \sum_{j,k} \rho((a_{jk}, b_{jk}])\\ 
+        &\leq \sum_j \left(\mu^*(A_j) + \frac{\ep}{2^j}\right)\\ 
+        &= \sum_j \mu^*(A_j) + \ep\\ 
+        &= \sum_j \mu^*(A_j)
+    \end{align*}
+
+    Hence, $\mu^*$ is an outer measure on $\R$ inducing the Lebesgue-Stieltjes measure $\mu$.
+
+    \div 
+    
+    Consider 
+    \[f(x) = \begin{cases}
+        0 & x < 0\\ 
+        1 & x \geq 0
+    \end{cases}\]
+
+    Then $\rho((-1, 0]) = 1$ but $(-1, 0] \sub \bigcup_{n} (-1, -\frac{1}{n})$ so
+    \[\mu((-1, 0])\leq \sum_n \rho((-1, -\frac{1}{n})) = \sum_n (0 - 0) = 0\]
+
+    Hence $\mu^*((a, b]) \neq \rho((a, b])$ in general.
+
+    We claim that if $f$ is right continuous, then $\mu^*((a, b]) = \rho((a, b])$.
+
+    We have that $(a, b]$ covers itself so certainly $\mu^*((a, b]) \leq \rho((a, b])$.
+
+    Now suppose $(a, b] \sub \bigcup_{k=1}^\infty (a_i, b_i]$. Let $\ep > 0$ and pick $x \in (a, b)$ such that $f(x) - f(a) < \frac{\ep}{2}$ (possible by monotonicity and right continuity of $f$). 
+
+    Choose $b_i' > b_i$ such that $f(b_i') - f(b_i) < \frac{\ep}{2^{i+1}}$ and let $E_i = (a_i, b_i')$. 
+
+    Now $[x, b]$ is compact and $\{E_i\}$ is an open cover. By Heine-Borel, there exists a finite subcover of $[x, b]$ by $\{E_i\}_{i=1}^N$.
+
+    \begin{proof}
+        \textbf{Lemma:} For $\{E_i\}_{i=1}^n$, a finite subcover of $[a, b]$ with $E_k = (a_k, b_k)$ and $f$ a non-decreasing, right continuous function,
+        \[\sum_{k=1}^n [f(b_k) - f(a_k)] \geq f(b) - f(a)\]
+
+        \emph{Proof:} $\exists E_{k_1} \st a \in E_{k_1}$. If $[a, b] \sub E_{k_1}$, then the result is immediate. Otherwise, $E_{k_1} = (a_{k_1}, b_{k_1})$ and $b_{k_1} \leq b$ so $\exists E_{k_2} \st b_{k_1} \in E_{k_2}$. 
+
+        If $[a, b] \sub E_{k_1} \cup E_{k_2}$, we stop. Otherwise, $b_{k_1} < b_{k_2} \leq b$ and we continue. 
+
+        Inductively choose $E_{k_j}$ such that $b_{k_{j-1}} \in E_{k_j}$. 
+
+        Because $\{E_i\}$ is a finite subcover, this process must terminate for some $m \leq n$.
+
+        Then, by construction, 
+        \begin{align*}
+            a_{k_1} &< a < b_{k_1}\\ 
+            a_{k_m} &< b < b_{k_m}
+        \end{align*}
+        and $a_{k_j} < b_{k_{j-1}} < b_{k_j}$ so 
+        \begin{align*}
+            f(b) - f(a) &\leq f(b_{k_m}) - f(a_{k_1})\\
+            &= [f(b_{k_1}) - f(a_{k_1})] + \sum_{j=2}^m [f(b_{k_j}) - f(a_{k_{j-1}})]\\
+            &\leq \sum_{j=1}^m [f(b_{k_j}) - f(a_{k_j})]
+        \end{align*}
+    \end{proof}
+    
+    By the Lemma, 
+    \begin{align*}
+        \rho((a, b]) &\leq f(b) - f(x) + \frac{\ep}{2}\\ 
+        &\leq \sum_{i=1}^n (f(b_i') - f(a_i)) + \frac{\ep}{2}\\ 
+        &\leq \sum_{i=1}^n \rho((a_i, b_i]) + \ep\\
+        &\overset{\ep \to 0}{=} \sum_{i=1}^n \rho((a_i, b_i])
+    \end{align*}
+
+    Taking the $\inf$ over all such covers,
+    $\rho(I) \leq \mu^*(I)$ and hence $\mu^*(I) = \rho(I)$.
+    
+\color{black}
+
+\end{document}

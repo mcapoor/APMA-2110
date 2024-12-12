@@ -1,0 +1,359 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
+\renewcommand{\L}{\mathcal{L}}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\renewcommand{\Re}{\text{Re}\,}
+\renewcommand{\Im}{\text{Im}\,}
+\newcommand{\sign}{\text{sign}\,}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+\begin{tcolorbox}[
+    parbox=false,
+    colback=#1!5!white,
+    colframe=#1!75!black,
+    breakable
+]}
+{\end{tcolorbox}}
+
+\title{APMA 2110: Homework 6}
+\author{Milan Capoor}
+\date{28 Oct 2024}
+
+\begin{document}
+\maketitle
+1. Let $f \geq 0$ be a measurable function $(X, \A, \mu)$. Show that $f$ is integrable
+if and only if 
+\[\sum_{n=-\infty}^{\infty} 2^n \mu\{x: f(x) > 2^n\} < \infty\]
+
+    \color{blue}
+        Let $f$ be integrable. Then since $f \geq 0$,
+        \[\int_X f \; d\mu = \int_X \abs{f} \; d\mu < \infty\] 
+
+        Notice that for the disjoint sets 
+        \[E_n = \{x: 2^n < f(x) \leq 2^{n+1}\}\]
+        we have that 
+        \[\int_{E_n} f \; d\mu \geq 2^n \mu(E_n) \]
+        for all $n$. 
+
+        Hence, 
+        \[\int_X f \; d\mu \geq \sum_{-\infty}^{\infty} 2^n\mu(E_n)\]
+
+        Suppose that $\sum_{n=-\infty}^{\infty} 2^n \mu\{x: f(x) > 2^n\} = \infty$. 
+
+        There are two possible ways this could happen:
+        \begin{enumerate}
+            \item There are infinitely many $n$ such that $\mu\{x: f(x) > 2^n\} > 0$. 
+            \item $\exists n$ such that $\mu\{x: f(x) > 2^n\} = \infty$.
+        \end{enumerate}
+
+        CASE 1: There are infinitely many $n$ such that $\mu\{x: f(x) > 2^n\} > 0$. 
+
+        WLOG, let $N$ be the smallest of all such $n$. Then $\forall m\geq N$, 
+        \[\{x: f(x) > 2^N\} \sub \{x: f(x) > 2^m\} \implies 0 < \mu\{x: f(x) > 2^N\} \leq \mu\{x: f(x) > 2^m\}\]
+        so $2^n \mu(E_n) \to \infty$ and thus $\int f \; d\mu \to \infty$, which is a contradiction. 
+
+        CASE 2: $\exists n$ such that $\mu\{x: f(x) > 2^n\} = \infty$. 
+
+        But for all $m \leq n$, 
+        \[\{x: f(x) > 2^n\} \sub \{x: f(x) > 2^m\} \implies \infty = \mu\{x: f(x) > 2^n\} \leq \mu\{x: f(x) > 2^m\}\]
+        
+        In particular, then infinitely many $m$ have $\mu\{x: f(x) > 2^m\} > 0$ so we are back in Case 1 and have a contradiction.
+
+        Hence, $\sum_{n=-\infty}^{\infty} 2^n \mu\{x: f(x) > 2^n\} < \infty$.
+
+        \div 
+
+        Let $\sum_{n=-\infty}^{\infty} 2^n \mu\{x: f(x) > 2^n\} < \infty$. 
+
+        \begin{tbox}[blue]{\textbf{Lemma:} If $f \geq 0$, 
+            \[\int_X f \; d\mu = (R)\int_0^{\infty} \mu\{x: f(x) > t\} \; dt\]}
+            \emph{Proof:}
+            
+            Since $f$ is measurable and $f \geq 0$, we can take a sequence of simple functions $\phi_n \to f$ such that $0 \leq \phi_n \leq \phi_{n+1} \leq f$ for $n \geq 1$. 
+
+            By the Monotone Convergence Theorem,
+            \[\int f \; d\mu = \int \lim \phi_n \; d\mu = \lim \int \phi_n \; d\mu\]
+
+            Each $\phi_n$ is a simple function, $\phi_n = \sum_{i=1}^{m_n} a_i^{(n)} \ind_{A_i^{(n)}}(x)$, so
+            \begin{align*}
+                \int \phi_n \; d\mu &= \sum_{i=1}^{m_n} a_i^{(n)} \mu(A_i^{(n)})\\ 
+                    &= \sum_{i=1}^{m_n} (a_i^{(n)} - a_i^{(n-1)})\; \mu(x: \phi_n(x) > a_i^{(n-1)})
+            \end{align*}
+
+            Therefore, 
+            \begin{align*}
+                \lim_{n \to \infty} \int \phi_n &= \lim_{n \to \infty} \sum_{i=1}^{m_n} (a_i^{(n)} - a_i^{(n-1)})\; \mu(x: \phi_n(x) > a_i^{(n-1)})\\ 
+                &= \sum_{i=1}^{\infty} (a_i - a_{i-1})\; \mu(x: f(x) > a_{i-1})\\  
+                &= (R)\int_0^{\infty} \mu(x: f(x) > t) \; dt
+            \end{align*}            
+        \end{tbox}
+
+        Since $f\geq 0$, it suffices to show that 
+        \[\int_X f \; d\mu < \infty\]
+
+        By the Lemma, 
+        \begin{align*}
+            \int_X f \; d\mu &= (R)\int_0^{\infty} \mu\{x: f(x) > t\} \; dt\\ 
+            & = \sum_{-\infty}^{\infty} \int_{2^n}^{2^{n+1}} \mu\{x: f(x) > t\} \; dt\\
+        \end{align*}
+
+        For $t \in (2^n, 2^{n+1}]$, 
+        \[\mu\{x: f(x) > t\} \leq \mu\{x: f(x) > 2^n\}\] 
+        so 
+        \begin{align*}
+            \int_{2^n}^{2^{n+1}} \mu\{x: f(x) > t\} \; dt &\leq \int_{2^n}^{2^{n+1}} \mu\{x: f(x) > 2^n\} \; dt\\ 
+                &\leq (2^{n+1} - 2^n) \mu\{x: f(x) > 2^n\}\\ 
+                &= 2^n\mu\{x: f(x) > 2^n\} 
+        \end{align*}
+
+        Hence, 
+        \[\int \abs{f} \; d\mu = \int_X f \; d\mu \leq \sum_{-\infty}^{\infty} 2^n\mu\{x: f(x) > 2^n\} < \infty\]
+        and $f$ is integrable. $\qed$
+    \color{black}
+
+\pagebreak 
+
+2. Define $f \in \L^p(X, \A, \mu)$ if $\int \abs{f}^p \; d\mu < \infty$ with $1 \leq p \leq \infty$. If $\mu(X) < \infty$, show that $f \in \L^p(X, \A, \mu)$ for all $1 \leq q \leq p$. What happens when $\mu(X) = \infty$?
+
+    \color{blue}
+        If $\abs{f} \geq 1$, then $\abs{f}^q \leq \abs{f}^p$ and by monotonicity, 
+        \[\int \abs{f}^q\; d\mu \leq \int\abs{f}^p \; d\mu < \infty \implies f \in \L^q\]
+
+        If $\abs{f} \leq 1$, then $\abs{f}^q \leq 1$ so $\abs{f}^q \leq \abs{f}^p + 1$ and 
+        \[\int \abs{f}^q \; d\mu\leq \int \abs{f}^p + 1 \; d\mu = \int \abs{f}^p + \mu(X)\]
+
+        If $\mu(X) < \infty$, then $\int \abs{f}^p + \mu(X) < \infty$ and $f \in \L^q$ for all $1 \leq q \leq p$. 
+        
+        Meanwhile, if $\mu(X) = \infty$, then $\int \abs{f}^p + \mu(X) = \infty$ and $f \notin \L^q$ for $1 \leq q \leq p \qed$ .
+    \color{black}
+
+
+\pagebreak 
+
+3. Assume $\mu(X) < \infty$ and $f_n \to f$ a.e. 
+\begin{itemize}
+    \item Assume $\forall \ep >0$, $\exists \delta > 0$ such that 
+    \[\sup_n \sup_{E: \mu(E) < \delta} \int_E \abs{f_n} \; d\mu < \ep\]
+    Show that $\int \abs{f_n - f} \; d\mu \to 0$
+
+    \color{blue}
+        Notice 
+        \[\lim \int \abs{f_n - f} \; d\mu = \lim \int_A \abs{f_n  -f} \; d\mu + \lim \int_{A^c} \abs{f_n - f} \; d\mu\]
+
+        Consider the first term.
+
+        First notice that $\forall A \in \{E \sub X: \mu(E) < \delta\}$,
+        \[\int_A \abs{f_n} \; d\mu \leq \sup_n \int_A \abs{f_n} \; d\mu<  \sup_n \sup_{E: \mu(E) < \delta} \int_E \abs{f_n} \; d\mu < \ep\]
+        by assumption. 
+
+        Then 
+        \begin{align*}
+            \lim \int_A \abs{f_n - f} \; d\mu &\leq \lim \int_A \abs{f_n} \; d\mu + \lim \int_A \abs{f} \; d\mu\\ 
+            &< \ep + \lim \int_A \abs{f} \; d\mu
+        \end{align*}
+        but as $\delta \to 0$, $\int_A \abs{f} \; d\mu \to 0$ (approximation by simple functions), so we are free to choose $\delta$ such that $\int_A \abs{f} \; d\mu < \ep$ and 
+        \[\int_A \abs{f_n - f} \; d\mu < 2\ep\]
+
+        For the second term, $\mu(A) < \delta$ for all $\delta$, $\mu(X) < \infty$, and $f_n \to f$ a.e. so Egorov's Theorem guarantees $f_n - f \to 0$ uniformly on $E^c$. Hence, for $N$ sufficiently large, 
+        \[\abs{f_n - f} < \ep \implies \lim \int \abs{f_n - f} \; d\mu < \ep \mu(X)\]
+        
+        And since $\mu(X) < \infty$, for $\ep \to 0$, $\ep \mu(X) \to 0$. 
+
+        Hence, 
+        \[\lim \int \abs{f_n - f} \; d\mu = \lim \int_A \abs{f_n  -f} \; d\mu + \lim \int_{A^c} \abs{f_n - f} \; d\mu = 0 + 0 = 0 \qed\]
+        
+    \color{black}
+
+
+    \item Assume for some $p > 1$ 
+    \[\sup_n \int \abs{f_n}^p \; d\mu < \infty\]
+    Show that $\int \abs{f_n - f} \; d\mu \to 0$. What if $p = 1$? 
+
+    \color{blue}
+      
+        Since $f_n \to f$ a.e., on $X \setminus E$ for some $E \sub X$ with $\mu(E) = 0$, 
+        \[\lim \abs{f_n - f} = 0\]
+        
+        Hence, 
+        \begin{align*}
+            \lim \int \abs{f_n - f} \; d\mu &= \lim \int_{X \setminus E} \abs{f_n - f} \; d\mu + \lim \int_E \abs{f_n - f} \; d\mu\\ 
+            &= \lim \int_{X \setminus E} \abs{f_n - f} \; d\mu
+        \end{align*}
+        by a lemma from class ($\mu(E) = 0$ and $\abs{f_n - f} \geq 0$).,
+
+        We claim that $\exists g: X \to \R$ such that $\int g \; d\mu < \infty$ and $\abs{f_n - f} \leq g$ for all $n$.
+
+        \begin{proof}
+            \emph{Proof:} Suppose not. Then for all $n$, 
+            \[\int \abs{f_n - f} \; d\mu = \infty\]
+            (or else $g = \abs{f_n - f} + 1$ would suffice as $\mu(X) < \infty$.)
+
+            But, 
+            \[\int \abs{f_n - f} \; d\mu \leq \int \abs{f_n} \; d\mu + \int \abs{f} \; d\mu\]
+
+            By assumption, 
+            \[\int \abs{f_n}^p \; d\mu \leq \sup_n \int \abs{f_n}^p \; d\mu < \infty\]
+            and $\mu(X) < \infty$, so $f_n \in \L^p$ for all $n$. In particular, by Problem 2, $f_n \in \L^1$ for all $n$ so 
+            \[\int \abs{f_n} \; d\mu < \infty\]
+
+            Further, by Fatou's lemma, 
+            \begin{align*}
+                \int \abs{f} \; d\mu &= \int \liminf \abs{f_n} \; d\mu\\ 
+                    &\leq \liminf \int \abs{f_n} \; d\mu\\ 
+                    &\leq \limsup \int \abs{f_n} \; d\mu < \infty 
+            \end{align*}
+            so $f \in \L^1$ also. 
+
+            Hence, 
+            \[\int \abs{f_n - f} \; d\mu \leq \int \abs{f_n} \; d\mu + \int \abs{f} \; d\mu < \infty\]
+            and we have a contradiction.             
+        \end{proof}
+
+        Now by LDC, 
+        \[\lim \int_{X \setminus E} \abs{f_n - f} \; d\mu = \int_{X \setminus E} \lim \abs{f_n - f} \; d\mu = \int_{X \setminus E} 0 \; d\mu = 0\]
+
+        \div 
+
+        Now consider the case $p = 1$. 
+
+        Consider $f_n(x) = n \cdot \ind_{[0, \frac{1}{n}]}$. Then $f_n \to 0$ a.e. and 
+        \begin{align*}
+            \int \abs{f_n} \; d\mu
+                = \int n \cdot \ind_{[0, \frac{1}{n}]}\; d\mu 
+                = n \int_0^{1/n} 1 \; dx
+                = \frac{n}{n}
+                = 1 < \infty
+        \end{align*}
+        for all $n$.      
+        
+        But 
+        \[\int \abs{f_n - f} \; d\mu = \int \abs{f_n} \; d\mu = 1 \not\to 0\]
+
+
+
+    \color{black}
+
+\end{itemize}
+
+\pagebreak  
+
+4. Assume $f_n \to f$ a.e. Prove that if $\lim_{n \to \infty} \int \abs{f_n}\; d\mu = \int \abs{f} \; d\mu$, 
+\[\lim_{n \to \infty} \int \abs{f_n - f} \; d\mu = 0\]
+
+    \color{blue}
+        First notice that by the triangle inequality, 
+        \[\abs{f_n - f} \leq \abs{f_n} + \abs{f} \implies \abs{f_n} + \abs{f} - \abs{f_n - f} \geq 0\]
+
+        Therefore, by Fatou's Lemma,
+        \[\int \liminf \abs{f_n} + \abs{f} - \abs{f_n - f} \; d\mu \leq \liminf \int \abs{f_n} + \abs{f} - \abs{f_n - f} \; d\mu\]
+
+        Since $f_n \to f$ a.e., we have that 
+        \[\liminf \left(\abs{f_n} + \abs{f} - \abs{f_n - f}\right)  = 2\abs{f} = \abs{f} + \abs{f} - 0 = 2\abs{f}\] 
+        almost everywhere. 
+        
+        Hence, 
+        \begin{align*}
+            2\int \abs{f} \; d\mu &\leq \liminf \int \abs{f_n} + \abs{f} - \abs{f_n - f} \; d\mu\\
+            &= \liminf \int \abs{f_n} \; d\mu + \liminf\int \abs{f} \; d\mu + \liminf \int -\abs{f_n - f} \; d\mu\\
+            &= \liminf \int \abs{f_n} \; d\mu + \liminf\int \abs{f} \; d\mu  - \limsup \int \abs{f_n - f} \; d\mu && (\text{by parity of } \limsup)\\ 
+            &\leq \lim \int \abs{f_n} \; d\mu + \lim \int \abs{f} \; d\mu  - \limsup \int \abs{f_n - f} \; d\mu\\
+            &= 2\int \abs{f} \; d\mu - \limsup \int \abs{f_n - f} \; d\mu && (\text{by assumption})
+        \end{align*}
+        so 
+        \[\limsup \int \abs{f - f_n} \; d\mu \leq 0 \implies \lim \int \abs{f - f_n} = 0 \qed\]
+
+
+    \color{black}
+
+\end{document}

@@ -1,0 +1,340 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=0.25in}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
+\renewcommand{\L}{\mathcal{L}}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\renewcommand{\Re}{\text{Re}\,}
+\renewcommand{\Im}{\text{Im}\,}
+\newcommand{\sign}{\text{sign}\,}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{exercise}[1][red]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+\begin{tcolorbox}[
+    parbox=false,
+    colback=#1!5!white,
+    colframe=#1!75!black,
+    breakable
+]}
+{\end{tcolorbox}}
+
+\title{APMA 2110 - Homework 10}
+\author{Milan Capoor}
+\date{27 Nov 2024}
+
+\begin{document}
+\maketitle
+
+1. Assume the validity of the change of variables formula for the Riemann integral. Let $f$ be Riemann integrable in $\R^n$ and show that $f$ is Lebesgue integrable. 
+
+Use this fact to give an alternative proof of the change of variables formula for $f \in \L^1(\R^n)$. In particular, prove the integration in polar coordinates for $f\in \L^1(\R^n)$:
+\[\int_{\R^n} f = \int_0^{\infty} \int_{S^{n-1}} f(rx') r^{n-1} \;d\sigma(x') \; dr\] 
+where $\sigma = \sigma_{n-1}$ is the surface measure on the unit sphere $S^{n-1}$.
+
+    \color{blue}
+        We present an alternative proof of the change of variables formula for $f \in \L^1(\R^n)$.
+
+        STEP 1. Assume that for $\phi: E \to \R^n$ a $C^1$ diffeomorphism and $f: \phi(E) \to \R^n$ Riemann integrable,  
+        \[\int_{\phi(E)} f(y)\; dy = \int_{E} (f\circ \phi)(x) \abs{\det D_x\phi} \; dx\]
+
+        STEP 2. For smooth functions in $\R^n$, the Riemann integral is equivalent to the Lebesgue integral.
+
+        \begin{proof}
+
+            \emph{Proof:} Suppose $f$ is a smooth function in $\R^n$.
+
+            By definition, $f$ is continuous. Trivially, $\{x: f(x) \text{ not continuous}\}$ has measure zero, so by a Theorem from class, $f$ is Riemann integrable. 
+
+            Note that we showed in class that the Lebesgue and Riemann integrals are equivalent in $\R$. We can extend this to $\R^n$ by considering the product measure $m^n = m \times \dots \times m$ on $\R^n$ and applying Fubini: 
+            \begin{align*}
+                \int_{\R^n} f\; dm^n &= \int_{\R} \int_{\R} \dots\int_{\R} f \;dm(x_1), dm(x_2)\dots dm(x_n)\\ 
+                &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \dots \int_{-\infty}^{\infty} f \;dx_1 dx_2 \dots dx_n
+            \end{align*}
+            
+        \end{proof}
+
+        STEP 3. By the approximation of $\L^1(m)$ functions (shown in class), there exists a smooth function $g$ such that $\abs{\abs{f - g}}_{\L^1} < \ep$.
+
+        Hence, up to order $\ep$, the change of variables formula holds for $f \in \L^1(\R^n)$.
+
+        \div 
+
+        Denote the unit sphere $S^{n-1} = \{x \in \R^n: \abs{x} = 1\}$. Then for $x \in \R^n \setminus \{0\}$, the polar coordinates of $x$ are given by:
+        \[\begin{cases}
+            r = \abs{x} \in (0, \infty)\\ 
+            x' = \frac{x}{\abs{x}} \in S^{n-1}
+        \end{cases}\]
+
+        Consider the map $\Phi: (0, \infty) \times S^{n-1} \to \R^n\setminus \{0\}$ given by $\Phi(r, x') = rx'$.
+
+        By the change of variables formula above,
+        \begin{align*}
+            \int_{\R^n} f &= \int_{(0, \infty) \times S^{n-1}} f(\Phi(r, x')) \abs{\det D\Phi(r, x')} \; d(\sigma \times r)\\ 
+            &= \int_0^{\infty} \int_{S^{n-1}} f(rx') r^{n-1} \; d\sigma(x') \; dr \qquad (\text{Tonelli})
+        \end{align*}
+
+    \color{black}
+\pagebreak 
+
+2. Let $\nu$ be a signed measure on $(X, \M)$. Prove:
+\begin{itemize}
+    \item If $E_j$ is an increasing sequence of sets in $\M$, $\nu\left(\bigcup_{j=1}^\infty E_j\right) = \lim_{j\to\infty} \nu(E_j)$.
+    \item If $E_j$ is a decreasing sequence of sets in $\M$ and $\nu(E_1) < \infty$, then $\nu\left(\bigcap_{j=1}^\infty E_j\right) = \lim_{j\to\infty} \nu(E_j)$.
+\end{itemize}
+
+    \color{blue}
+        We would like to rewrite $\bigcup_j E_j$ as a union of disjoint sets to take advantage of countable additivity. 
+        
+        WLOG define $E_0 = \emptyset$. Then, because $E_n \sub E_{n+1}$,
+        \begin{align*}
+            E_1 &= E_1 \setminus \emptyset\\ 
+            E_2 &= E_1 \cup (E_2 \setminus E_1)\\ 
+            E_3 &= E_2 \cup (E_3 \setminus E_2)\\ 
+                &= (E_1 \setminus \emptyset) \cup (E_2 \setminus E_1) \cup (E_3 \setminus E_2) 
+        \end{align*}
+    
+        Hence, inductively define 
+        \[E_n = \bigcup_{k=0}^{n-1} E_{k+1} \setminus E_k\]
+        so 
+        \[\bigcup_{n=1}^\infty E_n = \bigcup_{n=0}^\infty (E_n \setminus E_{n-1})\]
+
+        Then, by countable additivity,
+        \begin{align*}
+            \nu\left(\bigcup_{n=1}^\infty E_n\right) &= \nu\left(\bigcup_{n=0}^\infty (E_n \setminus E_{n-1})\right)\\ 
+            &= \sum_{n=0}^\infty \nu(E_n \setminus E_{n-1})\\ 
+            &= \lim_{N\to\infty} \sum_{n=0}^N \nu(E_n \setminus E_{n-1})\\ 
+            &= \lim_{n \to \infty} \nu(E_n)
+        \end{align*}
+
+        \div 
+
+        Let $E_1 \supset E_2 \supset \dots$ and $\nu(E_1) < \infty$. Define $F_j = E_1 \setminus E_j$. Clearly, $F_n \sub F_{n+1}$. 
+
+        By the previous part,
+        \begin{align*}
+            \nu\left(\bigcup_{n=1}^\infty F_n\right) &= \lim_{n \to \infty} \nu(F_n)\\ 
+            F_j = E_1 \setminus E_j &\implies \bigcup_{j=1}^n F_j = E_1 \setminus \bigcup_{j=1}^n E_j\\ 
+            \nu\left(E_1 \setminus \bigcap_{n=1}^\infty E_n\right) &= \lim_{n \to \infty} \nu(E_1 \setminus \bigcap_{j=1}^n E_j )\\
+        \end{align*}
+
+        In a signed measure, we do not have monotonicity but we do have that for $E \sub F$,
+        \[\nu(F) = \nu(E \cup F \setminus E) = \nu(E) + \nu(F \setminus E)\]
+
+        \begin{proof}
+            \emph{Proof:} Consider $F \setminus E = F \cap E^c$. But $E \cap (F \cap E^c) = \emptyset$ so 
+            \[\mu(F) = \mu(E \cup F \setminus E) = \mu(E) + \mu(F \setminus E)\]
+        \end{proof}
+
+        Because $\nu(E_1) < \infty$,
+        \begin{align*}
+            \nu(E_1) - \nu\left(\bigcap_{n=1}^\infty E_n\right) &= \lim_{n \to \infty} \left[\nu(E_1) - \nu\left(\bigcap_{j=1}^n E_j \right)\right]\\ 
+                &= \lim_{n \to \infty} \left[\nu(E_1) - \nu(E_n)\right]\\ 
+                &= \nu(E_1) - \lim_{n \to \infty} \nu(E_n)\\
+            \nu\left(\bigcap_{n=1}^\infty E_n\right) &= \lim_{n \to \infty} \nu(E_n) \qed
+        \end{align*}
+
+    \color{black}
+
+\pagebreak 
+
+3. If $\nu$ is a signed measure and $\lambda, \mu$ are positive measures such that $\nu = \lambda - \mu$, show $\lambda \geq \nu^+$ and $\mu \geq \nu^-$.
+
+    \color{blue}
+        $\nu$ is a signed measure, so by Hahn decomposition, $\exists P, N$ unique with $P$ positive and $N$ negative such that
+        \[P \cup N = X, \; P \cap N = \emptyset\]
+
+        Define 
+        \[\nu^+(A) = \nu(A \cap P), \; \nu^-(A) = -\nu(A \cap N)\]
+
+        Then, $\nu = \nu^+ - \nu^-$.
+
+        First consider $\lambda$. Because $\lambda, \mu$ are positive measures, we have $\lambda \geq \lambda - \mu = \nu$. 
+
+        In particular, $\forall A \in \M$, 
+        \[\lambda(A) \overset{*}{\geq} \lambda(A \cap P) \geq \nu(A \cap P) = \nu^+(A)\]
+        where $\overset{*}{\geq}$ follows from the fact that $\lambda$ is a positive measure (and hence monotonic).
+
+        Now consider $\mu$. We have $-\nu = \mu - \lambda$ so in particular, $\mu \geq -\nu$. Hence, for any $A \in \M$,
+        \[\mu(A) \geq \mu(A \cap N) \geq -\nu(A \cap N) = \nu^-(A)\]
+        again by monotonicity of $\mu$. $\qed$
+       
+    \color{black}
+
+
+\pagebreak
+
+4. Suppose that $\nu$ is a signed measure on $(X, \M)$ and $E \in \M$. Prove 
+\begin{enumerate}
+    \item \begin{align*}
+        \nu^+(E) &= \sup\{\nu(F): F \sub E, F \in \M\} \\
+        \nu^-(E) &= -\inf\{\nu(F): F \sub E, F \in \M\} 
+    \end{align*}
+
+    \item 
+    \[\abs{\nu}(E) = \sup \left\{\sum_{j=1}^n \abs{\nu(E_j)} \; \bigg\vert \; n \in \N,\; E_1\, \dots\, E_n  \text{ disjoint}, \; \bigcup_1^n E_j = E\right\}\]
+\end{enumerate}
+
+    \color{blue}
+        Let $X = P \cup N$ be the Hahn decomposition of $X$ and 
+        \begin{align*}
+            \nu^+(E) &= \nu(E \cap P)\\ 
+            \nu^-(E) &= -\nu(E \cap N)
+        \end{align*}
+        
+        Define $\bar F = \arg\sup \{\nu(F) : F \sub E, \; F \in \M\}$.
+
+        STEP 1. $\bar F$ is a positive set and $E \setminus \bar F$ is a negative set. 
+
+        \begin{proof}
+            \emph{Proof:} Let $\bar F = A \cup B$ where $A$ is a positive set and $B$ is a negative set such that $A \cap B = \emptyset$ (guaranteed by Hahn). 
+            
+            Suppose, for contradiction, that $\bar F$ is not positive, i.e. $B \neq \emptyset$ 
+
+            We know $\nu(\bar F) = \nu(\bar F \setminus B) + \nu(B)$ (countable additivity), so in particular, $\nu(\bar F \setminus B) \geq \nu(\bar F) $ (as $\nu(B)< 0$). But this contradicts the maximality of $\bar F$. 
+
+            Hence, $\bar F$ is a positive set.
+
+            \div 
+
+            Similarly, suppose $E \setminus \bar F$ is not negative, i.e. it contains some positive set $C$. But then, $C$ and $\bar F$ are disjoint so by countable additivity, 
+            \[\nu(\bar F \cup C) = \nu(\bar F) + \nu(C) \geq \nu(\bar F)\]
+            which again contradicts the maximality of $\bar F$.
+
+        \end{proof}
+
+        STEP 2. $\nu(\bar F) = \nu(E \cap P) = \nu^+(E)$. 
+
+        \begin{proof}
+            \emph{Proof:} In fact, we have the strictly stronger claim that $\bar F = E \cap P$: clearly, $\bar F \sub E$ and further, $\bar F$ is positive (by Step 1), so $\bar F \sub E \cap P$. 
+
+            Then, suppose $\exists D \in (E \cap P) \setminus \bar F$. But then $D$ is a positive set in $E$ which is disjoint from $\bar F$ so $\nu(D \cup \bar F) = \nu(D) + \nu(\bar F) > \nu(\bar F)$, contradicting the maximality of $\bar F$. Hence, $E \cap P \sub \bar F$
+
+            Certainly, $\bar F = E \cap P \implies \nu(\bar F) = \nu(E \cap P) = \nu^+(E)$, by definition.  
+        \end{proof}        
+
+        $\nu^-$ follows by similar argument on $\underbar F = \arg\inf \{\nu(F) : F \sub E, \; F \in \M\}$. $\qed$
+
+        \div
+
+        Once again, let $X = P \cup N$ be the Hahn decomposition of $X$ and let $\nu^+(E) = \nu(E \cap P)$ and $\nu^-(E) = -\nu(E \cap N)$.
+
+        Notice that $E = (E \cap P) \cup (E \cap N)$ and $E \cap P, E \cap N$ are disjoint, so, by definition of the supremum,
+        \begin{align*}
+            \sup \left\{\sum_{j=1}^n \abs{\nu(E_j)} \; \bigg\vert \; n \in \N,\; E_1\, \dots\, E_n  \text{ disjoint}, \; \bigcup_1^n E_j = E\right\} &\geq \abs{\nu(E \cap P)} + \abs{\nu(E \cap N)}\\ 
+            &= \nu^+(E) + \abs{-\nu^-(E)}\\ 
+            &= \nu^+(E) + \nu^-(E)\\ 
+            &= \abs{\nu}(E)
+        \end{align*}
+
+        Conversely, let $E = \bigcup_{j=1}^n E_j$ for $E_j$ disjoint. Then 
+        \begin{align*}
+            \abs{\nu}(E) &= \abs{\nu}\left(\bigcup_{j=1}^n E_j\right)\\
+                &= \sum_{j=1}^n \abs{\nu}(E_j) \qquad (\text{by countable additivity})\\
+                &= \sum_{j=1}^n \nu^+(E_j) + \nu^-(E_j)\\
+                &\geq \sum_{j=1}^n \abs{\nu^+(E_j) - \nu^-(E_j)}\\ 
+                &= \sum_{j=1}^n \abs{\nu(E_j)}
+        \end{align*}
+        Taking the supremum over all such decompositions, we have the desired result. $\qed$
+        
+
+
+    \color{black}
+
+\end{document}

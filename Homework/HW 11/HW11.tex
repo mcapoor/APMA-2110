@@ -1,0 +1,289 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=0.25in}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\norm}[1]{\left\vert\left\vert #1 \right\vert\right\vert}
+
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
+\renewcommand{\L}{\text{L}}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\renewcommand{\Re}{\text{Re}\,}
+\renewcommand{\Im}{\text{Im}\,}
+\newcommand{\sign}{\text{sign}\,}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{exercise}[1][red]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+\begin{tcolorbox}[
+    parbox=false,
+    colback=#1!5!white,
+    colframe=#1!75!black,
+    breakable
+]}
+{\end{tcolorbox}}
+
+\title{APMA 2110: Homework 11}
+\author{Milan Capoor}
+\date{10 Dexember 2024}
+
+\begin{document}
+\maketitle
+1. Suppose $\mu$ and $\nu$ are $\sigma$-finite measures on $(X, \M)$ with $\nu \ll \mu$, and let $\lambda = \mu + \nu$. If $f = \frac{d\nu}{d\lambda}$, show $0 \leq f < 1$ a.e. and $\frac{d\nu}{d\mu} = \frac{f}{1 - f}$.  
+
+    \color{blue}
+        STEP 1. $0 \leq f$ $\mu$-a.e.
+
+        It suffices to show that $E = \{x: f(x) < 0\}$ has measure zero.
+
+        Notice though, for $E_n = \{x: f(x) < -\frac{1}{n}\}$,
+        \[E = \{x: f(x) < 0\} = \bigcup_{n=1}^\infty E_n\]
+        and since $f = \frac{d\nu}{d\lambda}$,
+        \[\nu(E_n) = \int_{E_n} f \; d\lambda < \int_{E_n} -\frac{1}{n} \; d\lambda = -\frac{1}{n} \lambda(E_n)\]
+
+        But $\nu \geq 0$, so
+        \[-\frac{1}{n}\lambda(E_n) \geq 0 \implies \lambda(E_n) = \mu(E_n) + \nu(E_n) \leq 0 \implies \mu(E_n) \leq 0\]
+
+        But again $\mu(E_n) \geq 0$, so $\mu(E_n) = 0$ and hence $\mu(E) = 0$.
+        
+        STEP 2. $f < 1$ $\mu$-a.e.
+
+        Now consider $F = \{x: f(x) \geq 1\}$. By $\sigma$-finiteness of $\nu$, $\exists \{F_n\}$ such that $F = \bigcup_{n=1}^\infty F_n$ and $\nu(F_n) < \infty$ for all $n$.
+
+        Since $f = \frac{d\nu}{d\lambda}$,
+        \[\nu(F_n) = \int_{F_n} f \; d\lambda \geq \int_{F_n} 1 \; d\lambda = \lambda(F_n) = \mu(F_n) + \nu(F_n)\]
+
+        Since $\nu(F_n) < \infty$, $0 \geq \mu(F_n) \implies \mu(F_n) = 0 \implies \mu(F) = 0$ and $f < 1$ $\mu$-a.e.
+
+        \div 
+
+        $\mu \leq \lambda \implies \mu \ll \lambda$ and $\nu \ll \mu$ by assumption so by the chain rule, 
+        \[\frac{d\nu}{d\mu} = \frac{d\nu}{d\lambda} \cdot \frac{d\lambda}{d\mu} = f \cdot \frac{d\lambda}{d\mu}\]
+
+        Hence, it suffices to show that $\frac{d\lambda}{d\mu} = \frac{1}{1 - f}$. 
+
+        But in fact, since $\nu \ll \mu$ by assumption, 
+        \[\mu(E) = 0 \implies \nu(E) = 0 \implies \nu(E) + \mu(E) = \lambda(E) = 0\] 
+        so we also have that $\lambda \ll \mu$.
+
+        In particular, this means that 
+        \[\frac{d\lambda}{d\mu} \cdot \frac{d\mu}{d\lambda} = 1 \; \text{a..e}\]
+        and it in fact suffices to show that $\frac{d\mu}{d\lambda} = 1 - f$. 
+
+        Consider
+        \begin{align*}
+            \mu(E) + \nu(E) &= \lambda(E)\\ 
+                 &= \int_E 1 \; d\lambda\\ 
+                 &= \int_E (1 - f) \; d\lambda + \int_E f \; d\lambda\\
+                    &= \int_E (1 - f) \; d\lambda + \nu(E)
+        \end{align*} 
+        and since $\nu$ is $\sigma$-finite, 
+        \[\mu(E) = \int_E (1 - f)\; d\lambda \implies \frac{d\mu}{d\lambda} = 1 - f\]
+        exactly as desired. $\qed$
+    \color{black}
+
+
+\pagebreak
+
+2. Let $f \in \L^1(\R^n)$ and recall the average function 
+\[A_r f(x) = \frac{1}{m(B(r, x))} \int_{B(r, x)} f(y)\; dy\]
+
+Prove that 
+\[\lim_{r \to 0} \norm{A_r f - f}_{\L^1(\R^n)} \to 0\]
+
+Deduce there is a subsequence $r_n \to 0$ such that $A_{r_n} f \to f$ a.e. 
+
+    \color{blue}
+        Let $\ep > 0$. 
+    
+        Since $f \in \L^1$, by a theorem from class, we may approximate by a continuous integrable function with compact support $g$ such that 
+        \[\int_{\R^n} \abs{f - g} \; dy < \frac{\ep}{3}\]
+
+        By the triangle inequality, 
+        \begin{align*}
+            \lim_{r \to 0} \norm{A_r f - f}_{\L^1} &= \lim_{r \to 0} \int_{\R^n} \abs{A_r f - f}\; dm\\ 
+                &= \lim_{r \to 0} \int_{\R^n} \abs{A_r f - A_r g + A_r g - g + g - f}\; dm\\
+                &\leq \lim_{r \to 0} \int_{\R^n} \abs{A_r f - A_r g}\; dm + \lim_{r \to 0} \int_{\R^n} \abs{A_r g - g}\; dm + \lim_{r \to 0} \int_{\R^n} \abs{g - f}\; dm
+        \end{align*}
+
+        For fixed $r > 0$, by continuity of $g$, $\abs{y - x} < r$ implies $\abs{g(y) - g(x)} < \delta$, so 
+        \[\abs{A_r g - g} = \abs{\frac{1}{m(B(r, x))}\int_{B(r, x)} [g(y) - g(x)] \; dy} < \delta\]
+        
+        Now since $g$ has compact support (say on some set $K \sub \R^n$), 
+        \[\int_{\R^n} \delta \; dm = \int_{K} \delta \; dm = \delta m(K) < \infty\]
+        since the Lebesgue measure is $\sigma$-finite so letting $\delta = \frac{\ep}{3m(K)}$, $\lim_{r \to 0} \int_{\R^n} \abs{A_r g - g} < \frac{\ep}{3}$.
+
+        Further, by definition,
+        \begin{align*}
+            \int_{\R^n} \abs{A_r f - A_r g} &= \int_{\R^n}\abs{\frac{1}{m(B(r, x))} \int_{B(r, x)} f(y) - g(y)\; dy}\; dx\\
+                &\leq \int_{\R^n}\frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y) - g(y)}\; dy\;dx\\ 
+                &\leq \frac{1}{m(B(r, x))} \int_{\R^n} \int_{B(r, x)} \abs{f(y) - g(y)}\; dy\; dx \qquad (\text{since }m(B(r, x)) \text{ is constant WRT } x)\\
+                &= \frac{1}{m(B(r, x))} \int_{\R^n} \int_{\R^n} \abs{f(y) - g(y)} \ind_{B(r, x)}\; dy\; dx\\
+                &= \frac{1}{m(B(r, x))} \int_{\R^n} \int_{\R^n} \abs{f(y) - g(y)} \ind_{B(r, x)}\; dx\; dy \qquad (\text{Fubini})\\
+                &= \frac{1}{m(B(r, x))} \int_{\R^n} \abs{f(y) - g(y)} \int_{\R^n} \ind_{B(r, x)}\; dx\; dy\\
+                &= \frac{1}{m(B(r, x))} \int_{\R^n} \abs{f(y) - g(y)} m(B(r, x))\; dy\\
+                &= \int_{\R^n} \abs{f(y) - g(y)}\; dy < \frac{\ep}{3}
+        \end{align*}
+
+        Hence, 
+        \[\lim_{r \to 0} \norm{A_r f - f}_{\L^1} < \frac{\ep}{3} + \frac{\ep}{3} + \frac{\ep}{3} = \ep\]
+
+        Therefore, $A_r f \to f$ in $\L^1$ (take $r = \frac{1}{n}$ for the limit $n \to \infty$), and by a theorem from class, there is a subsequence $r_n \to 0$ such that $A_{r_n} f \to f$ a.e. $\qed$
+        
+    
+    \color{black}
+
+
+\pagebreak 
+
+3. Define a variant of the maximal function $H(f)$ in $\R^n$ as 
+\[H^* f(x) = \sup \left\{\frac{1}{m(B)} \int_B \abs{f(y)}\; dy \; \bigg\vert \; B \text{ is a ball and } x \in B\right\}\]
+
+Show $Hf \leq H^* f \leq 2^n Hf$. 
+
+    \color{blue}
+        Recall that 
+        \[H f(x) = \sup_{r > 0} \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y)}\; dy\]
+        where $B(r, x)$ is the n-ball of radius $r$ centered at $x$.
+
+        Pick any $r > 0$. Let $B(r, x)$ be a ball of radius $r$ centered at $x$. Certainly, $x \in B(r, x)$ so by definition of $H^* f(x)$,
+        \[\frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y)}\; dy \leq H^* f(x)\]
+
+        Taking the $\sup$ over $r > 0$, we have that $H f(x) \leq H^* f(x)$.
+
+        Conversely, for any ball $B_r$ of radius $r$ with $x \in B_r$, $B_r \sub B(2r, x)$ (the ball of radius $2r$ centered at $x$). Hence,
+        \[\frac{1}{m(B_r)} \int_{B_r} \abs{f(y)}\; dy \leq \frac{1}{m(B_r)} \int_{B(2r, x)} \abs{f(y)}\; dy = \frac{2^n}{m(B(2r, x))} \int_{B(2r, x)} \abs{f(y)}\; dy \leq 2^n H f\]
+
+        Again taking the $\sup$ on both sides, $H^* f(x) \leq 2^n H f(x)$. $\qed$
+    \color{black}
+
+
+\pagebreak
+
+4. Assume $\mu$ is a positive measure and $f_n \to f$ in $\L^1(\mu)$. Prove that $\forall \ep > 0$, $\exists \delta  >0$ such that $\abs{\int_E f_n \; d\mu} < \ep$ for all $n$ and any $\mu(E) < \delta$. 
+
+    \color{blue}
+        Let $\ep > 0$. 
+        
+        By a lemma from class, 
+        \[\abs{\int_E f_n \; d\mu} \leq \int_E \abs{f_n} \; d\mu\]
+        for any set $E \sub X$. 
+
+        By the triangle inequality,
+        \[\int_E \abs{f_n} \; d\mu = \int_E \abs{f_n - f + f} \; d\mu \leq \int_E \abs{f_n - f} \; d\mu + \int_E \abs{f} \; d\mu\]
+
+        Since $f \in \L^1$, $\int \abs{f} \; d\mu = M < \infty$. Hence, for $\delta_1 = \frac{\ep}{2M}$ and $\mu(E) < \delta_1$, 
+        \[\int_E \abs{f} \; d\mu < \frac{\ep}{2} \]
+    
+        Further, since $f_n \to f$ in $\L^1$, $\exists N$ such that $\forall n \geq N$ and any measurable set $E$,
+        \[\int_E \abs{f_n - f} \; d\mu < \frac{\ep}{2}\] 
+
+        It remains to show that $\int_E \abs{f_n - f} \; d\mu < \frac{\ep}{2}$ for $n < N$.     
+
+        Consider the finite set $\{f_n\}_{n=1}^{N-1} \sub \L^1$. By a corollary from class, $\forall \ep > 0$, $\exists \delta_{f_n} > 0$ such that $\mu(E) < \delta$ implies $\int_E \abs{f_n} \; d\mu < \frac{\ep}{2}$. 
+        
+        Let $\delta_2 = \max\{\delta_{f_1}, \ldots, \delta_{f_{N-1}}\}$. Then, $\mu(E) < \delta_2$ implies
+        \[\int_E \abs{f_n} \; d\mu < \frac{\ep}{2}\]
+        for all $n < N$.
+
+        Taking $\delta = \max\{\delta_1, \delta_2\}$, we have that $\mu(E) < \delta$ implies
+        \[\int_E \abs{f_n} \; d\mu < \frac{\ep}{2} + \frac{\ep}{2} = \ep \qed\]
+        
+    \color{black}
+
+
+\end{document}

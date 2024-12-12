@@ -1,0 +1,298 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=0.5in}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
+\renewcommand{\L}{\mathcal{L}}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\renewcommand{\Re}{\text{Re}\,}
+\renewcommand{\Im}{\text{Im}\,}
+\newcommand{\sign}{\text{sign}\,}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{exercise}[1][red]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+\begin{tcolorbox}[
+    parbox=false,
+    colback=#1!5!white,
+    colframe=#1!75!black,
+    breakable
+]}
+{\end{tcolorbox}}
+
+\title{APMA 2110 - Homework 8}
+\author{Milan Capoor}
+\date{11 November 2024}
+
+\begin{document}
+\maketitle
+
+1. Let $f_n \geq 0$ for all $n$, $\lim_{n \to \infty} f_n = f$ a.e., and $\lim_{n \to \infty} \int_X f_n = \int_X f$. Prove that for all $E \sub X$, 
+\[\lim_{n \to \infty} \int_E f_n = \int_E f.\]
+
+    \color{blue}
+        STEP 1. Since $f_n \to f$ a.e. on $X$, $f_n \to f$ a.e. on $E$ for all $E \sub X$.
+
+        \begin{proof}
+            \emph{Proof:} Let $A$ be the set of measure zero of points where $f_n \to f$ does not hold. Let $B$ be the set of points in $E$ where $f_n \to f$ does not hold. Since $E \sub X$, $B \sub A$. By monotonicity  of measure, $\mu(B) \leq \mu(A) = 0$. Hence $f_n \to f$ a.e. on $E$.
+        \end{proof}
+
+        STEP 2. By Fatou's Lemma,
+        \[\int_E \liminf f_n = \int_E f \leq \liminf \int_E f_n\]
+        
+        STEP 3. We claim $\int_X f < \infty$
+
+        \begin{proof}
+            \emph{Proof:} Suppose not. We have, by assumption, $\lim \int_X f_n = \int_X f$.
+
+            But then, for $n > N$ sufficiently large such that $\abs{\int_X f_n - \int_X f} < \ep$,  we have $\infty - \infty < \ep$ which is not defined. 
+        \end{proof}
+
+        STEP 4. WTS $\lim \int_E f_n \leq \int_E f$.
+        \begin{align*}
+            \int_{X \setminus E} f \leq \liminf \int_{X \setminus E} f_n
+                = \liminf \int_X f_n - \limsup \int_E f_n
+                = \int_X f - \limsup \int_E f_n
+        \end{align*}
+        where the first inequality follows from Fatou again. 
+        
+        Then by finiteness of the integral,
+        \[\limsup \int_E f_n \leq \int_X f - \int_{X \setminus E} f \implies \limsup \int_E f_n \leq \int_E f\]
+
+        All together, 
+        \[\limsup \int_E f_n \leq \int_E f \leq \liminf \int_E f_n\]
+        so 
+        \[\lim \int_E f = \int_E f \qed\]
+    \color{black}
+
+\pagebreak
+
+2. (Riemann-Lebesgue Theorem) Let $f \in L^1(\R)$. Prove that 
+\[\lim_{n \to \infty} \int f(x) \cos(nx)\; dx =0 \]
+
+    \color{blue}
+        First notice that since $f \in \L^1$, we may choose $R > 0$ such that 
+        \[\int_{R}^{\infty} \abs{f(x)}\; dx < \ep, \qquad \int_{-\infty}^{-R} \abs{f(x)}\; dx < \ep\]
+        for all $\ep$. 
+
+        Now by the reduction to smooth functions, we can take a $C^{\infty}$ function with compact support $\phi$ such that 
+        \[\int_{-R}^R \abs{f - \phi} < \ep\] 
+
+        Further, since $\abs{\cos nx} \leq 1$, 
+        \[\abs{\int_{-R}^R (f(x) - \phi(x)) \cos(nx)\; dx} \leq \int_{-R}^R \abs{f(x) - \phi(x)}\; dx < \ep\]
+        (where we have the switching of the absolute value by a lemma from class). 
+
+        But by integration by parts,
+        \[\int_{-R}^R \phi(x) \cos(nx)\; dx = \frac{\phi(R) \sin(nR)}{n} + \frac{\phi(-R)\sin(nR)}{n} - \frac{1}{n} \int_{-R}^R \phi'(x)\sin(nx)\; dx\]
+        so for $n$ sufficiently large, $\abs{\int_{-R}^R \phi(x)\cos(nx)\; dx} < \ep/2$.
+
+        Hence, 
+        \begin{align*}
+            \abs{\int_{-R}^R (f(x) - \phi(x)) \cos(nx)\; dx} &\leq \abs{\int_{-R}^R f(x)\cos(nx)\; dx} + \abs{\int_{-R}^R \phi(x)\cos(nx)\; dx} < \ep\\ 
+            &\implies \abs{\int_{-R}^R f(x)\cos(nx)\; dx} < \ep /2
+        \end{align*}
+
+        All together, 
+        \begin{align*}
+            \lim_{n \to \infty} \int f(x) \cos(nx)\; dx &= \lim_{n \to \infty} \left[ \int_{-\infty}^{-R} f(x) \cos(nx) \; dx + \int_{-R}^R f(x)\cos(nx)\; dx + \int_{R}^{\infty} f(x)\cos(nx)\; dx\right]\\ 
+            &< 2\ep + \lim_{n \to \infty} \int_{-R}^R f(x)\cos(nx)\; dx\\ 
+            &< 2\ep + \frac{\ep}{2} = \frac{5\ep}{2} \to 0 \qed
+        \end{align*}
+    \color{black}
+
+\pagebreak 
+
+3. Let $f \in L^1(\R^d)$ and $f \neq 0$. Prove that there exists $C$ (dependent on $f$) and $R > 0$ such that 
+\[\sup_{r > 0} \frac{1}{m(B(r, x))} \int_{B(r,  x)} \abs{f(y)} \; dy  \geq C\abs{x}^{-d}\qquad \abs{x} > R\]
+
+    \color{blue}
+        Pick $R > 0$ and $x$ such that $\abs{x} > R$.
+        
+        Since $f \in \L^1$, $\exists C$ such that 
+        \[\int_{B(R, x)} \abs{f} = C \leq \int \abs{f} < \infty\]
+
+        Further, by the faithfulness of the Lebesgue measure, $m(B(r, x)) \propto r^d$.
+
+        \begin{proof}
+            \emph{Proof:} $B(r, x)$ is a ball of radius $r$ centered at $x$ so necessarily a subset of the hypercube 
+            \[C(r + 1, x) = \{h_j: x_j - \frac{r+1}{2}\leq h_j \leq x_j + \frac{r+1}{2}, \; j = 1, \dots, d\}\] 
+            which has measure $m(C(r, x)) = r^d$.  
+
+            But further, $C(r - 1, x) \sub B(r, x)$ so 
+            \[r^{d-1} < m(B(r, x)) < r^{d+1}\]
+        \end{proof}
+
+        Now, we have $\abs{x} > R \implies \abs{x}^d > R^d \geq m(B(r, x))$ so 
+        \[\frac{1}{m(B(R, x))} \geq \abs{x}^{-d}\]
+        and 
+        \[\frac{1}{m(B(R, x))} \int_{B(R,x)} \abs{f(y)}\; dy \geq C\abs{x}^{-d}\]
+
+        The RHS is independent of $r$ so we can taking the supremum, 
+        \[\sup_{r > 0} \frac{1}{m(B(r, x))} \int_{B(r, x)} \abs{f(y)} \geq C\abs{x}^{-d}\qed\]
+    \color{black}
+
+
+\pagebreak
+
+4. Suppose $f_n \overset{\mu}{\longrightarrow} f$ and $g_n \overset{\mu}{\longrightarrow} g$. Prove that 
+\begin{enumerate}[(a)]
+    \item $f_n + g_n \overset{\mu}{\longrightarrow} f + g$
+    
+    \color{blue}
+        Since $f_n \overset{\mu}{\longrightarrow} f$, $\mu\{x: \abs{f_n(x) - f(x)} \geq \ep\} \to 0$. 
+
+        Let $\ep > 0$. Consider the set 
+        \[\{x: \abs{f_n + g_n - f - g} \geq \ep\}\]'
+
+        By the triangle inequality, 
+        \[\abs{f_n + g_n - f - g} \leq \abs{f_n - f} + \abs{g_n - g}\]
+
+        So by monotonicity of measure, 
+        \[\mu\{x: \abs{f_n + g_n - f - g} \geq \ep\} \leq \mu\{x: \abs{f_n - f} + \abs{g_n - g} \geq \ep\}\]
+
+        For notational convenience, define 
+        \begin{align*}
+            A_n &= \{x: \abs{f_n(x) - f(x)} \geq \ep/2\}\\
+            B_n &= \{x: \abs{g_n(x) - g(x)} \geq \ep/2\}
+        \end{align*}
+
+        By assumption, $\mu(A_n) \to 0$ and $\mu(B_n) \to 0$. 
+
+        But also, 
+        \[\{x: \abs{f_n - f} + \abs{g_n - g} \geq \ep\} \sub A_n \cup B_n\]
+        so again by monotonicity of measure,
+        \[\mu\{x: \abs{f_n - f} + \abs{g_n - g} \geq \ep\} \leq \mu(A_n \cup B_n)\] 
+
+        And by a property from HW 3, 
+        \[\mu(A_n \cup B_n) \leq \mu(A_n) + \mu(B_n) \to 0\]
+
+        Hence, 
+        \[\mu\{x: \abs{f_n + g_n - f - g} \geq \ep\} \to 0\]
+        and so $f_n + g_n \overset{\mu}{\longrightarrow} f + g$.
+    \color{black}
+
+    \item $f_ng_n \overset{\mu}{\longrightarrow} fg$ if $\mu(X) < \infty$
+    
+    \color{blue}
+        Let $n_k$ be any subsequence in $\N$. Since $f_n \overset{\mu}{\longrightarrow} f$, we also have $f_{n_k} \overset{\mu}{\longrightarrow} f$. 
+
+        By a Theorem from class, $\exists n_{k_j}$ such that $f_{n_{k_j}} \to f$ a.e. 
+
+        But now we can repeat the same argument for $g$. Take the sequence $n_{k_j}$. Since $g_n \overset{\mu}{\longrightarrow} g$, $\exists n_{k_{j_l}}$ such that $g_{n_{k_{j_l}}} \to g$ a.e.
+
+        \tbf{Lemma:} If $f_{n_k} \to f$ a.e. and $g_{n_k} \to g$ a.e., then $f_{n_k}g_{n_k} \to fg$ a.e.
+
+        \begin{proof}
+            \emph{Proof:} Since $f_{n_k} \to f$ a.e., $\exists N_1$ such that for almost all $n > \geq N_1$, $\abs{f_{n_k} - f} < \delta$. Similarly, $\exists N_2$ such that for almost all $n \geq N_2$, $\abs{g_{n_k} - g} < \delta$.
+
+            Pick $N = \max\{N_1, N_2\}$. Then for almost all $n \geq N$,
+            \[\abs{f_{n_k}g_{n_k} - fg} < \abs{(f + \delta)(g + \delta) - fg} = \abs{f\delta + g\delta - \delta^2} \to 0\]
+        \end{proof}
+
+        Hence, $f_{n_{k_{j_l}}} g_{n_{k_{j_l}}} \to fg$ a.e.
+
+        Now suppose $f_n g_n$ does not converge to $fg$ in measure. Then $\forall \delta > 0$, $\exists \ep > 0$ such that 
+        \[\mu\{\abs{f_n g_n - fg} \geq \delta\} > \ep\]
+        for infinitely many $n$.
+
+        But this means that there is a sequence $\{n_k\} \in \N$ such that $\mu\{\abs{f_{n_k} g_{n_k} - fg} \geq \delta\} > \ep$. But then clearly, $f_{n_k} g_{n_k} \not\to fg$ a.e., which contradicts our work above. 
+    \color{black}
+
+\end{enumerate}
+
+\end{document}

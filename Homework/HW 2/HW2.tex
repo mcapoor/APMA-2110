@@ -1,0 +1,631 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, 
+    left=0.5in,
+    top=0.5in,
+    right=0.5in,
+    bottom=0.5in
+}
+
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\newcommand{\F}[1]{\mathcal{F}(#1)}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\renewcommand{\div}{\vspace*{10pt}\hrule \vspace*{10pt}}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        coltext=#1,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+
+\title{APMA 2110 - Homework 2}
+\author{Milan Capoor}
+\date{}
+
+\begin{document}
+\maketitle
+
+1. Let $A$ be a countable set. Show that the set of all finite sequences from $A$ 
+\[X = \{(a_1, a_2, a_3, \dots, a_n): a_i \in A, \text{ any fixed } n \geq 1\}\] 
+is countable.
+
+    \color{blue}
+        Define $X_n = \{(a_1, a_2, \dots, a_n): a_i \in A\}$. 
+
+        We claim that $X = \bigcup_{n=1}^{\infty} X_n$. 
+        
+        \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,coltext=blue]
+            \emph{Proof:} Let $x \in X$. Then $x = (a_1, a_2, \dots, a_n)$ for some $n$. So $x \in X_n$ for some $n$. Thus $X \sub \bigcup_{n=1}^{\infty} X_n$. Now consider $x \in \bigcup_{n=1}^{\infty} X_n$. Then $x \in X_n$ for some $n$ so $x = (a_1, a_2, \dots, a_n)$ for some $n$. Thus $x \in X$. So $\bigcup_{n=1}^{\infty} X_n \sub X$. 
+        \end{tcolorbox}
+
+        By a proposition from class, the union of countably many countable sets is countable. So it suffices to show that each $X_n$ is countable.
+
+        Let $n = 1$. So $X = \{(a): a \in A\}$. Trivially, there exists $f: X \biject A$ by $f(x) = x$. Since $A$ is countable, $X$ is countable.
+
+        Let $X_k = \{(a_1, a_2, \dots, a_k): a_i \in A\}$. Assume $X_k$ is countable. Then 
+        \[X_{k+1} = \{(a_1, a_2, \dots, a_k, a_{k+1}): a_i \in A\}\] 
+
+        We can define a bijection $f: X_{k+1} \biject X_k \times A$ by
+        \[f((a_1, a_2, \dots, a_k, a_{k+1})) = ((a_1, a_2, \dots, a_k), a_{k+1})\]
+
+        Clearly this is injective by element-wise comparison of the finite sequences. Further, it is surjective because the first $k$ terms of sequences in $X_{k+1}$ span $X_k$ (as it is a subsequence of length $k$ in $X$) and the last term can be any element of $A$.
+        
+        Since the product of two countable sets is countable (by a proposition from class), $X_{k+1}$ is countable. $\qed$
+
+    \color{black}
+
+
+\pagebreak
+
+2. Let $p$ be an integer greater than $1$ and $x$ a real number $0 < x < 1$. Show that there is a sequence $\{a_n\}$ of integers with $0 \leq a_n < p$ such that 
+\[x = \sum_{n=1}^\infty \frac{a_n}{p^n} \]
+and that this sequence is unique except when $x = q/p^n$, in which case there are two such sequences.
+
+    \color{blue}   
+        Let $x_1 = x$ and $a_1 = \floor{px_1}$ where $\floor{\cdot}: \R \to \Z$ is defined by 
+        \[\floor{x} = \sup\{n \in \Z: n \leq x\}\]
+        (well-defined by completeness - $x$ is an upper bound). 
+
+        Then let $x_2 = px_1 - a_1$. We claim that $0 \leq x_2 < 1$.
+
+        \begin{proof}
+            Suppose not. Then $x_2 < 0$ or $x_2 \geq 1$. 
+
+            Case 1: $x_2 < 0$. Then $px_1 < a_1 = \floor{px_1}$ which is a contradiction of the definition of the floor function.
+            
+            Case 2: $x_2 \geq 1$. Then $px_1 \geq 1 + a_1 = 1 + \floor{px_1}$ so 
+            \[px_1 - \floor{px_1} \geq 1\]
+            which is again a contradiction of the definition of the floor function.
+        \end{proof}
+
+        By similar argument, let $x_3 = px_2 - a_2$ and $a_2 = \floor{px_2}$. 
+
+        Expanding so far, 
+        \[x_1 = \frac{a_1}{p} + \frac{x_2}{p^2}\ + \frac{r_3}{p^2}\]
+
+        Suppose that for $i = 1, \dots, k$, we have 
+        \[x_{i + 1} = px_i - a_i\]
+        for $a_i = \floor{px_i} \in \{0, 1, \dots, p-1\}$ and $0 \leq x_i < 1$. Then 
+        \[x = \frac{a_1}{p} + \frac{a_2}{p^2} + \cdots + \frac{a_k}{p^k} + \frac{x_{k+1}}{p^k}\]
+        where 
+        \[x_{k+1} = px_k - a_k\]
+
+        If $x_{k + 1} = 0$, then $a_k = px_k = \floor{px_k}$ so 
+        \[x = \sum_{n=1}^{k} \frac{a_n}{p^n}\]
+        exactly so we can define $a_n = 0$ for $n > k$ and we have successfully constructed a sequence. 
+
+        Otherwise, $0 < x_{k+1} < 1$ so $a_{k+1} = \floor{px_{k+1}}$ and $0 \leq a_{k+1} < p$. 
+        
+        We claim $0 \leq x_{k+2} < 1$ with $x_{k+2} = px_{k+1} - a_{k+1}$, i.e. this process can be continued indefinitely.
+
+        \begin{proof}
+            Suppose not. Then $x_{k+2} < 0$ or $x_{k+2} \geq 1$.
+
+            Case 1: $x_{k+2} < 0$. Then $px_{k+1} < a_{k+1} = \floor{px_{k+1}}$ which is a contradiction of the definition of the floor function.
+
+            Case 2: $x_{k+2} \geq 1$. Then $px_{k+1} \geq 1 + a_{k+1} = 1 + \floor{px_{k+1}}$ so $px_{k+1} - \floor{px_{k+1}} \geq 1$ which is again a contradiction of the definition of the floor function.
+        \end{proof}
+
+        Then, 
+        \[x_{k+1} = \frac{a_{k+1}}{p} + \frac{x_{k+2}}{p}\]
+        so 
+        \[x = \frac{a_1}{p} + \frac{a_2}{p^2} + \cdots + \frac{a_k}{p^k} + \frac{a_{k+1}}{p^{k+1}} + \frac{x_{k+2}}{p^{k+1}}\]
+
+        By induction, 
+        \[x = \sum_{n=1}^{\infty} \frac{a_n}{p^n}\]
+        such that $0 \leq a_n < p$ for all $n$.       
+
+        \div 
+
+        We claim that this sequence is unique except when $x = q/p^n$ for some $q \in \Z$ and $n \in \N$.
+
+        \textbf{Case 1:} $x \neq q/p^n$. 
+
+        Suppose there are two such sequences $\{a_n\}$ and $\{b_n\}$ such that
+        \[x = \sum_{n=1}^{\infty} \frac{a_n}{p^n} = \sum_{n=1}^{\infty} \frac{b_n}{p^n}\]
+
+        Let $k$ be the smallest index such that $a_k \neq b_k$. WLOG, assume $a_k < b_k$. Then
+        \[\sum_{n=1}^{k-1} \frac{a_n}{p^n} + \frac{a_k}{p^k} + \sum_{n=k+1}^{\infty} \frac{a_n}{p^n} = \sum_{n=1}^{k-1} \frac{b_n}{p^n} + \frac{b_k}{p^k} + \sum_{n=k+1}^{\infty} \frac{b_n}{p^n}\]
+        and by assumption, the first $k-1$ terms are equal so 
+        \[\frac{b_k - a_k}{p^k} = \sum_{n=k+1}^{\infty} \frac{b_n - a_n}{p^n}\]
+        but since $0 \leq a_k < b_k < p$, $1 \leq b_n - a_n < p$ for all $n$ so 
+        \[\frac{1}{p^k} < \sum_{n=k+1}^{\infty} \frac{1}{p^{k+1}} = \frac{1}{p^{k+1}(p - 1)}\]
+        but $p \geq 1$ so this is a contradiction.
+
+        \textbf{Case 2:} $x = q/p^n$
+
+        \emph{Lemma:} if $x = q/p^n$, then $\exists k$ such that $x_{k} = 0$ for $k > n$. 
+        
+        \begin{proof}
+            Assume to the contrary that $x_k \neq 0$ for all $k > n$. 
+            
+            Consider $x_{n+1}$: 
+            \[\frac{a_{n+1}}{p^{n+1}} = \frac{\floor{px_{n+1}}}{p^{n+1}} \neq 0\]
+
+            But $a_{n+1} < p$, so $p$ cannot divide $a_{n+1}$. Hence, 
+            \[x = \frac{a_1}{p} + \frac{a_2}{p^2} + \dots + \frac{a_n}{p^n} + \frac{a_{n+1}}{p^{n+1}} + \dots\] 
+            cannot be expressed with denominator $p^n$ so $x \neq q/p^n$. Contradiction. 
+
+            Suppose terms $x_1, \dots, x_k$ have been defined for $k > n$. By assumption, $x_{k+1} \neq 0$ so by the same argument, $\frac{a_{n+1}}{p^{n+1}} \neq 0$ with $p \nmid a_{n+1}$. 
+
+            Then $x = q/p^n$ cannot be expressed with denominator $p^n$ so $x \neq q/p^n$. Contradiction.
+
+            By induction, $x_k = 0$ for $k > n$.
+        \end{proof}
+
+        Thus,
+        \[x = \frac{q}{p^n} = \sum_{n=1}^k \frac{a_n}{p^n}\]
+        for finite $k$. 
+
+        It remains to show that there is one more sequence that satisfies this condition.
+
+        Consider 
+        \[b_n = \begin{cases}
+            a_n & n \leq k - 1\\
+            a_n - 1 & n = k\\
+            p - 1 & n > k
+        \end{cases}\]
+
+        Then 
+        \begin{align*}
+            \sum_{n=1}^{\infty} \frac{a_n}{p^n}- \sum_{n=1}^{\infty} \frac{b_n}{p^n} &= \left(\sum_{n=1}^{k-1} \frac{a_n}{p^n} + \frac{a_k}{p^k} + \sum_{n=k+1}^{\infty} \frac{a_n}{p^n}\right) - \left(\sum_{n=1}^{k-1} \frac{a_n}{p^n} + \frac{a_k - 1}{p^k} + \sum_{n=k+1}^{\infty} \frac{p - 1}{p^k}\right)
+        \end{align*}
+        But $a_n = 0$ for $n > k$ so 
+        \begin{align*}
+            \sum_{n=1}^{\infty} \frac{a_n}{p^n}- \sum_{n=1}^{\infty} \frac{b_n}{p^n} &= \frac{1}{p^k} - \sum_{k+1}^{\infty} \frac{p - 1}{p^k}\\ 
+            &= \frac{1}{p^k} - \frac{1}{p^k} = 0
+        \end{align*}
+        which implies 
+        \[x = \sum_{n=1}^{\infty} \frac{b_n}{p^n}\]
+        and $a_n$ and $b_n$ are valid sequences if $x = q/p^n$.
+
+        Now suppose that $c_n$ is another such sequence
+        \[\sum_{n=1}^{\infty} \frac{a_n}{p^n} = \sum_{n=1}^{\infty} \frac{c_n}{p^n}\]
+        but $\exists k$ such that $a_k \neq c_k$. 
+        
+        WLOG, let $a_k > c_k$. Then
+        \begin{align*}
+            \sum_{n=1}^{\infty} \frac{a_n}{p^n}- \sum_{n=1}^{\infty} \frac{c_n}{p^n} &= \frac{a_k - c_k}{p^k} + \sum_{n=k+1}^{\infty} \frac{a_n - c_n}{p^n}
+        \end{align*} 
+
+        Certainly, $a_n - c_n \geq 1$. But then 
+        \begin{align*}
+            \frac{a_k - c_k}{p^k} + \sum_{n=k+1}^{\infty} \frac{a_n - c_n}{p^n} &\geq \frac{1}{p^k} + \sum_{n=k+1}^{\infty} \frac{1}{p^n}\\
+            &= \frac{1}{p^k} + \frac{1}{p^k(p-1)}\\
+            &= \frac{p}{p^k(p-1)} > 0
+        \end{align*}
+        but this is a contradiction of the equality of the series.
+        
+        \div 
+        
+        Thus, $a_n$ as constructed above is unique except when $x = q/p^n$ for some $q \in \Z$ and $n \in \N$, in which case there are two such sequences. $\qed$
+
+    \color{black}
+
+\pagebreak
+
+3. Show that the set of infinite sequences from two numbers $\{0, 1\}$ 
+\[E = \{(a_1, a_2, a_3, \dots): a_i \in \{0, 1\}\}\]
+is not countable. Furthermore, show that $(0, 1)$ is uncountable.
+
+    \color{blue}
+        (Cantor's Diagonalization) Suppose that $E$ is countable. Then we can define a sequence $S_n$ of elements in $E$ indexed by the natural numbers. 
+
+        Let the notation $S_m[k]$ represent the $k$-th element of the $m$-th sequence in $(S_n)$. 
+
+        Define a new sequence $(X)$ by 
+        \[X_n = 1 - S_n[n]\] 
+        That is, the elements of $X$ are the complements of the diagonal elements of $(S_n)$. 
+
+        $(X)$ is a sequence of $0$'s and $1$'s, so $(X) \in E$. However, for every $n$, $X \neq S_n$ since $X$ differs from $S_n$ in the $n$-th element. But this suggests there are sequences in $E$ that are not in $S_n$, a contradiction. $\qed$
+
+        \div 
+
+        Assume $(0, 1)$ is countable. Then $(0, 1) = \{x_1, x_2, x_3, \dots\}$.
+
+        Let $I_1 \sub (0, 1)$ be a closed interval which does not contain $x_1$. Let $I_2 \sub I_1$ be a closed interval which does not contain $x_2$. Continue this process to get a nested sequence of closed intervals $I_1 \supset I_2 \supset I_3 \supset \dots$ such that $I_{n + 1} \sub I_n$ and $x_n \not\in I_n$. 
+
+        By construction, 
+        \[\bigcap_{n=1}^{\infty} I_n = \emptyset\]
+        but every finite intersection of $I_n$'s is nonempty. 
+
+        \begin{proof}
+            \emph{Proof:} Let $I_n = [a, b]$. Then $\bigcap_{k=1}^n I_k \sub [a, b]$. But exists $x_0 \in \Q \cap [a, b]$ by the density of the rationals in the reals. So $\exists x_0 \in \bigcap_{k=1}^n I_k$ for all $n$.
+        \end{proof}
+        
+        so by HW 1.1.e, the bounded intersection of closed sets with the Finite Intersection Property is nonempty. This is a contradiction, so $(0, 1)$ is uncountable. $\qed$ 
+
+    \color{black}
+
+\pagebreak
+
+4. Take $p = 3$ in (1). The Cantor ternary set $C$ consists of those real numbers in $[0, 1]$ for which $a_n \neq 1$ for all $n$ in (1). (In case there are two ternary expansions, we put $x$ in the Cantor set if \emph{one} of the expansions has no term $a_n = 1$. Prove 
+\begin{itemize}
+    \item $C$ is closed, and $C$ is obtained by first removing the middle third $(\frac{1}{3}, \frac{2}{3})$ from $[0, 1]$, then removing the middle $(\frac{1}{9}, \frac{2}{9})$ and $(\frac{7}{9}, \frac{8}{9})$ of the remaining intervals and so on.
+    
+        \color{blue}
+            Let $I_1 = (\frac{1}{3}, \frac{2}{3})$ and 
+            \[C_1 = [0, 1] \setminus I_1 = [0, \frac{1}{3}] \cup [\frac{2}{3}, 1]\]
+
+            Let $I_2 = (\frac{1}{9}, \frac{2}{9}) \cup (\frac{7}{9}, \frac{8}{9})$ and
+            \[C_2 = [0, 1] \setminus (I_1 \cup I_2) = [0, \frac{1}{9}] \cup [\frac{2}{9}, \frac{1}{3}] \cup [\frac{2}{3}, \frac{7}{9}] \cup [\frac{8}{9}, 1]\]
+
+            Inductively, we can define a sequence of closed intervals $I_n$ such that $I_{n+1}$ is the union of the middle thirds of the intervals in $I_n$ and 
+            \[C_n = [0, 1] \setminus \bigcup_{i=1}^n I_i\]
+
+            We claim that 
+            \[C = \bigcap_{n=1}^{\infty} C_n\]
+            for
+            \[C = \left\{\sum_{n=1}^{\infty} \frac{a_n}{3^n} \bigg\vert a_n \in \{0, 2\} \right\}\] 
+
+            \emph{Part I: $C \sub \bigcap_{n=1}^{\infty} C_n$}
+            
+            Let $x \in C$. Then  
+            \[x = \frac{a_1}{3} + \sum_{n=2}^{\infty} \frac{a_n}{3^n}\]
+
+            And 
+            \[\sum_{n=2}^{\infty} \frac{a_n}{3^n} \leq \sum_{n=2}^{\infty} \frac{2}{3^n} =  -\frac{2}{3} + \sum_{n=1}^{\infty} \frac{2}{3^n} = \frac{1}{3}\]
+
+            Therefore, if $a_1 = 0$, $x \in [0, \frac{1}{3}]$. If $a_1 = 2$, then $x \in [\frac{2}{3}, 1]$.
+            
+            Regardless, $x \in C_1$. 
+
+            Now suppose $x \in C_n$. We can write $C_n = \bigcup_{i=1}^{2^n} F_i$ where $F_i$ is a closed interval, so $x \in F_i$ for some $i$. Let $F_i = [a, b]$. 
+
+            We want to show that $x \in C_{n+1}$, for which it suffices to show that 
+            \[x \in [a, a + \frac{b - a}{3}] \cup [b - \frac{b - a}{3}, b]\]
+
+            But each $F_i$ is 1/3 of the length of the interval that contains it, so $b-a = \frac{1}{3^n}$. Thus, we want to show that 
+            \[x \in [a, a + \frac{1}{3^{n+1}}] \cup [a + \frac{2}{3^{n+1}}, b]\]
+
+            By construction,  
+            \begin{align*}
+                x &= \sum_{i=1}^n \frac{a_i}{3^i} + \frac{a_{n+1}}{3^{n+1}} +\sum_{i=n+2}^{\infty} \frac{a_i}{3^i}\\ 
+                    &= a + \frac{a_{n+1}}{3^{n+1}} + \sum_{i=n+2}^{\infty} \frac{a_i}{3^i}\\ 
+                    &\leq a + \frac{a_{n+1}}{3^{n+1}} + \sum_{i=n+2}^{\infty} \frac{2}{3^i}\\ 
+                    &= a + \frac{a_{n+1}}{3^{n+1}} +  \frac{1}{3^{n+1}}
+            \end{align*}
+
+            If $a_{n+1} = 0$, then 
+            \[x \leq a + \frac{1}{3^{n+1}} \implies x \in [a, a + \frac{1}{3^{n+1}}]\]
+
+            If $a_{n+1} = 2$, then
+            \[x \leq a + \frac{2}{3^{n+1}} +  \frac{1}{3^{n+1}} = a + \frac{1}{3^n} = b \implies x \in [a + \frac{2}{3^{n+1}}, b]\]
+
+            Therefore, $x \in C_{n+1}$. By induction, $x \in \bigcap_{n=1}^{\infty} C_n$ so 
+            \[C \sub \bigcap_{n=1}^{\infty} C_n\]
+            
+            \emph{Part II: $\bigcap_{n=1}^{\infty} C_n \sub C$} 
+            
+            Let $x \in \bigcap_{n=1}^{\infty} C_n$. 
+
+            From (2), we know that $x$ has a unique ternary expansion. It remains to show that $x$ has no $1$'s in its expansion.
+
+            Suppose $a_1 = 1$. Then 
+            \begin{align*}
+                x &= \frac{1}{3} + \sum_{n=2}^{\infty} \frac{a_n}{3^n}\\
+                &\leq \frac{1}{3} + \sum_{n=2}^{\infty} \frac{2}{3^n}\\
+                &= \frac{1}{3} + \frac{1}{3}\\ 
+                &\implies x \in (\frac{1}{3}, \frac{2}{3})
+            \end{align*}
+
+            But then $x \not\in C_1$, a contradiction. So $a_1 \neq 1$.
+
+            Now suppose $a_k \neq 1$ for all $k \leq n$ for some $n$. We want to show that $a_{n + 1} \neq 1$. 
+            
+            Let the closed interval in $C_n$ which contains $x$ be $[a, b]$. Since $x \in C_{n+1}$ too, we further know that 
+            \[x \in [a, a + \frac{1}{3^{n+1}}] \quad \text{ or }\quad  x \in [a + \frac{2}{3^{n+1}}, b]\]
+
+            Suppose $a_{n+1} = 1$. Then 
+            \begin{align*}
+                x &= \sum_{n=1}^n \frac{a_n}{3^n} + \frac{1}{3^{n+1}} + \sum_{n=n+2}^{\infty} \frac{a_n}{3^n}\\
+                    &= a + \frac{1}{3^{n+1}} + \sum_{n=n+2}^{\infty} \frac{a_n}{3^n}\\
+                    &\leq a + \frac{1}{3^{n+1}} + \sum_{n=n+2}^{\infty} \frac{2}{3^n}\\
+                    &= a + \frac{1}{3^{n+1}} + \frac{1}{3^{n+1}}\\
+                    &= a + \frac{2}{3^{n+1}}\\ 
+                    &\implies x \in [a + \frac{1}{3^{n+1}}, a + \frac{2}{3^{n+1}}]\\ 
+            \end{align*}
+
+            So 
+            \[x \in \left([a, a + \frac{1}{3^{n+1}}] \cup [a + \frac{2}{3^{n+1}}, b]\right) \bigcap \left([a + \frac{1}{3^{n+1}}, a + \frac{2}{3^{n+1}}]\right) \implies x \in \left\{a + \frac{1}{3^{n+1}}, a + \frac{2}{3^{n+1}}\right\} \]
+
+            Case 1: $x = a + \frac{1}{3^{n+1}}$. Then
+            \[\{a_n\} = \{a_1, \dots, a_n, 1, 0, 0, \dots\} = \{a_1, \dots, a_n, 0, 2, 2, \dots\}\]
+            because (letting the partial sums of the first series be $S_n$ and the second be $T_n$),
+            \[S_n - T_n = \frac{1}{3^{n+1}} - \sum_{k=n+2}^{\infty} \frac{2}{3^k} = \frac{1}{3^{n+1}} - \frac{1}{3^{n+1}} = 0 \implies S_n = T_n\] 
+
+            Case 2: $x = a + \frac{2}{3^{n+1}}$. Then 
+            \[\{a_n\} = \{a_1, \dots, a_n, 2, 0, 0, \dots\}\] 
+            which contradicts that $a_{n+1} = 1$. 
+
+            Thus, $x$ can always be written in a form such that $a_{n+1} \neq 1$. Hence, 
+            \[\bigcap_{n=1}^{\infty} C_n \sub C\] 
+
+            \div  
+
+            In our construction, we defined $C$ as the complement in $[0, 1]$ of the union of countably many open intervals. Hence, $C$ is closed. 
+
+        \color{black}
+
+    \item The set of accumulation points of $C$ is $C$ itself.
+    
+        \color{blue}
+            Let $\ep > 0$ and choose $x \in C$. Consider the open interval $B_{\ep}(x) = (x - \ep, x + \ep)$.
+
+            Let $\{F_n\}$ be the set of $2^n$ closed intervals that define the partitioning construction of $C$. Let $\{I_n\} \sub \{F_n\}$ be the closed intervals in $C$ which contain $x$. 
+
+            Define a sequence $x_n \in C$ by picking $x_n \in I_n$ for all $n$. 
+                        
+            For $n$ large enough, the length of $I_n = \frac{1}{3^n} < \ep$ so $I_n \sub B_{\ep}(x)$. Hence, $x$ is an accumulation point of $C$, i.e. every point in $C$ is an accumulation point of $C$. 
+
+            Now suppose $x \notin C$ but $x$ is an accumulation point of $C$. Then there exists a sequence $(x_n) \sub C$ such that $x_n \to x$. Therefore, $\exists N \in \N$ such that $\forall n \geq N$, $x_n \in B_{\ep}(x)$. But $C$ is closed, so $C^c$ is open which implies that $B_{\ep}(x) \sub C^c$. But then $\exists x_0 \in \{x_n\} \cap C^c$ which is a contradiction. 
+            
+            Hence, the set of accumulation points of $C$ is $C$ itself. $\qed$
+            
+        \color{black}
+
+
+\end{itemize}
+
+\pagebreak
+
+5. Let $X$ be the set of all continuous functions $f$ over $[0, 1]$. Define 
+\[\rho_1(f, g) = \int_0^1 \abs{f(x) - g(x)} \; dx\]
+
+Show 
+\begin{itemize}
+    \item $(X, \rho_1)$ is a metric space.
+    
+        \color{blue}
+            It suffices to show that 
+            \begin{enumerate}
+                \item $\rho_1(f, g) = 0$ iff $f = g$ 
+                \item $\rho_1(f, g) = \rho_1(g, f)$
+                \item $\rho_1(f, g) \leq \rho_1(f, h) + \rho_1(h, g)$
+            \end{enumerate}
+
+            For (1), suppose $f = g$. Then 
+            \[\rho_1(f, g) = \rho_(f, f) = \int_0^1 \abs{f(x) - f(x)} \; dx = 0\]
+
+            Conversely, if $\rho_1(f, g) = 0$, then
+            \[\int_0^1 \abs{f(x) - g(x)} \; dx = 0\]
+            but $\abs{f(x) - g(x)} \geq 0$ so $\abs{f(x) - g(x)} = 0$ for all $x \in [0, 1]$. 
+
+           \begin{proof}
+                \emph{Proof:} a Riemann integral is by definition a limit of Riemann sums. So for non-negative integrand, the integral is monotonically increasing. Therefore, if the integral is $0$, then the integrand must be $0$ almost everywhere.
+           \end{proof}
+
+            For (2), 
+            \[\rho_1(f, g) = \int_0^1 \abs{f(x) - g(x)} \; dx = \int_0^1 \abs{-[g(x) - f(x)]} = \int_0^1 \abs{g(x) - f(x)} \; dx = \rho_1(g, f)\]
+
+            For (3), 
+            \begin{align*}
+                \rho_1(f, g) &= \int_0^1 \abs{f(x) - g(x)} \; dx \\
+                &= \int_0^1 \abs{f(x) - h(x) + h(x) - g(x)} \; dx \\
+                &\leq \int_0^1 \abs{f(x) - h(x)} + \abs{h(x) - g(x)} \; dx \\
+                &= \int_0^1 \abs{f(x) - h(x)} \; dx + \int_0^1 \abs{h(x) - g(x)} \; dx \\
+                &= \rho_1(f, h) + \rho_1(h, g)
+            \end{align*}
+        \color{black}
+
+    \item $(X, \rho_1)$ is not complete.
+    
+        \color{blue}
+            It suffices to find a Cauchy sequence in $X$ that does not converge in $X$. Consider the sequence of functions $f_n(x) = x^n$
+
+            We claim this is is continuous and further, that it is Cauchy. 
+
+            Let $\ep > 0$. Fix $n \in \N$. Then let $\delta = \ep/n$. Then if $\abs{x - y} < \delta$,
+            \begin{align*}
+                \abs{f_n(x) - f_n(y)} &= \abs{x^n - y^n}\\ 
+                &= \abs{x - y}\; \abs{x^{n-1} + x^{n-2}y + \cdots xy^{n-2} + y^{n-1}}\\
+                &\leq \abs{x - y}\; \abs{1 + 1 + \cdots + 1 + 1}\\ 
+                &= n\abs{x - y} < n\delta = \ep
+            \end{align*}
+            so $f_n$ is continuous.
+
+            \div
+
+            Now we show it is Cauchy. WLOG suppose $m \geq n$ so $x^m \leq x^n$. Then 
+            \begin{align*}
+                \rho_1(f_n, f_m) &= \int_0^1 \abs{x^n - x^m} \; dx \\
+                &= \int_0^1 x^n - x^m \; dx \\
+                &= \frac{1}{n+1} - \frac{1}{m+1}
+            \end{align*}
+
+            Let $\ep > 0$. Then set $N = 1/2\ep$ so that for $n, m \geq N$,
+            \[\rho_1(f_n, f_m) = \frac{1}{n+1} - \frac{1}{m+1} < \frac{1}{n} + \frac{1}{m} \leq \frac{2}{N} = \ep\]
+            so $(f_n)$ is Cauchy and in $X$. 
+
+            \div  
+
+            But 
+            \[\lim f_n(x) = \lim x^n = \begin{cases}
+                0 & x \in [0, 1) \\
+                1 & x = 1
+            \end{cases}\] 
+            which is not continuous on $[0, 1]$. Therefore, $\lim f_n \notin X$. So $(X, \rho_1)$ is not complete. $\qed$
+        \color{black}
+\end{itemize}
+
+\pagebreak
+
+6. If $E$ is a subset of the metric space $(X, \rho)$, then prove the following are equivalent:
+\begin{enumerate}[label=(\alph*)]
+    \item $E$ is complete and totally bounded 
+    \item Every sequence in $E$ has a subsequence that converges to a point in $E$
+    \item If $\{V_{\alpha}\}_{\alpha \in \mathcal A}$ is an open covering of $E$, there is a finite set $\mathcal F \sub \mathcal A$ such that $\{V_{\alpha}\}_{\alpha \in \mathcal F}$ covers $E$ 
+\end{enumerate}
+
+    \color{blue}
+        We will first show $a \iff b$ and then $b \iff c$. 
+
+        ($a \to b$) Let $(x_n)$ be a sequence in $E$. As $E$ is totally bounded, it can be covered by finitely many balls -- say of radius $1/2$. Let 
+        \[N_1 = \{n \in \N: x_n \in B_1\}\]
+        where $B_1$ is one of the balls that contains infinitely many points in $x_n$ (guaranteed to exist because $E$ is covered by finitely many balls, so at least one must contain infinitely many points). 
+
+        But now $E \cap B_1 \sub E$ so it can also be covered by finitely many balls of radius $1/4$. Again, at least one of these balls -- call it $B_2$ -- contains infinitely many $x_n$. Let $N_2 = \{n \in \N: x_n \in B_2\}$. 
+
+        Inductively define a sequence of balls $B_k$ of radius $1/2^k$ and a sequence of subsets $N_k$ of $\N$ such that $x_n \in B_k$ for $n \in N_k$. 
+
+        Using the Axiom of Choice, pick $n_1 \in N_1, n_2 \in N_2, \dots$ such that $n_1 < n_2 < \cdots$. 
+
+        By construction, $\{x_{n_k}\}$ is a Cauchy sequence because $\rho(x_{n_j}, x_{n_k}) < \frac{1}{2^{1 - k}}$ for $j > k$. Since $E$ is complete, it has a limit in $E$
+
+        \div 
+
+        ($b \to a$) First suppose that $E$ is not complete, i.e. $\exists (x_n) \in E$ with no limit in $E$. But then $x_n$ can have no subsequence which converges in $E$ (or the whole sequence would converge to the same limit). 
+
+        Now suppose $E$ is not totally bounded and choose $\ep > 0$ so $E$ cannot be covered by finitely many balls of radius $\ep$. 
+
+        We will inductively construct a sequence that can have no convergent subsequence. First pick any $x_1 \in E$. Then (assuming $x_1, \dots, x_n$), pick 
+        \[x_{n+1} = E \setminus \bigcup_{i=1}^n B_{\ep}(x_i)\]
+        so $\rho(x_n, x_m) > \ep$ for any $n, m$. Thus, no convergent subsequence is possible. 
+
+        \div
+
+        ($b \to c$) Suppose every sequence in $E$ has a subsequence that converges to a point in $E$. By our above work, we know $E$ is complete and totally bounded. Thus we just need to show that for any open cover $\{V_{\alpha}\}_{\alpha \in A}$, there exists an $\ep > 0$ such that for all $x_n \in E$, $B_{\ep}(x_n) \sub V_{\alpha}$ for some $\alpha \in A$. 
+        
+        Suppose to the contrary that for all $n \in \N$, there is a ball $B_n$ of radius $1/2^n$ such that $B_n \cap E \neq \emptyset$ but $B_n \not\sub V_{\alpha}$ for any $\alpha$. 
+
+        Since it is not empty by assumption, pick $x_n \in B_n \cap E$. These $x_n$ then form a sequence which (by b), has a subsequence that converges to some $x \in E$.
+        
+        As $\{V_{\alpha}\}_{\alpha \in A}$ is an open cover of $E$, $x \in V_{\alpha}$ for some $\alpha$ and (since it is open), $B_{\ep}(x) \sub V_{\alpha}$ for all $\ep > 0$. 
+        
+        But as $x$ is the limit of a sequence, choose $n$ large enough so that $\rho(x, x_n) < \ep$ and $\frac{1}{2^n} < \ep$. Thus, 
+        \[B_n \sub B_{\ep}(x) \sub V_{\alpha}\]
+        which is a contradiction. 
+
+        \div  
+
+        ($c \to b$) Suppose every open cover of $E$ has a finite subcover. Let $(x_n)$ be a sequence in $E$ with no convergent subsequence. 
+
+        Let $\ep > 0$. For each $x \in E$, there must exist an open ball $B_{\ep}(x)$ which contains only finitely many elements in $x_n$ (or $(x_n)$ would have a convergent subsequence). 
+        
+        But then $\{B_{\ep}(x)\}_{x \in E}$ is an open cover of $E$ which can have no finite subcover. This is a contradiction, so $(x_n)$ must have a convergent subsequence. $\qed$
+
+    \color{black}
+
+
+\pagebreak
+
+7. (Ascoli-Arzela) Assume that $(X, \rho)$ is bounded and separable. Consider all continuous functions $f: (X, \rho) \to (Y, \sigma)$. A family $\mathcal F$ of $f$ is \emph{equicontinuous} if for all $x \in X$, for any $\ep > 0$, there is an open set $O_x > 0$ such that 
+\[\sigma(f(x), f(y)) < \ep\]
+for all $y \in O_x$ and \emph{uniformly} for all $f \in \mathcal F$.
+
+Take any $f_n \in \mathcal F$ such that for each $x \in X$, the closure of $\{f_n(x): 0 \leq n < \infty\}$ is compact. Prove that there exists a subsequence $f_{n_k}$ that converges pointwise to a continuous function $f$.  
+
+    \color{blue}
+        Let $f_n$ be a sequence in $\mathcal F$.
+
+        Since $X$ is separable, it contains $D$, a countable dense subset. Enumerate $D$ by $\{x_n\}_{n=1}^{\infty}$. 
+
+        Since $f_n(x_1) \in \overline{\{f_n(x_1): n \in \N\}}$, which is compact, $f_n(x_1)$ is bounded. Then by Bolzano-Weierstrass, there exists a convergent subsequence $f_{n, 1}(x_1)$.
+
+        But similarly, the sequence $f_{n, 1}(x_2)$ is bounded for all $n$ so it contains a convergent subsequence of its own, $f_{n, 2}(x_2)$, which converges to some $f$ at $x_1$ and $x_2$. 
+
+        Suppose we have constructed $f_{n,1}, f_{n, 2}, \dots, f_{n, k}$ such that $f_{n,k}$ converges to $f$ at $x_1, \dots, x_k$ for all $n$. 
+
+        Then $f_{n, k}(x_{k+1})\in \overline{\{f_n(x_{k+1}): n \in \N\}}$ so it is bounded. Therefore, it contains a convergent subsequence $f_{n, k+1}(x_{k+1})$ which converges to some $f$ at $\{x_1, x_2, \dots, x_{k+1}\}$.
+
+        By induction, we can take the subsequence $f_{n, n}$ of $f_n$ which converges pointwise to $f$ for all $x \in D$.
+
+        Now it remains to show that $f$ is continuous. Let $\ep > 0$. 
+
+        Pick $x \in D$ and choose $O_x$ such that $B_{\ep}(x) \sub O_x$. 
+
+        Since $D$ is dense, $\exists y \in B_{\ep}(x) \cap D$ for all $x$. Then $y \in O_x$ and by equicontinuity, 
+        \[\sigma(f_{n,n}(x), f_{n, n}(y)) < \frac{\ep}{3}\]
+
+        By pointwise convergence, $\exists N \in \N$ such that $\forall n \geq N$, 
+        \begin{align*}
+            \sigma(f_{n, n}(x), f(x)) < \frac{\ep}{3}\\ 
+            \sigma(f_{n, n}(y), f(y)) < \frac{\ep}{3}
+        \end{align*}
+        for all $x, y \in D$.
+
+        Together, for $n \geq N$ and $x, y \in D$ as picked above, 
+        \begin{align*}
+            \sigma(f(x), f(y)) \leq \sigma(f(x), f_{n, n}(x)) + \sigma(f_{n, n}(x), f_{n, n}(y)) + \sigma(f_{n, n}(y), f(y)) < \frac{\ep}{3} + \frac{\ep}{3} + \frac{\ep}{3} = \ep
+        \end{align*}
+        hence $f$ is continuous. $\qed$.
+       
+
+
+\end{document}

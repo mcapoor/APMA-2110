@@ -1,0 +1,229 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=0.5in}
+\usepackage{graphicx} 
+\usepackage{bbm}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\Fc}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+\newenvironment*{proof}[1][blue]{
+    \begin{tcolorbox}[
+    parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        coltext=#1,
+        breakable
+    ]}
+    {\end{tcolorbox}}
+
+\title{APMA 2110: HW 5}
+\author{Milan Capoor}
+\date{10/21/24}
+
+\begin{document}
+\maketitle
+1. Show that the characteristic function $\X_E = \ind_E$ is a measurable function iff $E$ is a measurable set.
+
+\color{blue}
+    $\implies$. Assume $\ind_E$ is a measurable function. 
+
+    By definition, $\forall \alpha \in \R$, $\{x \in X: \ind_E(x) > \alpha\}$ is measurable.
+
+    WLOG, let $\alpha = 0$. Then 
+    \[\{x \in X: \ind_E(x) > \alpha\} = \{x \in X: \ind_E(x) > 0\}\]
+
+    But since $\ind_E: X \to \{0, 1\}$,
+    \[\{x \in X: \ind_E(x) > 0\} = \{x \in X: \ind_E(x) = 1\} = \{x \in X: x \in E\} = E\]
+
+    Hence, $E$ is measurable. 
+
+    \div
+
+    $\impliedby$. Now assume $E$ is measurable. 
+
+    We want to show that $A = \{x \in X: \ind_E(x) > \alpha\}$ is measurable for all $\alpha \in \R$. 
+
+    CASE 1. If $\alpha > 1$, then $A = \emptyset \in \M$. 
+
+    CASE 2. If $0 \leq \alpha < 1$, then 
+    \begin{align*}
+        A &= \{x \in X: \ind_E(x) > \alpha\} \\
+        &= \{x \in X: \ind_E(x) = 1\} \\
+        &= \{x \in X: x \in E\} \\
+        &= E
+    \end{align*}
+    so $A$ is measurable. 
+
+    CASE 3. If $\alpha <0$, then $A = X \in \M$. $\qed$
+    
+\color{black}
+
+
+
+\pagebreak
+
+2. Let $\{f_n\}$ be a sequence of measurable functions on $X$ then $\{x : \exists\lim f_n(x)\}$ is a measurable set.
+
+    \color{blue}
+        \tbf{Lemma:} $\exists \lim f_n(x) \iff \limsup f_n(x) = \liminf f_n(x) = \lim f_n(x)$. 
+
+        \begin{proof}
+            \emph{Proof:} ($\implies$) Let $\ep > 0$. If $\lim f_n(x) = f(x)$, then $\exists N \in \N$ such that $\rho(f_n(x), f(x)) < \ep$ for all $n \geq N$. 
+            
+            Then for $n \geq N$, $\{f_k(x): k \geq n\} \in B(f_n(x), \ep)$ so 
+            \[\limsup f_n = \lim_{n \to \infty} (\sup \{f_k(x): k \geq n\}) \in B(f_n(x), \ep)\]
+            and 
+            \[\liminf f_n = \lim_{n \to \infty} (\inf \{f_k(x): k \geq n\}) \in B(f_n(x), \ep)\]
+
+            Since $\ep$ arbitrary, $\limsup f_n(x) = \liminf f_n(x) = f(x)$.
+        
+            ($\impliedby$) Let $\ep > 0$ and denote $f(x) = \lim f_n(x)$. Since $\limsup f_n(x) = \liminf f_n(x) = f(x)$, $\exists N \in \N$ such that for $n \geq N$, 
+            \begin{align*}
+                \rho(\limsup f_n(x), f(x)) &= \rho(\sup_{k \geq n} f_k(x), f(x)) < \ep \implies \sup_{k \geq n} f_k(x) \in B(f(x), \ep)\\ 
+                \rho(\liminf f_n(x), f(x)) &= \rho(\inf_{k \geq n} f_k(x), f(x)) < \ep \implies \inf_{k \geq n} f_k(x) \in B(f(x), \ep)
+            \end{align*}
+
+            But 
+            \[\inf_{k \geq n} f_k(x) \leq f_n(x) \leq \sup_{k \geq n} f_k(x)\]
+            by the definitions of $\inf$ and $\sup$ so 
+            \[\rho(f_n(x), f(x)) = \max\left(\rho(\inf_{k \geq n} f_k(x), f(x)), \rho(\sup_{k \geq n} f_k(x), f(x))\right) = \max(\ep, \ep) = \ep\]
+            so for $n$ sufficiently large, $\rho(f_n(x), f(x)) < \ep$. Hence, $\lim f_n(x) = f(x)$.
+        \end{proof} 
+
+        Call $f(x) = \limsup f_n(x)$ and $g(x) = \liminf f_n(x)$. By propositions from class, $f$, $g$, and $f - g$ are measurable functions because $\{f_n\}$ are measurable. 
+        
+        Therefore, by the Lemma,
+        \begin{align*}
+            \{x: \exists \lim f_n(x)\} &= \{x: f(x) = g(x)\} \\
+            &= \{x: f(x) - g(x) = 0\}
+        \end{align*}
+
+        Since $f - g$ is measurable, $\{x: f(x) - g(x) > \alpha\}$ is measurable for all $\alpha \in \R$. 
+        
+        Let $\ep > 0$ so $\{x: f(x) - g(x) > \ep\} \in \M$ and $\{x: f(x) - g(x) > -\ep\} \in \M$. 
+
+        Then since $\M$ is closed under complements and countable intersections, 
+        \[\{x: f(x) - g(x) > \ep\}^c = \{x: f(x) - g(x) \leq \ep\} \in \M\]
+        and 
+        \[\{x : f(x) - g(x) = 0\} = \{x : f(x) - g(x) \leq \ep\} \cap \{x: f(x) - g(x) > -\ep\} \in M \qed\]
+        
+    \color{black}
+
+
+\pagebreak 
+
+3. Let $E$ be a Lebesgue measurable set in $\R$ and $\mu(E) > 0$. Show that for any $\alpha <1$, there exists an open interval $I_{\alpha}$ such that $\mu(E \cap I_{\alpha}) > \alpha \mu(I_{\alpha})$.
+
+    \color{blue}
+        Suppose not. Then for all open intervals $I$, $\mu(E \cap I) \leq \alpha \mu(I)$.
+
+        Let $\ep > 0$. By approximation from above, $\exists O$ open such that $E \sub O$ and 
+        \[\mu(O) - \ep \leq \mu(E) \leq \mu(O)\]
+
+        But since $O \sub \R$, by a proposition from class, we can write $O$ as a countable union of disjoint open intervals, $O = \bigcup_{n} I_{n}$.
+
+        Then,
+        \begin{align*}
+            \mu(E) &= \mu(\bigcup_{n} E \cap I_{n}) \qquad (E \sub O) \\ 
+            &= \sum_{n} \mu(E \cap I_{n}) \qquad (I_{n} \text{ disjoint})\\ 
+            &\leq \sum_{n} \alpha \mu(I_{n}) \qquad (\text{by assumption})\\
+            &= \alpha \sum_n \mu(I_n)\\ 
+            &= \alpha \mu(O) \qquad (\text{disjoint union})
+        \end{align*}
+
+        So 
+        \[\mu(O) - \ep \leq \mu(E) = \alpha \mu(O) \leq \mu(O)\]
+
+        Taking $\ep \to 0$, we have $\mu(O) = \alpha \mu(O)$ but $\alpha \neq 1$ and $\mu(E) > 0 \implies \mu(O) > 0$ by monotonicity, so we have a contradiction. 
+    \color{black}
+
+
+
+\end{document}

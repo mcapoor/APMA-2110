@@ -1,0 +1,297 @@
+\documentclass[12pt]{report} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper,
+    margin=0.5in}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\chi}
+\renewcommand{\L}{\mathcal{L}}
+
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\card}{\text{card }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\biject}{\hookrightarrow \hspace{-8pt} \rightarrow}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\overcirc}[1]{\overset{\circ}{#1}}
+\newcommand{\diam}{\text{diam }}
+
+\renewcommand{\Re}{\text{Re}\,}
+\renewcommand{\Im}{\text{Im}\,}
+\newcommand{\sign}{\text{sign}\,}
+
+\newcommand*{\tbf}[1]{\ifmmode\mathbf{#1}\else\textbf{#1}\fi}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{proof}[1][blue]{
+\begin{tcolorbox}[
+    parbox=false,
+    colback=#1!5!white,
+    colframe=#1!75!black,
+    breakable
+]}
+{\end{tcolorbox}}
+
+\title{APMA 2110: Homework 7}
+\author{Milan Capoor}
+\date{4 Nov 2024}
+
+\begin{document}
+\maketitle
+1. Let $f \geq 0$ be a measurable function and define its distribution function for $\lambda \geq 0$,
+\[d_f(\lambda) = \mu\{x: \abs{f(x)} > \lambda\}\]
+
+Show 
+\[\int \abs f \; d\mu = \int_0^{\infty} d_f(\lambda) \; d\lambda\]
+
+    \color{blue}
+        First, $f \geq 0$ so $\abs{f} = f$. 
+
+        Since $f$ is measurable, we can take a sequence of simple functions $\phi_n \to f$ such that $0 \leq \abs{\phi_n} \leq \abs{\phi_{n+1}} \leq \abs{f}$ for $n \geq 1$. 
+
+        By the Monotone Convergence Theorem,
+        \[\int f \; d\mu = \int \lim phi_n \; d\mu = \lim \int \phi_n \; d\mu\]
+
+        Each $\phi_n$ is a simple function, i.e. $\phi_n = \sum_{i=1}^{m_n} a_i^{(n)} \ind_{A_i^{(n)}}(x)$, so
+        \begin{align*}
+            \int \phi_n \; d\mu &= \sum_{i=1}^{m_n} a_i^{(n)} \mu(A_i^{(n)})\\ 
+                &= \sum_{i=1}^{m_n} (a_i^{(n)} - a_{i-1}^{(n)})\; \mu(x: \phi_n(x) > a_{i-1}^{(n)})
+        \end{align*}
+
+        By definition,
+        \begin{align*}
+            \int f \; d\mu &= \sup_{\phi \leq f} \int \phi \; d\mu\\ 
+            &= \lim_{n \to \infty} \int \phi_n \; d\mu && (\text{monotonicity of } \phi_n)\\ 
+            &= \lim_{n \to \infty} \sum_{i=1}^{m_n} (a_i^{(n)} - a_{i-1}^{(n)})\; \mu(x: \phi_n(x) > a_{i-1}^{(n)})
+        \end{align*}
+
+        But since $\phi_n \to f$, $\forall \ep > 0, \exists N \in \N \st \forall n \geq N, \; \abs{f - \phi_n} < \ep$. WLOG, consider 
+        \[\phi := \phi_N = \sum_{i=1}^m a_i \ind_{A_i}\]
+        so 
+        \begin{align*}
+            \int \phi \; d\mu &= \sum_{i=1}^{\infty} (a_i - a_{i-1})\mu\{x: \phi(x) > a_{i-1}\}\\ 
+            &= \sum_{i=1}^{\infty} (a_i - a_{i-1})\left[\mu\{x: f(x) > a_{i-1}\} - \mu\{a_{i-1}: a_{i-1} < \abs{f - \phi}\} \right]\\ 
+            &= \sum_{i=1}^{\infty} (a_i - a_{i-1})\left[\mu\{x: f(x) > a_{i-1}\} - \mu\{a_{i-1}: a_{i-1} < \ep\} \right]\\ 
+            &= \sum_{i=1}^{\infty}(a_i - a_{i-1})\mu\{x: f(x) > a_{i-1}\}\\ 
+            &= \int_0^{\infty} \mu\{x: f(x) > \lambda\} \; d\lambda \qed
+        \end{align*}
+
+    \color{black}
+
+
+\pagebreak 
+
+2. Let $1 < a \in \R$. Determine the limit of the following Lebesgue integral:
+\[\lim_{n \to \infty} \int_0^{\infty} (1 + \frac{t}{n})^n e^{at}\; dt\]
+
+    \color{blue}
+        Let $f_n(t) = (1 + \frac{t}{n})^n e^{-at}$. Notice that $f_{n+1}(t) \geq f_{n}(t)$ for all $t \geq 0$
+
+        \begin{proof}
+            \emph{Proof:} It suffices to show that 
+            \[(1 + \frac{t}{n})^n \leq (1 + \frac{t}{n+1})^{n+1}\]
+
+            Consider  
+            \begin{align}
+                (1 + \frac{t}{n+1})^{n+1} - (1 + \frac{t}{n})^{n} &= (1 + \frac{t}{n+1})(1 + \frac{t}{n+1})^n - (1 + \frac{t}{n})^{n}\\ 
+                &\geq (1 + \frac{t}{n+1})(1 + \frac{t}{n+1})^n - (1 + \frac{t}{n+1})^{n}\\ 
+                &= (1 + \frac{t}{n+1})^n[(1 + \frac{t}{n+1}) - 1]\\
+                &= (1 + \frac{t}{n+1})^n[\frac{t}{n+1}]\\
+                &\geq 1 \cdot 0 = 0
+            \end{align}
+        \end{proof}
+
+        So, by the Monotone Convergence Theorem,
+        \begin{align*}
+            \lim_{n \to \infty} \int_0^{\infty} (1 + \frac{t}{n})^n e^{-at}\; dt &= \int_0^{\infty} \lim_{n \to \infty} (1 + \frac{t}{n})^n e^{-at}\; dt \\ 
+            &= \int_0^{\infty} e^t e^{-at} \; dt && (\text{by definition of exp})\\
+            &= \int_0^{\infty} e^{-(a-1)t} \; dt\\
+            &= \left[\frac{e^{-(a-1)t}}{1 - a}\right]_0^{\infty}\\ 
+            &= \frac{0}{1-a} - \frac{1}{1-a} = \boxed{\frac{1}{a-1}}
+        \end{align*}
+    \color{black}
+\pagebreak 
+
+3. 
+\begin{enumerate}[(a)]
+    \item Let $\{r_n\}_1^{\infty}$ be an enumeration of $\Q \cap [0, 1]$. Let $0 < a_n < \infty$ with $\sum_{n=1}^{\infty} a_n < \infty$.
+
+    Prove that the series 
+    \[h(t) = \sum_{n=1}^\infty \frac{a_n}{\sqrt{\abs{t - r_n}}}\]
+    converges a.e. (WRT the Lebesgue measure) for $t \in [0,1]$ 
+
+        \color{blue}
+            We want to show that $\mu\{t: h(t) = \infty\} = 0$.
+
+            CASE 1. $t \in \Q \cap [0, 1]$. Then, $\exists r_n$ such that $t = r_n$ so $\sqrt{\abs{t - r_n}} = 0$ and $\frac{a_n}{\sqrt{\abs{t - r_n}}} = \infty \implies h(t) = \infty$. 
+
+            However, $Q \cap [0, 1]$ is countable so $\mu\{t: t \in \Q \cap [0, 1] \land h(t) = \infty\} = 0$.
+
+            \div
+
+            CASE 2. $t \in [0, 1] \setminus \Q$. Let $\ep > 0$.
+
+            Define 
+            \[E_n(\ep) = \left\{t \in [0, 1] \setminus \Q \bigg\vert \frac{a_n}{\sqrt{\abs{t - r_n}}} > \ep\right\}\]
+
+            We WTS that $\mu(E_n(\ep)) = 0$.  
+
+            Certainly, if $t \in E_n(\ep)$, then $\abs{t - r_n} < (\frac{a_n}{\ep})^2$. By the faithfulness of the Lebesgue measure, $\mu(E_n(\ep)) \leq 2(\frac{a_n}{\ep})^2$. 
+
+            We know that $\lim_{\ep \to \infty} 2(\frac{a_n}{\ep})^2 = 0$ so $\frac{a_n}{\sqrt{\abs{t - r_n}}} < \infty$ a.e. 
+
+            It only remains to show that $\sum_{n=1}^{\infty} \frac{a_n}{\sqrt{\abs{t - r_n}}} < \infty$ a.e.
+
+            Let 
+            \[E(\ep) = \{t \in [0, 1] \setminus \Q \; | \; h(t) > \ep\}\]
+
+            Then, $E(\ep) \sub \bigcup_n E_n(\ep)$, so 
+            \begin{align*}
+                \mu(E(\ep)) &\leq \mu\left(\bigcup_n E_n(\ep)\right)\\ 
+                &\leq \sum_n \mu(E_n(\ep))\\
+                &\leq \sum_n 2(\frac{a_n}{\ep})^2\\
+                &= 2\ep^{-2} \sum_n a_n^2
+            \end{align*}
+
+            \tbf{Lemma:} $\sum_n a_n^2 \leq \left(\sum_n a_n\right)^2$
+
+            \begin{proof}
+                \emph{Proof:} 
+                \[\left(\sum_n a_n\right)^2 = \sum_n \sum_m a_n a_m = \sum_n a_n^2 + \sum_n \sum_{n\neq m} a_n a_m \geq \sum_n a_n^2\]
+            \end{proof}
+
+            So $\mu(E(\ep)) \leq 2\ep^{-2} \left(\sum_n a_n\right)^2 < \infty$ for all fixed $\ep >0$. And indeed, 
+            \[\lim_{\ep\to \infty} \mu\{t \in [0, 1] \setminus \Q \; | \; h(t) > \ep\} =\mu(E(\ep)) = 0\]
+            so $h(t) < \infty$ a.e.
+        \color{black}
+
+    \item If $g = h$ a.e., prove that $g$ is unbounded in every subinterval of $[0, 1]$.
+    
+        \color{blue}
+            Suppose $g = h$ a.e. and let $I \sub [0, 1]$ be a subinterval. 
+
+            Suppose $g$ is bounded on $I$. Then, $\exists M \in \R \st \forall t \in I, \; g(t) \leq M$. 
+
+            Once again, we proceed by cases. 
+
+            CASE 1. $\{t \in I \cap \Q: h(t) = g(t)\} \neq \emptyset$. Then, we can take $t = r_n \in I \cap \Q$ such that $h(t) = g(t) = \infty$ which is a contradiction.
+
+            \div 
+
+            CASE 2. $\{t \in I \setminus \Q: h(t) = g(t)\} \neq \emptyset$. 
+
+            By the density of $\Q$ in $\R$, $\exists r_n \in I \cap \Q$ such that $\abs{t - r_n} < \delta$ for some $\delta > 0$. 
+
+            But then, for all $t \in I \setminus \Q$, $\frac{a_n}{\sqrt{\abs{t - r_n}}} > \frac{a_n}{\sqrt \delta}$ so by taking $\delta \to 0$, we have $\frac{a_n}{\sqrt{\abs{t - r_n}}} \to \infty$. But this implies that $h(t) = \infty$ which is a contradiction of Part 1. 
+
+            
+        \color{black}
+
+\end{enumerate}
+
+\pagebreak
+
+4. Assume $f_n \overset{\mu}{\longrightarrow} f$.  
+\begin{itemize}
+    \item Prove that $\liminf_n \int \abs{f_n} \; d\mu \geq \int \abs{f} \; d\mu$ 
+    
+    \color{blue}
+        Since $f_n \overset{\mu}{\longrightarrow} f$, we have (by a Theorem from class), that there exists a subsequence $f_{n_k} \to f$ a.e.
+
+        Then, $\abs{f_{n_k}} \to \abs{f}$ a.e. so by Fatou's lemma,
+        \[\liminf_n \int \abs{f_{n_k}} \; d\mu \geq \int \liminf_n \abs{f_{n_k}} \; d\mu = \int \abs{f} \; d\mu\]  
+
+        By monotonicity of the integral, we also have 
+        \[\liminf_n \int \abs{f_n} \; d\mu \geq \liminf_n \int \abs{f_{n_k}} \; d\mu\] 
+        
+        Therefore, 
+        \[\liminf_n \int \abs{f_n} \; d\mu \geq \int \abs{f} \; d\mu\]
+        
+    \color{black}
+
+    \item Further assume $\abs{f_n} \leq g \in \L^1$. Prove that $f_n \to f$ in $\L^1$.
+    
+    \color{blue}
+        As before, we have that $f_{n_k} \to f$ a.e. and in particular, $\abs{f_{n_k} - f} \to 0$ a.e.
+        
+        By assumption, $\abs{f_{n_k}} \leq g \in \L^1$ so by the Dominated Convergence Theorem,
+        \[\lim \int \abs{f_{n_k} - f} \; d\mu = \int \lim \abs{f_{n_k} - f} \; d\mu = \int 0 \; d\mu= 0\]
+
+        Therefore, $f_{n_k} \to f$ in $\L^1$. 
+
+        Suppose now that $f_{n} \not\to f$ in $\L^1$. Then, $\forall \ep > 0$, $\exists f_{n_i}$ for infinitely many $n_i$ such that 
+        \[\int \abs{f_{n_i}- f} \; d\mu \geq \ep\]
+
+        But $f_{n_i} \overset{\mu}{\longrightarrow} f$ so it also has a subsequence $f_{n_{i_j}} \to f$ in $\L^1$. But then $\abs{f_{n_{i_j}} - f} \to 0$ a.e. and $\abs{f_{n_{i_j}}} \leq g \in \L^1$ so $\abs{f_{n_{i_j}} - f} \leq 2g$, hence 
+        \[\lim \inf \abs{f_{n_{i_j}}- f} \; d\mu =0\]
+        which is a contradiction. 
+    \color{black}
+
+\end{itemize}
+
+\end{document}

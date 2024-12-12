@@ -1,0 +1,339 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage[shortlabels]{enumitem}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-cd}
+\pgfplotsset{compat=1.18}
+
+\newcommand{\ans}[1]{\boxed{\text{#1}}}
+\newcommand{\vecs}[1]{\langle #1\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\newcommand{\F}[1]{\mathcal{F}(#1)}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\qed}{\quad \blacksquare}
+\newcommand{\brak}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right\vert}
+\newcommand{\ket}[1]{\left\vert #1 \right\rangle}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\mfX}{\mathfrak{X}}
+\newcommand{\ep}{\varepsilon}
+
+\newcommand{\Ec}{\mathcal{E}}
+\newcommand{\sub}{\subseteq}
+\newcommand{\st}{\text{ s.t. }}
+\renewcommand{\div}{\vspace*{10pt}\hrule\vspace*{10pt}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\tcbset{enhanced}
+\newenvironment*{tbox}[2][gray]{
+    \begin{tcolorbox}[
+        parbox=false,
+        colback=#1!5!white,
+        colframe=#1!75!black,
+        breakable,
+        title={#2}
+    ]}
+    {\end{tcolorbox}}
+
+
+\title{APMA 2110: Homework 1}
+\author{Milan Capoor}
+\date{}
+
+\begin{document}
+\maketitle
+
+1. Prove $(a) \implies (b) \implies (c) \implies (d) \implies (e) \implies (a)$:
+\begin{enumerate}[label=(\alph*)]
+    \item (Least Upper Bound) Any nonempty subsets $E$ of $\R$ with an upper bound has a least upper bound.
+    \item (Monotone Convergence Theorem) Any bounded monotone sequence is convergent.
+    \item (Bolzano-Weierstrass) Every bounded sequence in $R$ has a convergent subsequence.
+    \item (Heine-Borel) Let $F$ be a closed and bounded set of real numbers. Then
+    each open covering of $F$ has a finite subcovering.
+    \item (Finite Intersection Property) Let $\mathcal C$ be the collection of closed sets $F$ (of real numbers) with the property that every finite subcollection of $\mathcal C$ has nonempty intersection, and suppose that one of the sets is bounded. Then $\bigcap_{F \in \mathcal C} F \neq \emptyset$
+\end{enumerate}
+
+\color{blue}
+    $(a \to b)$ WLOG let $a_n \in \R$ be a bounded monotone increasing sequence. Let $A = \{a_n : n \in \N\}$. By (a), $\sup A$ exists. We claim $\lim a_n = \sup A$. Let $\ep > 0$. By the definition of $\sup A$, $\sup A - \ep$ is not an upper bound of $A$. Thus, there exists $N \in \N$ such that $a_N > \sup A - \ep$. Since $a_n$ is monotone increasing, for all $n \geq N$, $a_n \geq a_N > \sup A - \ep$. Further, $a_n \leq \sup A + \ep$ by boundedness. Thus, $\abs{a_n - \sup A} < \ep$ for all $n \geq N$. Hence, $\lim a_n = \sup A$.
+
+    \div 
+
+    $(b \to c)$ Let $a_n$ be a bounded sequence in $\R$. By (b), it suffices to show that every bounded sequence contains a bounded monotone subsequence. Boundedness of the subsequence is trivial. For monotonicity we proceed by cases:
+    \begin{enumerate}
+        \item If there exist infinitely many points $a_{n_k} \geq a_{n_i}$ for $n_k \leq n_i$, then $a_{n_k}$ is a monotone decreasing subsequence and we are done. 
+        \item If there exist finitely many points $a_{n_k}$ such that $a_{n_k} \geq a_{n_i}$ for all $n_k \leq n_i$, then we may define $N = \max\{n_k: a_{n_k} \leq a_{n_i} \forall n_k \leq n_i\}$. Then for all $a_{n_i}$ with $n_i > N$, there exists $n_{i+1}$ such that $a_{n_{i+1}} > a_{n_i}$. Thus, $a_{n_i}$ is a monotone increasing subsequence.
+    \end{enumerate}
+    Thus, every bounded sequence has a bounded monotone subsequence. By (b), this subsequence converges.
+
+    \div 
+
+    $(c \to d)$ Let $F$ be a closed and bounded set of real numbers. Let $\mathcal{O}$ be an open cover for $F$> If $F$ is finite, then there trivially exist a finite subcover by selecting the $\{O_x \in \mathcal{O}: x \in F\}$ where $O_x$ is an open set containing $x$.
+
+    Suppose $F$ is infinite. By (c) and boundedness of $F$, every sequence in $F$ has a convergent subsequence. 
+    
+    We claim that for all $\ep > 0$, there exists a finite set $\{x_1, \dots, x_n\} \sub F$ such that 
+    \[F \sub \bigcup_{i=1}^n B_{\ep}(x_i)\] 
+    where $B_{\ep}(x_i)$ is the open ball of radius $\ep$ centered at $x_i$. We shall call $F(\ep) = \{B_{\ep}(x_1), \dots, B_{\ep}(x_n)\}$. 
+
+    If this claim is not true then there exists an $\ep > 0$ for which $F(\ep)$ does not exist. Then by induction, we can choose a sequence $(x_n)$ such that $\abs{x_i - x_j} \geq \ep$ for $i \neq j$ (if we could not choose such a sequence, all of $F$ would be contained in a finite union of open balls). But this sequence can have no convergent subsequence, a contradiction.
+
+    Now suppose that $\mathcal O$ does not admit a finite subcovering of $F$. By the above argument, for $n \geq 1$, there exists a finite set $F(1/n)$. Since $\mathcal O$ does not admit a finite subcover, at least one element $B_{1/n}(x_i)$ from $F(1/n)$ which cannot be covered by finitely many open sets in $\mathcal O$. 
+
+    This gives us an infinite set $E = \{x \in F: x \in B_{1/n}(x_i)\}$ which is bounded because $F$ is bounded. As $E$ is infinite, we can select a sequence $(x_n) \in E$. By (c), $(x_n)$ has a convergent subsequence $(x_{n_k}) \to x$. Since $F$ is closed, $x \in F$ which implies $x \in O$ for some $O \in \mathcal O$. But $O$ is open so $\forall \ep > 0$, $B_{\ep}(x) \sub O$. 
+    
+    Since $x_{n_k} \to x$, $\exists N \in \N$ such that for all $n_k \geq N$, $x_{n_k} \in B_{\ep/2}(x)$. Choose an integer $n_m > N$ with $1/n_m < \ep/2$. By construction, 
+    \[B_{1/n_m}(x_{n_m}) \sub B_{\ep}(x) \sub O\]
+    which contradicts the fact the $B_{1/n_m}(x_{n_m})$ cannot be covered by finitely many open sets in $\mathcal O$. Thus, $\mathcal O$ admits a finite subcovering of $F$
+
+    \div 
+
+    $(d \to e)$ Let $X$ be a closed and bounded set of real numbers. Let $\mathcal C$ be the collection of closed sets $F$ in $X$ such that for $F_1, \dots, F_n \in \mathcal{C}$, $\bigcap_{i=1}^n F_i \neq \emptyset$. Assume one of the closed sets is bounded. 
+
+    Suppose $\bigcap_{F \in \mathcal C} F = \emptyset$. 
+    
+    \begin{tbox}[blue]{\emph{Lemma 1 (De Morgan's Laws):} 
+        \[\left(\bigcup_{E \in \mathcal E} E\right)^c = \bigcap_{E \in \mathcal E} E^c, \quad \left(\bigcap_{E \in \mathcal E} E\right)^c = \bigcup_{E \in \mathcal E} E^c\]}
+        \emph{Proof:}
+        \begin{enumerate}
+            \item \begin{align*}
+                x \in \left(\bigcup_{E \in \mathcal E} E\right)^c &\implies x \not\in \bigcup_{E \in \mathcal E} E \implies \forall E \in \mathcal E, x \not\in E \implies \forall E \in \mathcal E, x \in E^c\\ 
+                &\implies x \in \bigcap_{E \in \mathcal E} E^c
+            \end{align*}
+
+            \item \begin{align*}
+                x \in \left(\bigcap_{E \in \mathcal E} E\right)^c &\implies x \not\in \bigcap_{E \in \mathcal E} E
+                \implies \exists E \in \mathcal E \st x \not\in E\\
+                &\implies \exists E \in \mathcal E \st x \in E^c
+                \implies x \in \bigcup_{E \in \mathcal E} E^c
+            \end{align*}
+        \end{enumerate} 
+    \end{tbox}
+
+    \begin{tbox}[blue]{\emph{Lemma 2 (Open and closed complements):} $O$ open iff $O^c$ closed; $F$ closed iff $F^c$ open.}
+        \emph{Proof:} 
+        \begin{enumerate}
+            \item Let $O \sub \R$ be open. If $x$ is a limit point of $O^c$, then $\forall \ep > 0$, $\exists y \in O^c$ with $y \in B_{\ep}(x)$. But then $B_{\ep}(x) \not\subset O$ so $x$ is not a limit point of $O$. Thus, $O^c$ contains all its limit points so $O^c$ is closed. 
+            \item $(E^c)^c = E$ so the result follows.
+        \end{enumerate}
+    \end{tbox}
+
+    \begin{tbox}[blue]{\emph{Lemma 3:} The intersection of an arbitrary collection of closed sets is closed. The union of an arbitrary collection of open sets is open.:}
+        \emph{Proof:} Follows from Lemmas 1 and 2. 
+    \end{tbox}
+
+    Then 
+    \[\left(\bigcap_{F \in \mathcal C} F\right)^c = \bigcup_{F \in \mathcal C} F^c = X\]
+    by Lemma 1. 
+    
+    By Lemma 2, $F^c$ is open for all $F \in \mathcal C$ closed. Then by Lemma 3, $\bigcup_{F \in \mathcal C} F^c$ is an open cover for $X$. By (d), there exists a finite subcover $\{F_1^c, \dots, F_n^c\}$. 
+    
+    But then
+    \[X \sub \bigcup_{i=1}^n F_i^c  \implies \bigcap_{i=1}^n F_i = \emptyset\]
+    again by Lemma 1. But this contradicts the assumption that all finite intersections of $F \in \mathcal C$ are nonempty. Thus, $\bigcap_{F \in \mathcal C} F \neq \emptyset$. $\qed$
+
+    \div 
+
+    $(e \to a)$ Let $A$ be an arbitrary non-empty subset of $\R$ with an upper bound, $b_1$. Pick an $a_1 < b_1 \in A$ and define $I_1 = [a_1, b_1]$. 
+
+    Consider
+    \[m_1 = \frac{a_1 + b_1}{2}\] 
+
+    If $m_1$ is an upper bound for $A$, let $b_2 = m_1$ and $a_2 = a_1$. Otherwise, let $a_2 = m_1$ and $b_2 = b_1$. Define $I_2 = [a_2, b_2]$.
+
+    Now we iterate. For any $n$, let $m_n = \frac{a_n + b_n}{2}$. Define 
+    \[\begin{cases}
+        b_{n+1} = m_n, \; a_{n+1} = a_n & \text{if } m_n \text{ is an upper bound for } A\\
+        a_{n+1} = m_n, \; b_{n+1} = b_n & \text{otherwise}
+    \end{cases}\] 
+    and $I_{n+1} = [a_{n+1}, b_{n+1}]$.
+
+    This gives us nested closed sets $I_1 \subseteq I_2 \subseteq \cdots$. Because they are nested, any finite intersection is nonempty. By (e), $\bigcap_{n=1}^\infty I_n \neq \emptyset$.
+
+    Let $b \in \bigcap_{n=1}^{\infty} I_n$. We claim that $b = \sup A$. 
+
+    First suppose $b$ is not an upper bound for $A$. Then $\exists a \in A$ such that $a > b$. Let $\ep_0 = a -b > 0$. By construction, $a \leq b_n$ for all $n$ because $b_n$ is a sequence of upper bounds for $A$. But then for any $N > \frac{1}{\ep_0}$, 
+    \[b_N - b \geq a - b = \ep_0\]
+
+    But this is impossible because $b \in I_N = [a_N, b_N]$ which has length 
+    \[\frac{1}{2^N} < \frac{1}{N} < \ep_0\]
+
+    Thus, $b$ is an upper bound for $A$. Now it remains to show that it is the least upper bound. Let $\ep > 0$. Let $N > \frac{1}{\ep}$.
+
+    Again no $a_n$ is an upper bound for $A$ so $\exists a \in A$ such that 
+    \[a_N < a \leq b_N\]
+    and $a, b \in [a_N, b_N]$ which has length $1/2^N$ so 
+    \[\abs{b - a} \leq \frac{1}{2^N} < \frac{1}{N} < \ep\] 
+    so $b - a < \ep$ (because $b - a > 0$ by construction). Thus, $b - \ep < a$ for arbitrary $\ep > 0$ so $b$ is the least upper bound. $\qed$
+
+\color{black} 
+
+\pagebreak 
+
+2. Prove that (c) is equivalent to: any Cauchy sequence in $\R$ is convergent.
+
+\color{blue}
+    Assume that every bounded sequence in $\R$ has a convergent subsequence. Let $(a_n)$ be a Cauchy sequence and choose $\ep > 0$. Then there exists $N \in \N$ such that for all $n, m \geq N$, $\abs{a_n - a_m} < \ep$
+
+    WLOG, let $m = N$ so
+    \begin{align*}
+        \abs{a_n - a_N} < \ep &\implies \abs{a_n} - \abs{a_N} < \abs{a_n - a_N} < \ep\\
+        &\implies \abs{a_n} - \abs{a_N} < \ep\\ 
+        &\implies \abs{a_n} < 1 + \abs{a_N}
+    \end{align*}
+
+    
+    Thus 
+    \[\abs{a_n} < \max\{\abs{a_0}, \abs{a_1}, \cdots, \abs{a_N} + 1\}\]
+    so $(a_n)$ is bounded. By (c), $(a_n)$ has a convergent subsequence $(a_{n_k})\to a$.
+    
+    Therefore, for large enough $N$ and $n_k, n \geq N$, we can say 
+    \[\abs{a_n - a_{n_k}} < \frac{\ep}{2}\] 
+    by Cauchy and 
+    \[\abs{a_{n_k} - a} < \frac{\ep}{2}\]
+    by convergent subsequence.
+
+    So, 
+    \[\abs{a_n - a} \leq \abs{a_n - a_{n_k}} + \abs{a_{n_k} - a} < \ep\]
+
+    \div 
+
+    Let $(a_n)$ be a bounded sequence. Assume that every Cauchy sequence in $\R$ is convergent.
+    
+    If $(a_n)$ is Cauchy, then it is convergent. All convergent sequences trivially contain a convergent subsequence $(a_{n_k})$ given by $n_k = \N$.
+
+    If $(a_n)$ is not Cauchy (but bounded), then it still contains a bounded monotone subsequence $(a_{n_k})$ by the proof for $(1.b \to c)$. By the Monotone Convergence Theorem, $(a_{n_k})$ is convergent. $\qed$
+    
+\color{black}
+
+\pagebreak 
+
+3. Let $\limsup a_n = a$; where $a$ is a finite number in $\R$: Then 
+\begin{enumerate}
+    \item for any $\ep > 0$; there are all but finitely many $n$ such that $a_n < a + \ep$;
+    
+    \color{blue}
+        We will argue by contrapositive. Suppose that $a_n \geq a + \ep$ for infinitely many $n \in \N$.
+
+        Then certainly $\sup\{a_k: k \geq n\} \geq a +\ep$ for all $n \in \N$ because  
+        \[\sup\{a_k: k \geq n\} \geq a_n \geq a + \ep\]
+
+        So 
+        \[\limsup a_n \geq \lim (a + \ep) \implies \limsup a_n > a\] 
+        so $\limsup a_n \neq a$, as desired. 
+        
+    \color{black}
+
+    \item there are infinitely many $a_n$ such that $a_n > a - \ep$
+    
+    \color{blue}
+        Again by contrapositive, suppose tha there is an $N$ such that for all $n > T$, $a_n \leq a - \ep$. Then there would be finitely many $a_n$ such that $a_n > a - \ep$.
+
+        But for all $n$, $\sup \{a_k: k \geq n\} \geq a_n$ so for $n > N$, 
+        \[a_n \leq \sup \{a_k: k \geq n\} \leq a - \ep \implies \limsup a_n \leq \lim (a- \ep)\]
+        so $\limsup a_n < a$ as desired. $\qed$
+
+    \color{black}
+\end{enumerate}
+
+
+\pagebreak 
+4. Prove that given any real number $x$; there is an integer $n$ such that $x < n$
+(Axiom of Archimedes). Furthermore, for any $x < y$; there is a rational number
+$q \in \Q$ such that $x < q < y$.
+
+\color{blue}
+    Suppose $x \geq n$ for all $n \in \Z$. Then $x$ is an upper bound of $\Z$ so by the Axiom of Completeness, $\Z$ has a least upper bound $Z$. Since $Z - 1 < Z$, $Z - 1$ is not an upper bound of $\Z$. Thus, there exists $n \in \Z$ such that $n > Z - 1$. But then $Z < n + 1$ (an integer) which is a contradiction. Therefore, $\N$ is not bounded above. 
+
+    \div 
+
+    We want to show that $\exists m \in \Z$, $n \in \N$ such that $x < \frac{m}{n} < y$.
+
+    By the Archimedian property, $\exists m \in \Z \forall n \in \N, x \in \R$ such that 
+    \[nx < m\]  
+    Then we can bound $nx$ below by  
+    \[m - 1 < nx < m\] 
+
+    The RHS inequality gives $x < \frac{m}{n}$ as desired. So we need to show that $\frac{m}{n} < y$. 
+
+    By the Archimedian property again, we can pick $n \in \N$ such that $\frac{1}{n} < y - x \implies x < y - \frac{1}{n}$
+
+    The LHS inequality above then gives 
+    \[m \leq nx + 1 < n(y - \frac{1}{n}) + 1 = ny \implies m < ny \implies \frac{m}{n} < y\] 
+    
+\color{black}
+
+
+\pagebreak 
+5. If $\{f_n\}$ is a sequence of continuous functions in $\R$ and $\{f_n\}$ converges to
+$f$ uniformly, then $f$ is continuous.
+
+\color{blue}
+    Let $\ep > 0$. Since $f_n \to f$ uniformly, $\exists N \in \N$ such that for all $n \geq N$, $\abs{f_n(x) - f(x)} < \frac{\ep}{3}$ for all $x \in \R$. 
+
+    Choose $c \in \R$. Since $f_N$ is continuous, $\exists \delta > 0$ such that $\abs{x - c} < \delta \implies \abs{f_N(x) - f_N(y)} < \frac{\ep}{3}$. 
+
+    Then for all $x, c\in \R$ such that $\abs{x - c} < \delta$, 
+    \begin{align*}
+        \abs{f(x) - f(c)} &= \abs{f(x) - f_N(x) + f_N(x) - f_N(c) + f_N(c) - f(c)} \\
+        &\leq \abs{f(x) - f_N(x)} + \abs{f_N(x) - f_N(c)} + \abs{f_N(c) - f(c)} \\
+        &< \frac{\ep}{3} + \frac{\ep}{3} + \frac{\ep}{3} = \ep
+    \end{align*}
+    Thus, $f$ is continuous. $\qed$ 
+\color{black}
+
+
+\pagebreak
+6. If $f$ is a continuous function over a bounded closed set in $\R$ then $f$ attains a
+maximum and minimum on the set.
+
+\color{blue}
+    Let $K$ be a closed and bounded set in $\R$. By the Heine-Borel theorem, $K$ is compact. 
+
+    \begin{tbox}[blue]{\emph{Lemma:} If $f: A \to \R$ is continuous on $A$, $f(K)$ is compact for compact $K \sub A$ }
+        \emph{Proof:} Let $(y_n) \in f(K)$. Then $\forall n \in \N, \exists (x_n) \in K \st f(x_n) = y_n$. Since $K$ is compact, $\exists x_{n_k} \to x \in K$. Since $f$ is continuous, $f(x_{n_k}) \to f(x)$. Thus, 
+        \[f(x) = \lim f(x_{n_k}) = \lim y_{n_k} \in f(K)\] 
+    \end{tbox}
+
+    Then by the Lemma, $f(K)$ is compact so $\exists \alpha = \sup f(K)$ and we know $\alpha \in f(K)$ (closed). Therefore, $\exists x \in K$ such that $f(x) = \alpha$. Minimum follows by similar argument. $\qed$
+
+\color{black}
+
+\end{document}
