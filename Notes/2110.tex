@@ -284,7 +284,7 @@ Some basic logic:
 
     \textbf{Bounds:} If $E \sub X$, an \emph{upper} (resp. \emph{lower}) \emph{bound} for $E$ is an element $x \in X$ such that $y \leq x$ (resp. $x \leq y$) for all $y \in E$.
 
-    \begin{tbox}{\textbf{Zorn's Lemma (transfinite induction):} If $X$ is partially ordered by $\leq$, assume every linearly ordered subset of $X$ has an upper bound. Then $X$ has a maximal element.}
+    \begin{tbox}{\textbf{Zorn's Lemma (transfinite induction):} If $X$ is partially ordered by $\leq$ and every linearly ordered subset of $X$ has an upper bound, then $X$ has a maximal element.}
         \emph{Proof:} We regard this as axiomatic
     \end{tbox}
 
@@ -339,7 +339,7 @@ Some basic logic:
         \begin{itemize}
             \item $\card X \leq \card Y$ if there exists an injective function $f: X \to Y$
             \item $\card X = \card Y$ if there exists a bijective function $f: X \to Y$
-            \item $\card X \geq \card Y$ if $\card X \leq \card Y$ but $\card X \neq \card Y$ there exists a surjective function $f: X \to Y$
+            \item $\card X \geq \card Y$ if there exists a surjective function $f: X \to Y$
         \end{itemize}
 
         \begin{tbox}{\textbf{Property:} $\card X \leq \card Y$ iff $\card Y \geq \card X$}
@@ -357,11 +357,11 @@ Some basic logic:
         \end{tbox}
 
 \section*{Sept 12}
-    \begin{tbox}{\textbf{Property:} For any sets $x$ and $Y$, either $\card X \leq \card Y$ or $\card Y \leq \card X$}
+    \begin{tbox}{\textbf{Property:} For any sets $X$ and $Y$, either $\card X \leq \card Y$ or $\card Y \leq \card X$}
         \emph{Proof Sketch:} Consider the (non-empty) set 
         \[J = \{\text{all injections } f_E: X \to Y \text{ with respect to } E \sub X\}\]
         
-        Define a relation $R$ on $J$ such that $f_{E_1} R f_{e_2}$ if $E_1 \sub E_2$ and $f_{E_2}\big\vert_{E_1} = f_{E_1}$, i.e. $f_{E_2}$ is an extension of $f_{E_1}$.
+        Define a relation $R$ on $J$ such that $f_{E_1} R f_{E_2}$ if $E_1 \sub E_2$ and $f_{E_2}\big\vert_{E_1} = f_{E_1}$, i.e. $f_{E_2}$ is an extension of $f_{E_1}$.
 
         Repeating the argument of the Well-Ordering Principle, $R$ is a partial ordering. 
 
@@ -383,7 +383,7 @@ Some basic logic:
 
         If $f(X) = Y$, then $f$ is a bijection and we are done.
 
-        If $f(X) \neq Y$ (i.e. $f(X) \subsetneq Y$), the consider $Y_1 = Y \setminus f(X)$ and $g(Y_1)$. Then $f(Y_1) \subsetneq X$, so call $X_1 = f(Y_1)$. We now have a bijection $X_1 \to Y_1$. 
+        If $f(X) \neq Y$ (i.e. $f(X) \subsetneq Y$), the consider $Y_1 = Y \setminus f(X)$ and $g(Y_1)$. Then $g(Y_1) \subsetneq X$, so call $X_1 = g(Y_1)$. We now have a bijection $X_1 \to Y_1$. 
 
         Let's repeat. $f(X \setminus X_1) \subsetneq Y \setminus Y_1$ so define $Y_2 = (Y \setminus Y_1) \setminus f(X \setminus X_1)$.
 
@@ -849,7 +849,7 @@ Some basic logic:
             \end{exercise}
 
             Now $\forall y \in (a, b)$, 
-            \[y \in \bigcup_{n = 1}^N [a + \frac{1}{n}, \frac{b}{\frac{1}{n}}] \implies a < y < b\] 
+            \[y \in \bigcup_{n = 1}^N [a + \frac{1}{n}, b - \frac{1}{n}] \implies a < y < b\] 
             for $N$ sufficiently large.
 
             For the other direction, take $[a, b] \in \Ec_2$. Then 
@@ -858,7 +858,7 @@ Some basic logic:
             \begin{proof}
                 \emph{Proof:} $[a, b] \sub \bigcap_{n=1}^{\infty} (a - \frac{1}{n}, b + \frac{1}{n})$ is clear.
 
-                For the other direction, let $y in \bigcap_{n=1}^{\infty} (a - \frac{1}{n}, b + \frac{1}{n})$. Suppose $a \leq y \leq b$ is false. Then $y \notin (a - \frac{1}{N}, b + \frac{1}{N})$ so it cannot be in the intersection
+                For the other direction, let $y \in \bigcap_{n=1}^{\infty} (a - \frac{1}{n}, b + \frac{1}{n})$. Suppose $a \leq y \leq b$ is false. Then $y \notin (a - \frac{1}{N}, b + \frac{1}{N})$ so it cannot be in the intersection
             \end{proof}
 
             \begin{exercise}
@@ -878,49 +878,49 @@ Some basic logic:
 
     In this way, we can consider $\R^n$ as a metric space with this Euclidean metric. What is the Borel set of $\R^n$?
 
-    \begin{tbox}{\textbf{Proposition:} $B_{\R^n}$ is  }
+    \begin{tbox}{\textbf{Proposition:} $B_{\R^n}$ is $\bigotimes_{i=1}^n \B_{\R}$ }
         \emph{Proof:} First take $O_i$ open set in $X_i$ 
         \[\bigoplus_{i=1}^n O_i = O_1 \times O_2 \times \dots \times O_n \]
 
         We claim that this is an open set in the $X_1 \times X_2 \times \dots \times X_n$ topology.
 
         \begin{proof}
-            \emph{Proof:} Take $\bar x \in \bigoplus_{i=1}^n O_i$ with $x_i \in O_i$. 
+            \emph{Proof:} Take $\tbf{x} \in \bigoplus_{i=1}^n O_i$ with $X_i \in O_i$. 
 
-            It suffices to show $\exists \ep_0 > 0$ such that $B_{\ep_0}(\bar x) \sub \bigoplus_{i=1}^n O_i$ where 
-            \[B_{\ep_0}(\bar x) = \{\bar y: \rho(\bar x, \bar y) < \ep_0\}\]
-            so $\bar y \in B_{\ep}(\bar x)$ iff $\rho_i(x_i, y_i) < \ep_0$ for all $i$.
+            It suffices to show $\exists \ep_0 > 0$ such that $B(\tbf{x} \ep_0) \sub \bigoplus_{i=1}^n O_i$ where 
+            \[B(\tbf{x}, \ep_0) = \{\tbf{y}: \rho(\tbf{x}, \tbf{y}) < \ep_0\}\]
+            so $\tbf{y} \in B(\tbf{x}, \ep)$ iff $\rho_i(X_i, y_i) < \ep_0$ for all $i$.
 
-            Hence $y_i \in B_{\ep_0}(x_i) \sub O_i$
+            Hence $y_i \in B(X_i, \ep_0) \sub O_i$
         \end{proof}
 
-        Let $\bigotimes_{i=1}^n \B_{x_i}$ be the Borel set generated by $\bigoplus_{i=1}^n O_i$
-
-        Clearly, $\bigoplus_{i=1}^n \B_{x_i} \sub \B_{x_1 \times x_2 \times \dots \times x_n}$
+        Let $\bigotimes_{i=1}^n \B_{X_i}$ be the Borel set generated by $\bigoplus_{i=1}^n O_i$ 
         
-        \textbf{Lemma:} If $x_i$ is separable then 
-        \[\bigotimes_{i=1}^n B_{x_i} = \B_{x_1 \times x_2 \times \dots\times x_n}\]
+        Clearly, $\bigoplus_{i=1}^n \B_{X_i} \sub \B_{x_1 \times x_2 \times \dots \times x_n}$
+        
+        \textbf{Lemma:} If $X_i$ is separable then 
+        \[\bigotimes_{i=1}^n B_{X_i} = \B_{X_1 \times X_2 \times \dots\times X_n}\]
 
         In particular: 
         \[\bigotimes_{i=1}^n \B_{\R} = \B_{\R^n}\]
 
         \begin{proof}
-            \emph{Proof:} It suffices to show that $\forall \bar x, \ep$, 
-            \[\B_{\ep}(\bar x, \ep) \sub \bigotimes_{i=1}^n B_{x_i}\]
+            \emph{Proof:} It suffices to show that $\forall \tbf{x}, \ep$, 
+            \[B(\tbf{x}, \ep) \sub \bigotimes_{i=1}^n \B_{X_i}\]
 
             Let $\mathcal{C}_i$ be a countable subset of $X_i$ such that $\bar{\mathcal{C}_i} = X_i$ for all $1 \leq i \leq n$
 
             We claim 
-            \[B_{\ep}(\bar x) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B_{r_i}(c_i)\]
+            \[B(\tbf{x}, \ep) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B(c_i, r_i)\]
             for $\sqrt{r_1^2 + \dots + r_n^2} < \ep$
 
             (And this has cardinality $\N^{2n}$ so countable)
 
             Pick 
-            \[\bar y \in B_{\ep}(\bar x) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B_{r_i}(c_i) \sub \bigotimes_{i=1}^n \B_{x_i}\] 
+            \[\tbf{y} \in B(\tbf{x}, \ep) \sub \bigcup_{\begin{subarray}{c} c_i \in \mathcal{C}_i \\ r_i \in \Q \end{subarray}} \bigotimes_{i=1}^n B(c_i, r_i) \sub \bigotimes_{i=1}^n \B_{X_i}\] 
 
             Then 
-            \[\sigma(\bar x, \bar y) = \sqrt{\rho_1^2(y_1, x_2), \dots, \rho_n^2(y_n, x_n)} < \ep\]
+            \[\sigma(\tbf{x}, \tbf{y}) = \sqrt{\rho_1^2(y_1, x_2), \dots, \rho_n^2(y_n, x_n)} < \ep\]
             but each $\rho_i^2(y_i, x_i$) is fixed so we may choose $c_i \in \mathcal C, r_i \in \Q$ such that 
             \[\rho_i(y_i, c_i) < r_i = \rho_i(y_i, x_i) - [\rho(y_i, x_i) - \rho(y_i, c_i)]\]
             by density (from separability) 
@@ -1040,16 +1040,15 @@ Some basic logic:
             Clearly, $F_n \sub F_{n+1}$. By part 3, 
             \[\mu\left(\bigcup_{n=1}^\infty F_n\right) = \lim_{n\to \infty} \mu(F_n)\]
             and 
-            \[F_j = E_1 \setminus E_j \implies \bigcup_{n=1}^n F_j = E_1 \setminus \bigcup_{n=1}^n E_j\]
+            \[F_j = E_1 \setminus E_j \implies \bigcup_{n=1}^n F_j = E_1 \setminus \bigcap_{n=1}^n E_j\]
             (by $E_1 \supset E_2 \supset \dots$)
 
-            So 
-            \[\mu\left(E_1 \setminus \bigcap_{j=1}^{\infty}\right) = \lim_{n\to \infty} \mu(E_1 \setminus \bigcap_{j=1}^n E_j)\]
-
-            By Part 1, 
+            So, by 1, 
             \begin{align*}
-                \lim_{n\to \infty} \mu(E_1 \setminus \bigcap_{j=1}^n E_j) &= \lim_{n \to \infty} \left[\mu(E_1) - \mu(\bigcap_{j=1}^n E_j)\right]\\ 
-                    &= \lim_{n \to \infty} \left[\mu(E_1) - \mu(E_n)\right]\\ 
+                \mu(F_j) &= \mu(E_1) - \mu\left(E_1 \setminus \bigcap_{j=1}^{\infty} E_j\right)\\ 
+                    &=\mu(E_1) - \lim_{n\to \infty} \mu\left(E_1 \setminus \bigcap_{j=1}^n E_j\right)\\ 
+                    &= \mu(E_1) - \lim_{n \to \infty} \left[\mu(E_1) - \mu(\bigcap_{j=1}^n E_j)\right]\\ 
+                    &= \mu(E_1) - \lim_{n \to \infty} \left[\mu(E_1) - \mu(E_n)\right]\\ 
                     &= \lim_{n \to \infty} \mu(E_n)
             \end{align*}
         \end{tbox}
@@ -1079,12 +1078,12 @@ Some basic logic:
             \[\mu^*(A) \leq \sum_{n=0}^\infty \rho(E_j)\]
 
             Taking the inf, 
-            \[\mu^*(A) \leq \inf\left\{\sum_{i=1}^{\infty} \rho(E_j)\right\} \sub \mu^*(B)\]
+            \[\mu^*(A) \leq \inf\left\{\sum_{i=1}^{\infty} \rho(E_j)\right\} = \mu^*(B)\]
 
             (Subadditivity) Take $\bigcup_{j=1}^{\infty} A_j$ for all $A_j \in P(X)$. 
 
             By definition of $\inf$, $\forall \ep > 0$ there exists $E_{jk} \sub \Ec$ such that  
-            \[\sum_{i=1}^{\infty} \rho(E_{jk}) \leq \mu^*(A_j) + \frac{\ep}{2^j}\]
+            \[\sum_{k=1}^{\infty} \rho(E_{jk}) \leq \mu^*(A_j) + \frac{\ep}{2^j}\]
             so 
             \[\bigcup_{j=1}^{\infty} A_j \sub \bigcup_{jk}^{\infty} E_{jk}\]
             for $E_{jk} \in \Ec$. 
@@ -1103,7 +1102,7 @@ Some basic logic:
         \[\mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c)\]
 
         And in fact, it suffices to show 
-        \[\mu^*(E) \geq \mu^*(A \cup E) + \mu^*(E\cap A^c)\] 
+        \[\mu^*(E) \geq \mu^*(A \cap E) + \mu^*(E\cap A^c)\] 
 
 
 \section*{Oct 01}
@@ -1116,7 +1115,7 @@ Some basic logic:
 
         \div 
 
-        STEP 2. Let $A, B \in \M$ and $A \cup B \in \M$. Then 
+        STEP 2. Let $A, B \in \M$ and $A \cup B \in \M$. Then WTS
         \[\mu^*(A \cup B) = \mu^*(A) + \mu^*(B), \; A \cap B = \emptyset\]
 
         Since $\mu^* < \infty$ by definition, it suffices to show 
@@ -1144,7 +1143,7 @@ Some basic logic:
         Further, 
         \begin{align*}
             \mu^*(E \cap A \cap B) &+ \mu^*(E \cap A \cap B^c) + \mu^*(E \cap A^c \cap B) + \mu^*(E \cap A^c \cap B^c)\\ 
-                &\geq mu^*(E \cap A \cap B) + \mu^*(E \cap A \cap B^c) + \mu^*(E \cap B \cap A^c)
+                &\geq \mu^*(E \cap A \cap B) + \mu^*(E \cap A \cap B^c) + \mu^*(E \cap B \cap A^c)
         \end{align*}
         which is just 
         \[\mu^*(E) \geq \mu^*(E \cap (A\cup B)) + \mu^*(E \cap (A \cup B)^c)\]
@@ -1176,11 +1175,10 @@ Some basic logic:
             \mu^*(E) &= \mu^*(E \cap B_j) + \mu^*(E \cap B_j^c)\\ 
                 &= \mu^*\left(E \cap \bigcup_{j=1}^n A_j\right) + \mu^*\left(E \cap \bigcap_{j=1}^n A_j^c\right)\\ 
                 &= \sum_{j=1}^{n} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^n A_j^c) \qquad \text{Step 2}\\ 
-                &\geq \sum_{j=1}^{n} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^{\infty} A_j^c)\\ 
-                &\geq \sum_{j=1}^{\infty} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^n A_j^c)\\ 
+                &\geq \sum_{j=1}^{\infty} \mu^*(E \cap A_j) + \mu^*(E \cap \bigcap_{j=1}^{\infty} A_j^c)\\ 
                 &\geq \mu^*\left(E \cap \bigcup_{i=1}^\infty  A_i\right) + \mu^*\left(E \cap \bigcap_{i=1}^{\infty} A_j^c\right) \qquad \text{Subadditivity}
         \end{align*}
-
+        
         \div
 
         STEP 4 (Completeness) Let $\mu^*(A) = 0$, then $A \in \M$. 
